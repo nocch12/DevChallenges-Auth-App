@@ -65772,12 +65772,14 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
+/***/ "./resources/js/app.tsx":
+/*!******************************!*\
+  !*** ./resources/js/app.tsx ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -65790,9 +65792,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.tsx");
 
-
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
 
 /***/ }),
 
@@ -65841,103 +65842,51 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Example.js":
-/*!********************************************!*\
-  !*** ./resources/js/components/Example.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./resources/js/components/Example.tsx":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Example.tsx ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 
-
-
-function Example() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "max-w-md w-full"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "mx-auto h-12 w-auto",
-    src: "https://tailwindui.com/img/logos/workflow-mark-on-white.svg",
-    alt: "Workflow"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-    className: "mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900"
-  }, "Sign in to your account"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "mt-2 text-center text-sm leading-5 text-gray-600"
-  }, "Or", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "#",
-    className: "font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-  }, "start your 14-day free trial"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    className: "mt-8",
-    action: "#",
-    method: "POST"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "hidden",
-    name: "remember",
-    value: "true"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "rounded-md shadow-sm"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    "aria-label": "Email address",
-    name: "email",
-    type: "email",
-    required: true,
-    className: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5",
-    placeholder: "Email address"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "-mt-px"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    "aria-label": "Password",
-    name: "password",
-    type: "password",
-    required: true,
-    className: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5",
-    placeholder: "Password"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "mt-6 flex items-center justify-between"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "flex items-center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    id: "remember_me",
-    type: "checkbox",
-    className: "form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-    htmlFor: "remember_me",
-    className: "ml-2 block text-sm leading-5 text-gray-900"
-  }, "Remember me")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "text-sm leading-5"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "#",
-    className: "font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-  }, "Forgot your password?"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "mt-6"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "submit",
-    className: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "absolute left-0 inset-y-0 flex items-center pl-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
-    className: "h-5 w-5 text-indigo-500 group-hover:text-indigo-400 transition ease-in-out duration-150",
-    fill: "currentColor",
-    viewBox: "0 0 20 20"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
-    "fill-rule": "evenodd",
-    d: "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z",
-    "clip-rule": "evenodd"
-  }))), "Sign in")))));
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (Example);
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
+var Example = function () {
+    return (react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" },
+        react_1.default.createElement("div", { className: "max-w-md w-full" },
+            react_1.default.createElement("div", null,
+                react_1.default.createElement("img", { className: "mx-auto h-12 w-auto", src: "https://tailwindui.com/img/logos/workflow-mark-on-white.svg", alt: "Workflow" }),
+                react_1.default.createElement("h2", { className: "mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900" }, "Sign in to your account"),
+                react_1.default.createElement("p", { className: "mt-2 text-center text-sm leading-5 text-gray-600" },
+                    "Or",
+                    react_1.default.createElement("a", { href: "#", className: "font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150" }, "start your 14-day free trial"))),
+            react_1.default.createElement("form", { className: "mt-8", action: "#", method: "POST" },
+                react_1.default.createElement("input", { type: "hidden", name: "remember", value: "true" }),
+                react_1.default.createElement("div", { className: "rounded-md shadow-sm" },
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("input", { "aria-label": "Email address", name: "email", type: "email", required: true, className: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5", placeholder: "Email address" })),
+                    react_1.default.createElement("div", { className: "-mt-px" },
+                        react_1.default.createElement("input", { "aria-label": "Password", name: "password", type: "password", required: true, className: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5", placeholder: "Password" }))),
+                react_1.default.createElement("div", { className: "mt-6 flex items-center justify-between" },
+                    react_1.default.createElement("div", { className: "flex items-center" },
+                        react_1.default.createElement("input", { id: "remember_me", type: "checkbox", className: "form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" }),
+                        react_1.default.createElement("label", { htmlFor: "remember_me", className: "ml-2 block text-sm leading-5 text-gray-900" }, "Remember me")),
+                    react_1.default.createElement("div", { className: "text-sm leading-5" },
+                        react_1.default.createElement("a", { href: "#", className: "font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150" }, "Forgot your password?"))),
+                react_1.default.createElement("div", { className: "mt-6" },
+                    react_1.default.createElement("button", { className: "bg-myblue-100 hover:bg-blue-dark text-white py-2 px-4 rounded-lg" }, "Button"))))));
+};
+exports.default = Example;
 if (document.getElementById("app")) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById("app"));
+    react_dom_1.default.render(react_1.default.createElement(Example, null), document.getElementById("app"));
 }
+
 
 /***/ }),
 
@@ -65953,13 +65902,13 @@ if (document.getElementById("app")) {
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!**************************************************************!*\
+  !*** multi ./resources/js/app.tsx ./resources/sass/app.scss ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\js\app.tsx */"./resources/js/app.tsx");
 module.exports = __webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
