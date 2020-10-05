@@ -65786,13 +65786,22 @@ module.exports = function(module) {
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.tsx");
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
+var Auth_1 = __importDefault(__webpack_require__(/*! ./containers/Auth */ "./resources/js/containers/Auth.tsx"));
+var auth_context_1 = __webpack_require__(/*! ./store/contexts/auth-context */ "./resources/js/store/contexts/auth-context.tsx");
+var App = function () {
+    return (react_1.default.createElement(auth_context_1.AuthProvider, null,
+        react_1.default.createElement(Auth_1.default, null)));
+};
+if (document.getElementById("app")) {
+    react_dom_1.default.render(react_1.default.createElement(App, null), document.getElementById("app"));
+}
 
 
 /***/ }),
@@ -65842,50 +65851,113 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/Example.tsx":
-/*!*********************************************!*\
-  !*** ./resources/js/components/Example.tsx ***!
-  \*********************************************/
+/***/ "./resources/js/containers/Auth.tsx":
+/*!******************************************!*\
+  !*** ./resources/js/containers/Auth.tsx ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
-var Example = function () {
-    return (react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" },
-        react_1.default.createElement("div", { className: "max-w-md w-full" },
-            react_1.default.createElement("div", null,
-                react_1.default.createElement("img", { className: "mx-auto h-12 w-auto", src: "https://tailwindui.com/img/logos/workflow-mark-on-white.svg", alt: "Workflow" }),
-                react_1.default.createElement("h2", { className: "mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900" }, "Sign in to your account"),
-                react_1.default.createElement("p", { className: "mt-2 text-center text-sm leading-5 text-gray-600" },
-                    "Or",
-                    react_1.default.createElement("a", { href: "#", className: "font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150" }, "start your 14-day free trial"))),
-            react_1.default.createElement("form", { className: "mt-8", action: "#", method: "POST" },
-                react_1.default.createElement("input", { type: "hidden", name: "remember", value: "true" }),
-                react_1.default.createElement("div", { className: "rounded-md shadow-sm" },
-                    react_1.default.createElement("div", null,
-                        react_1.default.createElement("input", { "aria-label": "Email address", name: "email", type: "email", required: true, className: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5", placeholder: "Email address" })),
-                    react_1.default.createElement("div", { className: "-mt-px" },
-                        react_1.default.createElement("input", { "aria-label": "Password", name: "password", type: "password", required: true, className: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5", placeholder: "Password" }))),
-                react_1.default.createElement("div", { className: "mt-6 flex items-center justify-between" },
-                    react_1.default.createElement("div", { className: "flex items-center" },
-                        react_1.default.createElement("input", { id: "remember_me", type: "checkbox", className: "form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" }),
-                        react_1.default.createElement("label", { htmlFor: "remember_me", className: "ml-2 block text-sm leading-5 text-gray-900" }, "Remember me")),
-                    react_1.default.createElement("div", { className: "text-sm leading-5" },
-                        react_1.default.createElement("a", { href: "#", className: "font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150" }, "Forgot your password?"))),
-                react_1.default.createElement("div", { className: "mt-6" },
-                    react_1.default.createElement("button", { className: "bg-myblue-100 hover:bg-blue-dark text-white py-2 px-4 rounded-lg" }, "Button"))))));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var auth_context_1 = __webpack_require__(/*! ../store/contexts/auth-context */ "./resources/js/store/contexts/auth-context.tsx");
+var Auth = function () {
+    var _a = react_1.useContext(auth_context_1.authContext), isAuth = _a.isAuth, setIsAuth = _a.setIsAuth;
+    console.log(isAuth);
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" },
+            react_1.default.createElement("div", { className: "max-w-sm w-full mb-6" },
+                react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
+                    react_1.default.createElement("section", null,
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement("h2", null, "devChallenges")),
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement("h3", { className: "text-lg font-semibold" },
+                                "Join thousands of learners from",
+                                react_1.default.createElement("br", null),
+                                "around the world")),
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement("p", { className: "text-base font-semibold" }, "Master web development by making real-life projects. There are multiple paths for you to choose"))),
+                    react_1.default.createElement("section", null,
+                        react_1.default.createElement("form", { action: "#", method: "POST" },
+                            react_1.default.createElement("div", { className: "mb-6" },
+                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email" })),
+                            react_1.default.createElement("div", { className: "mb-6" },
+                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email" })),
+                            react_1.default.createElement("div", { className: "mb-6" },
+                                react_1.default.createElement("button", { className: "block w-full bg-myblue-100 hover:bg-blue text-white py-2 px-4 rounded-lg" }, "Button")))),
+                    react_1.default.createElement("section", null,
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement("p", null, "or continue with these social profile")),
+                        react_1.default.createElement("div", { className: "mb-6" }),
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement("p", null,
+                                react_1.default.createElement("span", null, "Adready a member?"),
+                                react_1.default.createElement("a", { href: "" }, "Login")))))))));
 };
-exports.default = Example;
-if (document.getElementById("app")) {
-    react_dom_1.default.render(react_1.default.createElement(Example, null), document.getElementById("app"));
-}
+exports.default = Auth;
+
+
+/***/ }),
+
+/***/ "./resources/js/store/contexts/auth-context.tsx":
+/*!******************************************************!*\
+  !*** ./resources/js/store/contexts/auth-context.tsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthProvider = exports.authContext = void 0;
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+exports.authContext = react_1.createContext({});
+exports.AuthProvider = function (_a) {
+    var children = _a.children;
+    var _b = react_1.useState(false), isAuth = _b[0], setIsAuth = _b[1];
+    return (react_1.default.createElement(exports.authContext.Provider, { value: { isAuth: isAuth, setIsAuth: setIsAuth } }, children));
+};
 
 
 /***/ }),
