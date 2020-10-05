@@ -7,7 +7,6 @@ const Login: React.FC = () => {
   const { isAuth, setIsAuth } = useContext(authContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirmaition, setPasswordConfirmaition] = useState('');
 
   const login = (e: FormEvent): void => {
     e.preventDefault();

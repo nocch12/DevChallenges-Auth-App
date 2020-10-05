@@ -69904,7 +69904,6 @@ var Login = function () {
     var _a = react_1.useContext(auth_context_1.authContext), isAuth = _a.isAuth, setIsAuth = _a.setIsAuth;
     var _b = react_1.useState(''), email = _b[0], setEmail = _b[1];
     var _c = react_1.useState(''), password = _c[0], setPassword = _c[1];
-    var _d = react_1.useState(''), passwordConfirmaition = _d[0], setPasswordConfirmaition = _d[1];
     var login = function (e) {
         e.preventDefault();
         // ログイン時にCSRFトークンを初期化
