@@ -65879,42 +65879,67 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var auth_context_1 = __webpack_require__(/*! ../store/contexts/auth-context */ "./resources/js/store/contexts/auth-context.tsx");
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var Auth = function () {
     var _a = react_1.useContext(auth_context_1.authContext), isAuth = _a.isAuth, setIsAuth = _a.setIsAuth;
-    console.log(isAuth);
+    var _b = react_1.useState(''), email = _b[0], setEmail = _b[1];
+    var _c = react_1.useState(''), password = _c[0], setPassword = _c[1];
+    var _d = react_1.useState(''), passwordConfirmaition = _d[0], setPasswordConfirmaition = _d[1];
+    var register = function (e) {
+        e.preventDefault();
+        // ログイン時にCSRFトークンを初期化
+        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
+            axios_1.default.post('/api/register', {
+                email: email,
+                password: password,
+                password_confirmation: passwordConfirmaition
+            }).then(function (res) {
+                console.log(res);
+            }).catch(function (err) {
+                console.log(err.response);
+            });
+        });
+    };
     return (react_1.default.createElement("div", null,
-        react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" },
-            react_1.default.createElement("div", { className: "max-w-sm w-full mb-6" },
+        react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
+            react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
                 react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
-                    react_1.default.createElement("section", null,
+                    react_1.default.createElement("section", { className: "mb-8" },
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("h2", null, "devChallenges")),
-                        react_1.default.createElement("div", { className: "mb-6" },
+                        react_1.default.createElement("div", { className: "mb-3" },
                             react_1.default.createElement("h3", { className: "text-lg font-semibold" },
-                                "Join thousands of learners from",
-                                react_1.default.createElement("br", null),
-                                "around the world")),
-                        react_1.default.createElement("div", { className: "mb-6" },
-                            react_1.default.createElement("p", { className: "text-base font-semibold" }, "Master web development by making real-life projects. There are multiple paths for you to choose"))),
+                                react_1.default.createElement("span", { className: "sm:block" }, "Join thousands of learners from"),
+                                react_1.default.createElement("span", { className: "sm:block" }, "around the world"))),
+                        react_1.default.createElement("div", null,
+                            react_1.default.createElement("p", { className: "text-base" },
+                                react_1.default.createElement("span", { className: "sm:block" }, "Master web development by making real-life"),
+                                react_1.default.createElement("span", { className: "sm:block" }, "projects. There are multiple paths for you to"),
+                                react_1.default.createElement("span", { className: "sm:block" }, "choose")))),
+                    react_1.default.createElement("section", { className: "mb-8" },
+                        react_1.default.createElement("form", { onSubmit: register },
+                            react_1.default.createElement("div", { className: "mb-4" },
+                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
+                            react_1.default.createElement("div", { className: "mb-6" },
+                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password", value: password, onChange: function (e) { return setPassword(e.target.value); } })),
+                            react_1.default.createElement("div", { className: "mb-6" },
+                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password Repeat", value: passwordConfirmaition, onChange: function (e) { return setPasswordConfirmaition(e.target.value); } })),
+                            react_1.default.createElement("div", null,
+                                react_1.default.createElement("button", { type: "submit", className: "block w-full bg-myblue-100 hover:bg-myblue-dark text-white py-2 px-4 rounded-lg" }, "Button")))),
                     react_1.default.createElement("section", null,
-                        react_1.default.createElement("form", { action: "#", method: "POST" },
-                            react_1.default.createElement("div", { className: "mb-6" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email" })),
-                            react_1.default.createElement("div", { className: "mb-6" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email" })),
-                            react_1.default.createElement("div", { className: "mb-6" },
-                                react_1.default.createElement("button", { className: "block w-full bg-myblue-100 hover:bg-blue text-white py-2 px-4 rounded-lg" }, "Button")))),
-                    react_1.default.createElement("section", null,
-                        react_1.default.createElement("div", { className: "mb-6" },
+                        react_1.default.createElement("div", { className: "mb-6 text-center text-mygray-200" },
                             react_1.default.createElement("p", null, "or continue with these social profile")),
                         react_1.default.createElement("div", { className: "mb-6" }),
                         react_1.default.createElement("div", { className: "mb-6" },
-                            react_1.default.createElement("p", null,
+                            react_1.default.createElement("p", { className: "text-center text-mygray-200" },
                                 react_1.default.createElement("span", null, "Adready a member?"),
-                                react_1.default.createElement("a", { href: "" }, "Login")))))))));
+                                react_1.default.createElement("a", { href: "", className: "text-myblue-200" }, " Login")))))))));
 };
 exports.default = Auth;
 

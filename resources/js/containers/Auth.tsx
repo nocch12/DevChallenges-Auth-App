@@ -1,8 +1,28 @@
-import React, { useContext } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { authContext } from "../store/contexts/auth-context";
+import axios from 'axios';
 
 const Auth: React.FC = () => {
   const { isAuth, setIsAuth } = useContext(authContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmaition, setPasswordConfirmaition] = useState('');
+
+  const register = (e: FormEvent): void => {
+    e.preventDefault();
+    // ログイン時にCSRFトークンを初期化
+    axios.get("/sanctum/csrf-cookie").then(response => {
+      axios.post('/api/register', {
+        email,
+        password,
+        password_confirmation: passwordConfirmaition
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err.response);
+      })
+    });
+  }
 
   return (
     <div>
@@ -34,12 +54,14 @@ const Auth: React.FC = () => {
             </section>
             {/* form */}
             <section className="mb-8">
-              <form action="#" method="POST">
+              <form onSubmit={register}>
                 <div className="mb-4">
                   <input
                     className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     type="email"
                     placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-6">
@@ -47,6 +69,17 @@ const Auth: React.FC = () => {
                     className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     type="password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                    type="password"
+                    placeholder="Password Repeat"
+                    value={passwordConfirmaition}
+                    onChange={(e) => setPasswordConfirmaition(e.target.value)}
                   />
                 </div>
                 <div>
