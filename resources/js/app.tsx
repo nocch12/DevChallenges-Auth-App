@@ -9,13 +9,23 @@ require('./bootstrap');
 
 import React from 'react';
 import ReactDOM from "react-dom";
-import Auth from './containers/Auth';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Login from './containers/Login';
+import Logout from './containers/Logout';
+import Register from './containers/Register';
 import {AuthProvider} from './store/contexts/auth-context';
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Auth />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/logout" component={Logout} />
+        </Switch>
+      </BrowserRouter>
     </AuthProvider>
   );
 }

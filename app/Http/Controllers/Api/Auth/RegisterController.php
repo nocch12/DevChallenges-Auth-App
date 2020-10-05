@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -50,9 +51,12 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        logger('test');
         $this->validator($request->all())->validate();
         $user = $this->create($request->all());
         $this->guard()->login($user);
+
+        $user = Auth::user();
 
         $result = true;
         $status = 200;
