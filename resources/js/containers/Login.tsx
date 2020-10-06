@@ -1,30 +1,21 @@
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {NavLink} from 'react-router-dom';
-import { authContext } from "../store/contexts/auth-context";
-import axios from 'axios';
+
+import {useAuth} from '../hooks/useAuth';
 
 const Login: React.FC = () => {
-  const { isAuth, setIsAuth } = useContext(authContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {state, login} = useAuth();
 
-  const login = (e: FormEvent): void => {
+  const loginHandler = (e: FormEvent): void => {
     e.preventDefault();
-    // ログイン時にCSRFトークンを初期化
-    axios.get("/sanctum/csrf-cookie").then(response => {
-      axios.post('/api/login', {
-        email,
-        password,
-      }).then(res => {
-        console.log(res);
-      }).catch(err => {
-        console.log(err.response);
-      })
-    });
+    login(email, password);
   }
 
   return (
     <div>
+      {JSON.stringify(state)}
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <NavLink to="/logout">logout</NavLink>
         <div className="max-w-lg w-full mb-6">
@@ -42,7 +33,7 @@ const Login: React.FC = () => {
             </section>
             {/* form */}
             <section className="mb-8">
-              <form onSubmit={login}>
+              <form onSubmit={loginHandler}>
                 <div className="mb-4">
                   <input
                     className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"

@@ -69802,15 +69802,13 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 var Login_1 = __importDefault(__webpack_require__(/*! ./containers/Login */ "./resources/js/containers/Login.tsx"));
 var Logout_1 = __importDefault(__webpack_require__(/*! ./containers/Logout */ "./resources/js/containers/Logout.tsx"));
 var Register_1 = __importDefault(__webpack_require__(/*! ./containers/Register */ "./resources/js/containers/Register.tsx"));
-var auth_context_1 = __webpack_require__(/*! ./store/contexts/auth-context */ "./resources/js/store/contexts/auth-context.tsx");
 var App = function () {
-    return (react_1.default.createElement(auth_context_1.AuthProvider, null,
-        react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
-            react_1.default.createElement(react_router_dom_1.Switch, null,
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/", exact: true, component: Register_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/register", component: Register_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/logout", component: Logout_1.default })))));
+    return (react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
+        react_1.default.createElement(react_router_dom_1.Switch, null,
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/", exact: true, component: Register_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/register", component: Register_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/logout", component: Logout_1.default }))));
 };
 if (document.getElementById("app")) {
     react_dom_1.default.render(react_1.default.createElement(App, null), document.getElementById("app"));
@@ -69892,33 +69890,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-var auth_context_1 = __webpack_require__(/*! ../store/contexts/auth-context */ "./resources/js/store/contexts/auth-context.tsx");
-var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+var useAuth_1 = __webpack_require__(/*! ../hooks/useAuth */ "./resources/js/hooks/useAuth.ts");
 var Login = function () {
-    var _a = react_1.useContext(auth_context_1.authContext), isAuth = _a.isAuth, setIsAuth = _a.setIsAuth;
-    var _b = react_1.useState(''), email = _b[0], setEmail = _b[1];
-    var _c = react_1.useState(''), password = _c[0], setPassword = _c[1];
-    var login = function (e) {
+    var _a = react_1.useState(''), email = _a[0], setEmail = _a[1];
+    var _b = react_1.useState(''), password = _b[0], setPassword = _b[1];
+    var _c = useAuth_1.useAuth(), state = _c.state, login = _c.login;
+    var loginHandler = function (e) {
         e.preventDefault();
-        // ログイン時にCSRFトークンを初期化
-        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
-            axios_1.default.post('/api/login', {
-                email: email,
-                password: password,
-            }).then(function (res) {
-                console.log(res);
-            }).catch(function (err) {
-                console.log(err.response);
-            });
-        });
+        login(email, password);
     };
     return (react_1.default.createElement("div", null,
+        JSON.stringify(state),
         react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
             react_1.default.createElement(react_router_dom_1.NavLink, { to: "/logout" }, "logout"),
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
@@ -69929,7 +69914,7 @@ var Login = function () {
                         react_1.default.createElement("div", { className: "mb-3" },
                             react_1.default.createElement("h3", { className: "text-lg font-semibold" }, "Login"))),
                     react_1.default.createElement("section", { className: "mb-8" },
-                        react_1.default.createElement("form", { onSubmit: login },
+                        react_1.default.createElement("form", { onSubmit: loginHandler },
                             react_1.default.createElement("div", { className: "mb-4" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
                             react_1.default.createElement("div", { className: "mb-6" },
@@ -70033,13 +70018,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-var auth_context_1 = __webpack_require__(/*! ../store/contexts/auth-context */ "./resources/js/store/contexts/auth-context.tsx");
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var Register = function () {
-    var _a = react_1.useContext(auth_context_1.authContext), isAuth = _a.isAuth, setIsAuth = _a.setIsAuth;
-    var _b = react_1.useState(''), email = _b[0], setEmail = _b[1];
-    var _c = react_1.useState(''), password = _c[0], setPassword = _c[1];
-    var _d = react_1.useState(''), passwordConfirmaition = _d[0], setPasswordConfirmaition = _d[1];
+    var _a = react_1.useState(''), email = _a[0], setEmail = _a[1];
+    var _b = react_1.useState(''), password = _b[0], setPassword = _b[1];
+    var _c = react_1.useState(''), passwordConfirmaition = _c[0], setPasswordConfirmaition = _c[1];
     var register = function (e) {
         e.preventDefault();
         // ログイン時にCSRFトークンを初期化
@@ -70095,10 +70078,10 @@ exports.default = Register;
 
 /***/ }),
 
-/***/ "./resources/js/store/contexts/auth-context.tsx":
-/*!******************************************************!*\
-  !*** ./resources/js/store/contexts/auth-context.tsx ***!
-  \******************************************************/
+/***/ "./resources/js/hooks/useAuth.ts":
+/*!***************************************!*\
+  !*** ./resources/js/hooks/useAuth.ts ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70123,15 +70106,121 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthProvider = exports.authContext = void 0;
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-exports.authContext = react_1.createContext({});
-exports.AuthProvider = function (_a) {
-    var children = _a.children;
-    var _b = react_1.useState(false), isAuth = _b[0], setIsAuth = _b[1];
-    return (react_1.default.createElement(exports.authContext.Provider, { value: { isAuth: isAuth, setIsAuth: setIsAuth } }, children));
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.useAuth = void 0;
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var actions_1 = __webpack_require__(/*! ../store/auth/actions */ "./resources/js/store/auth/actions.ts");
+var reducer_1 = __importStar(__webpack_require__(/*! ../store/auth/reducer */ "./resources/js/store/auth/reducer.ts"));
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+exports.useAuth = function () {
+    var _a = react_1.useReducer(reducer_1.default, reducer_1.initialState), state = _a[0], dispatch = _a[1];
+    var login = react_1.useCallback(function (email, password) {
+        dispatch(actions_1.authStart());
+        // ログイン時にCSRFトークンを初期化
+        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
+            axios_1.default.post('/api/login', {
+                email: email,
+                password: password,
+            }).then(function (res) {
+                console.log(res);
+                dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+            }).catch(function (err) {
+                dispatch(actions_1.authFail(err));
+                console.log(err.response);
+            });
+        });
+    }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
+    return { state: state, login: login };
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/store/auth/actions.ts":
+/*!********************************************!*\
+  !*** ./resources/js/store/auth/actions.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authFail = exports.authSuccess = exports.authStart = exports.SET_AUTH_REDIRECT_PATH = exports.LOGOUT = exports.AUTH_FAIL = exports.AUTH_SUCCESS = exports.AUTH_START = void 0;
+exports.AUTH_START = 'AUTH_START';
+exports.AUTH_SUCCESS = 'AUTH_SUCCESS';
+exports.AUTH_FAIL = 'AUTH_FAIL';
+exports.LOGOUT = 'LOGOUT';
+exports.SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+exports.authStart = function () {
+    return {
+        type: exports.AUTH_START,
+    };
+};
+exports.authSuccess = function (id, email) {
+    return {
+        type: exports.AUTH_SUCCESS,
+        id: id,
+        email: email,
+    };
+};
+exports.authFail = function (error) {
+    return {
+        type: exports.AUTH_FAIL,
+        error: error
+    };
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/store/auth/reducer.ts":
+/*!********************************************!*\
+  !*** ./resources/js/store/auth/reducer.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.initialState = void 0;
+var actions_1 = __webpack_require__(/*! ./actions */ "./resources/js/store/auth/actions.ts");
+exports.initialState = {
+    id: "",
+    email: "",
+    error: null,
+    loading: false,
+    authRedirectPath: "/"
+};
+var reducer = function (state, action) {
+    if (state === void 0) { state = exports.initialState; }
+    switch (action.type) {
+        case actions_1.AUTH_START:
+            return __assign(__assign({}, state), { loading: true });
+        case actions_1.AUTH_SUCCESS:
+            return __assign(__assign({}, state), { id: action.id, email: action.email, error: null, loading: false });
+        case actions_1.AUTH_FAIL:
+            return __assign(__assign({}, state), { error: action.error, loading: false });
+        default:
+            return state;
+    }
+};
+exports.default = reducer;
 
 
 /***/ }),

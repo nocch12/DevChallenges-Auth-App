@@ -1,10 +1,8 @@
 import React, { FormEvent, useContext, useState } from "react";
 import {NavLink} from 'react-router-dom';
-import { authContext } from "../store/contexts/auth-context";
 import axios from 'axios';
 
 const Register: React.FC = () => {
-  const { isAuth, setIsAuth } = useContext(authContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmaition, setPasswordConfirmaition] = useState('');
