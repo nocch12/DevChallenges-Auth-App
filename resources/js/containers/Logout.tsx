@@ -1,16 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {Redirect} from 'react-router-dom';
-import axios from 'axios';
+
+import {Context} from '../store/auth/context';
 
 const Logout = () => {
-  const logout = () => {
-    axios.get('/api/logout');
-  }
+  const {logout} = useContext(Context);
 
   useEffect(() => {
     logout();
   }, [logout]);
-
 
   return <Redirect to="/login" />;
 }

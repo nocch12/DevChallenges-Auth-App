@@ -1,26 +1,18 @@
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
+
+import {useAuth} from '../store/auth/useAuth';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirmaition, setPasswordConfirmaition] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const register = (e: FormEvent): void => {
+  const {state, register} = useAuth();
+
+  const registerHandler = (e: FormEvent): void => {
     e.preventDefault();
-    // ログイン時にCSRFトークンを初期化
-    axios.get("/sanctum/csrf-cookie").then(response => {
-      axios.post('/api/register', {
-        email,
-        password,
-        password_confirmation: passwordConfirmaition
-      }).then(res => {
-        console.log(res);
-      }).catch(err => {
-        console.log(err.response);
-      })
-    });
+    register(email, password, passwordConfirmation);
   }
 
   return (
@@ -53,7 +45,7 @@ const Register: React.FC = () => {
             </section>
             {/* form */}
             <section className="mb-8">
-              <form onSubmit={register}>
+              <form onSubmit={registerHandler}>
                 <div className="mb-4">
                   <input
                     className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
@@ -77,8 +69,8 @@ const Register: React.FC = () => {
                     className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     type="password"
                     placeholder="Password Repeat"
-                    value={passwordConfirmaition}
-                    onChange={(e) => setPasswordConfirmaition(e.target.value)}
+                    value={passwordConfirmation}
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
                   />
                 </div>
                 <div>

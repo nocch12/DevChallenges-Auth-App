@@ -1,3 +1,5 @@
+import {useAuth} from './store/auth/useAuth'
+
 export interface IAuthProviderProps {
   children?: any;
 }
@@ -5,9 +7,13 @@ export interface IAuthProviderProps {
 export interface IAuthState {
   id: string;
   email: string;
+  image: string;
+  biography: string;
+  phone: string;
   error: any;
   loading: boolean;
   authRedirectPath: string;
+  initChecking: boolean;
 }
 
 export interface Iprofile {
@@ -15,3 +21,5 @@ export interface Iprofile {
   name?: string;
   age?: string;
 }
+
+export type ContextType = ReturnType<typeof useAuth>

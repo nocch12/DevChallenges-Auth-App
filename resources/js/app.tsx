@@ -4,30 +4,50 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-
-import React from 'react';
-import ReactDOM from "react-dom";
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import Login from './containers/Login';
-import Logout from './containers/Logout';
-import Register from './containers/Register';
+import React, { useEffect, useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Login from "./containers/Login";
+import Logout from "./containers/Logout";
+import Register from "./containers/Register";
+import User from "./containers/User";
+import Loader from "./components/Loader";
+import { Context } from "./store/auth/context";
 
 const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" exact component={Register} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/logout" component={Logout} />
-      </Switch>
-    </BrowserRouter>
+  const { state, authCheck } = useContext(Context);
+
+  useEffect(() => {
+    authCheck();
+  }, [authCheck]);
+
+  let loader = null;
+  if (state.initChecking) loader = <Loader />;
+
+  let routes = (
+    <Switch>
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+      <Route path="/" render={() => <Redirect to="/register" />} />
+    </Switch>
   );
-}
 
-if (document.getElementById("app")) {
-  ReactDOM.render(<App />, document.getElementById("app"));
-}
+  if (state.id) {
+    routes = (
+      <Switch>
+        <Route path="/user" component={User} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/" render={() => <Redirect to="/user" />} />
+      </Switch>
+    );
+  }
+  return (
+    <React.Fragment>
+      {loader}
+      {routes}
+    </React.Fragment>
+  );
+};
 
+export default App;

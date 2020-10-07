@@ -69777,9 +69777,9 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/app.tsx":
+/***/ "./resources/js/App.tsx":
 /*!******************************!*\
-  !*** ./resources/js/app.tsx ***!
+  !*** ./resources/js/App.tsx ***!
   \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -69791,30 +69791,61 @@ module.exports = function(module) {
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var Login_1 = __importDefault(__webpack_require__(/*! ./containers/Login */ "./resources/js/containers/Login.tsx"));
 var Logout_1 = __importDefault(__webpack_require__(/*! ./containers/Logout */ "./resources/js/containers/Logout.tsx"));
 var Register_1 = __importDefault(__webpack_require__(/*! ./containers/Register */ "./resources/js/containers/Register.tsx"));
+var User_1 = __importDefault(__webpack_require__(/*! ./containers/User */ "./resources/js/containers/User.tsx"));
+var Loader_1 = __importDefault(__webpack_require__(/*! ./components/Loader */ "./resources/js/components/Loader.tsx"));
 var context_1 = __webpack_require__(/*! ./store/auth/context */ "./resources/js/store/auth/context.tsx");
 var App = function () {
-    return (react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
-        react_1.default.createElement(context_1.Provider, null,
-            react_1.default.createElement(react_router_dom_1.Switch, null,
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/", exact: true, component: Register_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/register", component: Register_1.default }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/logout", component: Logout_1.default })))));
+    var _a = react_1.useContext(context_1.Context), state = _a.state, authCheck = _a.authCheck;
+    react_1.useEffect(function () {
+        authCheck();
+    }, [authCheck]);
+    var loader = null;
+    if (state.initChecking)
+        loader = react_1.default.createElement(Loader_1.default, null);
+    var routes = (react_1.default.createElement(react_router_dom_1.Switch, null,
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/login", component: Login_1.default }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/register", component: Register_1.default }),
+        react_1.default.createElement(react_router_dom_1.Route, { path: "/", render: function () { return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/register" }); } })));
+    if (state.id) {
+        routes = (react_1.default.createElement(react_router_dom_1.Switch, null,
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/user", component: User_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/logout", component: Logout_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/", render: function () { return react_1.default.createElement(react_router_dom_1.Redirect, { to: "/user" }); } })));
+    }
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        loader,
+        routes));
 };
-if (document.getElementById("app")) {
-    react_dom_1.default.render(react_1.default.createElement(App, null), document.getElementById("app"));
-}
+exports.default = App;
 
 
 /***/ }),
@@ -69864,6 +69895,28 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/Loader.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/components/Loader.tsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Loader = function () {
+    return (react_1.default.createElement("div", null, "Loading"));
+};
+exports.default = Loader;
+
+
+/***/ }),
+
 /***/ "./resources/js/containers/Login.tsx":
 /*!*******************************************!*\
   !*** ./resources/js/containers/Login.tsx ***!
@@ -69906,9 +69959,7 @@ var Login = function () {
     };
     console.log(state);
     return (react_1.default.createElement("div", null,
-        JSON.stringify(state),
         react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
-            react_1.default.createElement(react_router_dom_1.NavLink, { to: "/logout" }, "logout"),
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
                 react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
                     react_1.default.createElement("section", { className: "mb-8" },
@@ -69966,17 +70017,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+var context_1 = __webpack_require__(/*! ../store/auth/context */ "./resources/js/store/auth/context.tsx");
 var Logout = function () {
-    var logout = function () {
-        axios_1.default.get('/api/logout');
-    };
+    var logout = react_1.useContext(context_1.Context).logout;
     react_1.useEffect(function () {
         logout();
     }, [logout]);
@@ -70068,6 +70114,31 @@ exports.default = Register;
 
 /***/ }),
 
+/***/ "./resources/js/containers/User.tsx":
+/*!******************************************!*\
+  !*** ./resources/js/containers/User.tsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var User = function () {
+    return (react_1.default.createElement("div", null,
+        "user",
+        react_1.default.createElement(react_router_dom_1.NavLink, { to: "/logout" }, "logout")));
+};
+exports.default = User;
+
+
+/***/ }),
+
 /***/ "./resources/js/endpoints.ts":
 /*!***********************************!*\
   !*** ./resources/js/endpoints.ts ***!
@@ -70078,10 +70149,47 @@ exports.default = Register;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.REGISTER_URL = exports.LOGIN_URL = exports.GET_USER = void 0;
-exports.GET_USER = '/api/user';
+exports.LOGOUT_URL = exports.REGISTER_URL = exports.LOGIN_URL = exports.GET_USER_URL = void 0;
+exports.GET_USER_URL = '/api/user';
 exports.LOGIN_URL = '/api/login';
 exports.REGISTER_URL = '/api/register';
+exports.LOGOUT_URL = '/api/logout';
+
+
+/***/ }),
+
+/***/ "./resources/js/index.tsx":
+/*!********************************!*\
+  !*** ./resources/js/index.tsx ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes React and other helpers. It's a great starting point while
+ * building robust, powerful web applications using React + Laravel.
+ */
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var context_1 = __webpack_require__(/*! ./store/auth/context */ "./resources/js/store/auth/context.tsx");
+var App_1 = __importDefault(__webpack_require__(/*! ./App */ "./resources/js/App.tsx"));
+var Index = function () {
+    return (react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
+        react_1.default.createElement(context_1.Provider, null,
+            react_1.default.createElement(App_1.default, null))));
+};
+if (document.getElementById("app")) {
+    react_dom_1.default.render(react_1.default.createElement(Index, null), document.getElementById("app"));
+}
 
 
 /***/ }),
@@ -70096,7 +70204,7 @@ exports.REGISTER_URL = '/api/register';
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authFail = exports.authSuccess = exports.authStart = exports.SET_AUTH_REDIRECT_PATH = exports.LOGOUT = exports.AUTH_FAIL = exports.AUTH_SUCCESS = exports.AUTH_START = void 0;
+exports.authLogout = exports.authFail = exports.authSuccess = exports.authStart = exports.SET_AUTH_REDIRECT_PATH = exports.LOGOUT = exports.AUTH_FAIL = exports.AUTH_SUCCESS = exports.AUTH_START = void 0;
 exports.AUTH_START = 'AUTH_START';
 exports.AUTH_SUCCESS = 'AUTH_SUCCESS';
 exports.AUTH_FAIL = 'AUTH_FAIL';
@@ -70117,7 +70225,12 @@ exports.authSuccess = function (id, email) {
 exports.authFail = function (error) {
     return {
         type: exports.AUTH_FAIL,
-        error: error
+        error: error,
+    };
+};
+exports.authLogout = function () {
+    return {
+        type: exports.LOGOUT,
     };
 };
 
@@ -70153,23 +70266,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Provider = exports.Context = exports.initialState = void 0;
+exports.Provider = exports.Context = void 0;
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var useAuth_1 = __webpack_require__(/*! ./useAuth */ "./resources/js/store/auth/useAuth.ts");
-exports.initialState = {
-    id: "",
-    email: "",
-    error: null,
-    loading: false,
-    authRedirectPath: "/"
-};
 exports.Context = react_1.default.createContext({});
 exports.Provider = function (_a) {
     var children = _a.children;
-    var _b = useAuth_1.useAuth(), state = _b.state, login = _b.login, register = _b.register, authCheck = _b.authCheck;
+    var _b = useAuth_1.useAuth(), state = _b.state, login = _b.login, logout = _b.logout, register = _b.register, authCheck = _b.authCheck;
     var ContextValue = react_1.useMemo(function () {
-        return { state: state, login: login, register: register, authCheck: authCheck };
-    }, [state, login, register, authCheck]);
+        return { state: state, login: login, logout: logout, register: register, authCheck: authCheck };
+    }, [state, login, logout, register, authCheck]);
     return react_1.default.createElement(exports.Context.Provider, { value: ContextValue }, children);
 };
 
@@ -70202,18 +70308,24 @@ var actions_1 = __webpack_require__(/*! ./actions */ "./resources/js/store/auth/
 exports.initialState = {
     id: "",
     email: "",
+    image: "",
+    biography: "",
+    phone: "",
     error: null,
     loading: false,
     authRedirectPath: "/",
+    initChecking: true
 };
 var reducer = function (state, action) {
     switch (action.type) {
         case actions_1.AUTH_START:
             return __assign(__assign({}, state), { loading: true });
         case actions_1.AUTH_SUCCESS:
-            return __assign(__assign({}, state), { id: action.id, email: action.email, error: null, loading: false });
+            return __assign(__assign({}, state), { id: action.id, email: action.email, error: null, loading: false, initChecking: false });
         case actions_1.AUTH_FAIL:
-            return __assign(__assign({}, state), { error: action.error, loading: false });
+            return __assign(__assign({}, state), { error: action.error, loading: false, initChecking: false });
+        case actions_1.LOGOUT:
+            return __assign(__assign({}, exports.initialState), { initChecking: false });
         default:
             return state;
     }
@@ -70267,12 +70379,10 @@ exports.useAuth = function () {
     var authCheck = react_1.useCallback(function () {
         // ログイン時にCSRFトークンを初期化
         axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
-            axios_1.default.get(endpoints_1.GET_USER).then(function (res) {
-                console.log(res);
+            axios_1.default.get(endpoints_1.GET_USER_URL).then(function (res) {
                 dispatch(actions_1.authSuccess(res.data.id, res.data.email));
             }).catch(function (err) {
                 dispatch(actions_1.authFail(err));
-                console.log(err.response);
             });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
@@ -70284,14 +70394,16 @@ exports.useAuth = function () {
                 email: email,
                 password: password,
             }).then(function (res) {
-                console.log(res);
                 dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
             }).catch(function (err) {
                 dispatch(actions_1.authFail(err));
-                console.log(err.response);
             });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
+    var logout = react_1.useCallback(function () {
+        // ログイン時にCSRFトークンを初期化
+        axios_1.default.get(endpoints_1.LOGOUT_URL).finally(function () { dispatch(actions_1.authLogout()); });
+    }, [dispatch, actions_1.authLogout]);
     var register = react_1.useCallback(function (email, password, passwordConfirmation) {
         dispatch(actions_1.authStart());
         // ログイン時にCSRFトークンを初期化
@@ -70301,15 +70413,13 @@ exports.useAuth = function () {
                 password: password,
                 password_confirmation: passwordConfirmation,
             }).then(function (res) {
-                console.log(res);
                 dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
             }).catch(function (err) {
                 dispatch(actions_1.authFail(err));
-                console.log(err.response);
             });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
-    return { state: state, login: login, register: register, authCheck: authCheck };
+    return { state: state, login: login, logout: logout, register: register, authCheck: authCheck };
 };
 
 
@@ -70327,13 +70437,13 @@ exports.useAuth = function () {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************!*\
-  !*** multi ./resources/js/app.tsx ./resources/sass/app.scss ***!
-  \**************************************************************/
+/*!****************************************************************!*\
+  !*** multi ./resources/js/index.tsx ./resources/sass/app.scss ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\js\app.tsx */"./resources/js/app.tsx");
+__webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\js\index.tsx */"./resources/js/index.tsx");
 module.exports = __webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

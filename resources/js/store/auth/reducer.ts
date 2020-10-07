@@ -1,16 +1,20 @@
 import React from "react";
-import { IAuthState } from "../../interfaces";
-import { ActionType, AUTH_START, AUTH_SUCCESS, AUTH_FAIL } from "./actions";
+import { IAuthState } from "../../types";
+import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT } from "./actions";
 
 export const initialState: IAuthState = {
   id: "",
   email: "",
+  image: "",
+  biography: "",
+  phone: "",
   error: null,
   loading: false,
-  authRedirectPath: "/"
+  authRedirectPath: "/",
+  initChecking: true
 };
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state: IAuthState, action: any): IAuthState => {
   switch (action.type) {
     case AUTH_START:
       return { ...state, loading: true };
@@ -20,10 +24,21 @@ const reducer = (state = initialState, action: any) => {
         id: action.id,
         email: action.email,
         error: null,
-        loading: false
+        loading: false,
+        initChecking: false
       };
     case AUTH_FAIL:
-      return { ...state, error: action.error, loading: false };
+      return {
+        ...state,
+        error: action.error,
+        loading: false,
+        initChecking: false
+      };
+    case LOGOUT:
+      return {
+        ...initialState,
+        initChecking: false
+      };
 
     default:
       return state;

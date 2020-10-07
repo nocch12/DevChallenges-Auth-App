@@ -9,6 +9,7 @@ export type ActionType = (
   | ReturnType<typeof authStart>
   | ReturnType<typeof authSuccess>
   | ReturnType<typeof authFail>
+  | ReturnType<typeof authLogout>
 )
 
 export const authStart = () => {
@@ -28,6 +29,12 @@ export const authSuccess = (id: string, email: string) => {
 export const authFail = (error: any) => {
   return {
     type: AUTH_FAIL,
-    error
+    error,
+  }
+}
+
+export const authLogout = () => {
+  return {
+    type: LOGOUT,
   }
 }
