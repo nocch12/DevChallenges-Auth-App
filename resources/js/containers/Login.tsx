@@ -3,6 +3,12 @@ import {NavLink} from 'react-router-dom';
 
 import {Context} from '../store/auth/context';
 
+import Button from '../components/Button';
+import Input from '../components/Input';
+import SocialIcons from '../components/SocialIcons';
+
+const logo = require('../../icons/google-icon.svg') as string;
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,8 +18,10 @@ const Login: React.FC = () => {
     e.preventDefault();
     login(email, password);
   }
-  console.log(state);
 
+  const socialLoginHandler = (type: string) => {
+    console.log(type);
+  }
 
   return (
     <div>
@@ -44,18 +52,17 @@ const Login: React.FC = () => {
                   />
                 </div>
                 <div className="mb-6">
-                  <input
-                    className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                  <Input
                     type="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: any) => setPassword(e.target.value)}
                   />
                 </div>
                 <div>
-                  <button type="submit" className="block w-full bg-myblue-100 hover:bg-myblue-dark text-white py-2 px-4 rounded-lg">
+                  <Button type="submit">
                     Login
-                  </button>
+                  </Button>
                 </div>
               </form>
             </section>
@@ -67,7 +74,7 @@ const Login: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-
+                <SocialIcons clicked={socialLoginHandler} />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">

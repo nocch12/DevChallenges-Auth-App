@@ -3,6 +3,9 @@ import {NavLink} from 'react-router-dom';
 
 import {useAuth} from '../store/auth/useAuth';
 
+import Button from '../components/Button';
+import SocialIcons from '../components/SocialIcons';
+
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +17,11 @@ const Register: React.FC = () => {
     e.preventDefault();
     register(email, password, passwordConfirmation);
   }
+
+  const socialRegisterHandler = (type: string) => {
+    console.log(type);
+  }
+
 
   return (
     <div>
@@ -74,9 +82,9 @@ const Register: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <button type="submit" className="block w-full bg-myblue-100 hover:bg-myblue-dark text-white py-2 px-4 rounded-lg">
+                  <Button type="submit">
                     Start coding now
-                  </button>
+                  </Button>
                 </div>
               </form>
             </section>
@@ -88,7 +96,7 @@ const Register: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-
+                <SocialIcons clicked={socialRegisterHandler} />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">

@@ -69777,6 +69777,50 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/icons/facebook-icon.svg":
+/*!*******************************************!*\
+  !*** ./resources/icons/facebook-icon.svg ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/facebook-icon.svg?a72763b75fd6474e212bcc3b823e8d97";
+
+/***/ }),
+
+/***/ "./resources/icons/github-icon.svg":
+/*!*****************************************!*\
+  !*** ./resources/icons/github-icon.svg ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/github-icon.svg?9429883aafbf5f75098ef5494ef5f81c";
+
+/***/ }),
+
+/***/ "./resources/icons/google-icon.svg":
+/*!*****************************************!*\
+  !*** ./resources/icons/google-icon.svg ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/google-icon.svg?f1e60caea46f3a94d156d67c7d6c0b0e";
+
+/***/ }),
+
+/***/ "./resources/icons/twitter-icon.svg":
+/*!******************************************!*\
+  !*** ./resources/icons/twitter-icon.svg ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/twitter-icon.svg?b2baa65006b5074bbe142f0dfbf24734";
+
+/***/ }),
+
 /***/ "./resources/js/App.tsx":
 /*!******************************!*\
   !*** ./resources/js/App.tsx ***!
@@ -69895,6 +69939,72 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/components/Button.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/components/Button.tsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Button = function (props) {
+    return (react_1.default.createElement("button", __assign({ className: "block w-full bg-myblue-100 hover:bg-myblue-dark text-white py-2 px-4 rounded-lg" }, props), props.children));
+};
+exports.default = Button;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Input.tsx":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Input.tsx ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Input = function (props) {
+    return (react_1.default.createElement("input", __assign({ className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none" }, props)));
+};
+exports.default = Input;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Loader.tsx":
 /*!********************************************!*\
   !*** ./resources/js/components/Loader.tsx ***!
@@ -69913,6 +70023,68 @@ var Loader = function () {
     return (react_1.default.createElement("div", null, "Loading"));
 };
 exports.default = Loader;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/SocialButton.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/SocialButton.tsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ICONS = {
+    google: __webpack_require__(/*! ../../icons/google-icon.svg */ "./resources/icons/google-icon.svg"),
+    facebook: __webpack_require__(/*! ../../icons/facebook-icon.svg */ "./resources/icons/facebook-icon.svg"),
+    github: __webpack_require__(/*! ../../icons/github-icon.svg */ "./resources/icons/github-icon.svg"),
+    twitter: __webpack_require__(/*! ../../icons/twitter-icon.svg */ "./resources/icons/twitter-icon.svg"),
+};
+var SocialIcon = function (_a) {
+    var type = _a.type, clicked = _a.clicked;
+    var Logo = ICONS[type];
+    return (react_1.default.createElement("button", { onClick: clicked, type: "button", className: "w-10 h-10 bg-transparent mouse rounded-full border border-mygray-100 hover:bg-mygray-200 flex justify-center items-center" },
+        react_1.default.createElement("img", { src: Logo, alt: type })));
+};
+exports.default = SocialIcon;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/SocialIcons.tsx":
+/*!*************************************************!*\
+  !*** ./resources/js/components/SocialIcons.tsx ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var SocialButton_1 = __importDefault(__webpack_require__(/*! ./SocialButton */ "./resources/js/components/SocialButton.tsx"));
+var SocialIcons = function (_a) {
+    var clicked = _a.clicked;
+    var onClick = function (type) {
+        clicked(type);
+    };
+    return (react_1.default.createElement("div", { className: "flex justify-between px-20" },
+        react_1.default.createElement(SocialButton_1.default, { type: "google", clicked: function () { return onClick('google'); } }),
+        react_1.default.createElement(SocialButton_1.default, { type: "facebook", clicked: function () { return onClick('facebook'); } }),
+        react_1.default.createElement(SocialButton_1.default, { type: "twitter", clicked: function () { return onClick('twitter'); } }),
+        react_1.default.createElement(SocialButton_1.default, { type: "github", clicked: function () { return onClick('github'); } })));
+};
+exports.default = SocialIcons;
 
 
 /***/ }),
@@ -69945,10 +70117,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var context_1 = __webpack_require__(/*! ../store/auth/context */ "./resources/js/store/auth/context.tsx");
+var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
+var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
+var SocialIcons_1 = __importDefault(__webpack_require__(/*! ../components/SocialIcons */ "./resources/js/components/SocialIcons.tsx"));
+var logo = __webpack_require__(/*! ../../icons/google-icon.svg */ "./resources/icons/google-icon.svg");
 var Login = function () {
     var _a = react_1.useState(''), email = _a[0], setEmail = _a[1];
     var _b = react_1.useState(''), password = _b[0], setPassword = _b[1];
@@ -69957,7 +70136,9 @@ var Login = function () {
         e.preventDefault();
         login(email, password);
     };
-    console.log(state);
+    var socialLoginHandler = function (type) {
+        console.log(type);
+    };
     return (react_1.default.createElement("div", null,
         react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
@@ -69972,13 +70153,14 @@ var Login = function () {
                             react_1.default.createElement("div", { className: "mb-4" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
                             react_1.default.createElement("div", { className: "mb-6" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password", value: password, onChange: function (e) { return setPassword(e.target.value); } })),
+                                react_1.default.createElement(Input_1.default, { type: "password", placeholder: "Password", value: password, onChange: function (e) { return setPassword(e.target.value); } })),
                             react_1.default.createElement("div", null,
-                                react_1.default.createElement("button", { type: "submit", className: "block w-full bg-myblue-100 hover:bg-myblue-dark text-white py-2 px-4 rounded-lg" }, "Login")))),
+                                react_1.default.createElement(Button_1.default, { type: "submit" }, "Login")))),
                     react_1.default.createElement("section", null,
                         react_1.default.createElement("div", { className: "mb-6 text-center text-mygray-200" },
                             react_1.default.createElement("p", null, "or continue with these social profile")),
-                        react_1.default.createElement("div", { className: "mb-6" }),
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement(SocialIcons_1.default, { clicked: socialLoginHandler })),
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("p", { className: "text-center text-mygray-200" },
                                 react_1.default.createElement("span", null, "Don\u2019t have an account yet?"),
@@ -70061,10 +70243,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
+var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
+var SocialIcons_1 = __importDefault(__webpack_require__(/*! ../components/SocialIcons */ "./resources/js/components/SocialIcons.tsx"));
 var Register = function () {
     var _a = react_1.useState(''), email = _a[0], setEmail = _a[1];
     var _b = react_1.useState(''), password = _b[0], setPassword = _b[1];
@@ -70073,6 +70260,9 @@ var Register = function () {
     var registerHandler = function (e) {
         e.preventDefault();
         register(email, password, passwordConfirmation);
+    };
+    var socialRegisterHandler = function (type) {
+        console.log(type);
     };
     return (react_1.default.createElement("div", null,
         react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
@@ -70099,11 +70289,12 @@ var Register = function () {
                             react_1.default.createElement("div", { className: "mb-6" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password Repeat", value: passwordConfirmation, onChange: function (e) { return setPasswordConfirmation(e.target.value); } })),
                             react_1.default.createElement("div", null,
-                                react_1.default.createElement("button", { type: "submit", className: "block w-full bg-myblue-100 hover:bg-myblue-dark text-white py-2 px-4 rounded-lg" }, "Start coding now")))),
+                                react_1.default.createElement(Button_1.default, { type: "submit" }, "Start coding now")))),
                     react_1.default.createElement("section", null,
                         react_1.default.createElement("div", { className: "mb-6 text-center text-mygray-200" },
                             react_1.default.createElement("p", null, "or continue with these social profile")),
-                        react_1.default.createElement("div", { className: "mb-6" }),
+                        react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement(SocialIcons_1.default, { clicked: socialRegisterHandler })),
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("p", { className: "text-center text-mygray-200" },
                                 react_1.default.createElement("span", null, "Adready a member?"),

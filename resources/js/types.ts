@@ -23,3 +23,5 @@ export interface Iprofile {
 }
 
 export type ContextType = ReturnType<typeof useAuth>
+
+export type SocialName = 'google' | 'github' | 'twitter' | 'facebook';
