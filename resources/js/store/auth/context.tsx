@@ -1,16 +1,11 @@
-import React, {useReducer, useMemo} from "react";
-import { IAuthState, ContextType } from "../../types";
-import {useAuth} from './useAuth';
+import React, {useReducer} from "react";
+import { ContextType } from "../../types";
+import reducer, { initialState } from "./reducer";
 
 export const Context = React.createContext({} as ContextType);
 
 export const Provider: React.FC<{}> = ({ children }) => {
-  const {state, login, logout, register, authCheck} = useAuth();
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const ContextValue = useMemo(() => {
-    return {state, login, logout, register, authCheck}
-  }, [state, login, logout, register, authCheck]);
-
-
-  return <Context.Provider value={ContextValue}>{children}</Context.Provider>;
+  return <Context.Provider value={{state, dispatch}}>{children}</Context.Provider>;
 };

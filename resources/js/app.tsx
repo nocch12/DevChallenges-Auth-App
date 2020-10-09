@@ -6,21 +6,23 @@
 
 require("./bootstrap");
 
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { useAuth } from "./store/auth/useAuth"
 import Login from "./containers/Login";
 import Logout from "./containers/Logout";
 import Register from "./containers/Register";
 import User from "./containers/User";
 import Loader from "./components/Loader";
-import { Context } from "./store/auth/context";
+import Header from "./components/Header";
 
 const App: React.FC = () => {
-  const { state, authCheck } = useContext(Context);
+  const { state, authCheck } = useAuth();
 
   useEffect(() => {
     authCheck();
   }, [authCheck]);
+
 
   let loader = null;
   if (state.initChecking) loader = <Loader />;
@@ -29,21 +31,28 @@ const App: React.FC = () => {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/" render={() => <Redirect to="/register" />} />
+      <Redirect to="/register" />
     </Switch>
   );
 
   if (state.id) {
     routes = (
-      <Switch>
-        <Route path="/user" component={User} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/" render={() => <Redirect to="/user" />} />
-      </Switch>
+      <React.Fragment>
+        <Header />
+        <Switch>
+          <Route path="/user" component={User} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={User} />
+          <Redirect to="/user" />
+        </Switch>
+      </React.Fragment>
     );
   }
+
+  console.log(state);
   return (
     <React.Fragment>
+      {JSON.stringify(state)}
       {loader}
       {routes}
     </React.Fragment>

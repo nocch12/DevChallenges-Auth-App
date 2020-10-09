@@ -14,6 +14,7 @@ import Logout from "./containers/Logout";
 import Register from "./containers/Register";
 import User from "./containers/User";
 import Loader from "./components/Loader";
+import Header from "./components/Header";
 
 const App: React.FC = () => {
   const { state, authCheck } = useAuth();
@@ -22,6 +23,7 @@ const App: React.FC = () => {
     authCheck();
   }, [authCheck]);
 
+
   let loader = null;
   if (state.initChecking) loader = <Loader />;
 
@@ -29,19 +31,25 @@ const App: React.FC = () => {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/" render={() => <Redirect to="/register" />} />
+      <Redirect to="/register" />
     </Switch>
   );
 
-  // if (state.id) {
-  //   routes = (
-  //     <Switch>
-  //       <Route path="/user" component={User} />
-  //       <Route path="/logout" component={Logout} />
-  //       <Route path="/" render={() => <Redirect to="/user" />} />
-  //     </Switch>
-  //   );
-  // }
+  if (state.id) {
+    routes = (
+      <React.Fragment>
+        <Header />
+        <Switch>
+          <Route path="/user" component={User} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/" exact component={User} />
+          <Redirect to="/user" />
+        </Switch>
+      </React.Fragment>
+    );
+  }
+
+  console.log(state);
   return (
     <React.Fragment>
       {JSON.stringify(state)}

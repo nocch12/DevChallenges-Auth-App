@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\OAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/oauth/{provider}', [OAuthController::class, 'redirectToProvider']);
+Route::get('/oauth/{provider}/callback', [OAuthController::class, 'handleProviderCallback']);
+
 Route::get('{any}', function () {
     return view('app');
 })->where('any', '.*');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

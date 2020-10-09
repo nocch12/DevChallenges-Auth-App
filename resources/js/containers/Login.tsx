@@ -18,18 +18,6 @@ const Login: React.FC = () => {
     login(email, password);
   }
 
-  const socialLoginHandler = (type: string) => {
-    // const w: any = window.open('/oauth/google', 'login', 'width=300px,height=300px');
-    // setInterval(() => {
-    //   if(w && w.opener && w.closed) {
-    //     console.log(w);
-    //     // console.log(w.opener);
-    //     // console.log(w.closed);
-    //     // console.log(w);
-    //   }
-    // }, 1000)
-  }
-
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -82,7 +70,7 @@ const Login: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <SocialIcons clicked={socialLoginHandler} />
+                <SocialIcons />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">
