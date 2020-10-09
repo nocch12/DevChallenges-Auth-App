@@ -10,16 +10,16 @@ const ICONS = {
 
 type PropType = {
   type: SocialName;
+  clicked?: () => void
 }
 
-const SocialIcon: React.FC<PropType> = ({type}) => {
+const SocialIcon: React.FC<PropType> = ({type, clicked}) => {
   const Logo = ICONS[type];
-  const href = `/oauth/${type}`;
 
   return (
-    <a href={href} className="w-10 h-10 bg-transparent mouse rounded-full border border-mygray-100 hover:bg-mygray-200 flex justify-center items-center">
+    <button onClick={clicked} type="button" className="w-10 h-10 bg-transparent mouse rounded-full border border-mygray-100 hover:bg-mygray-200 flex justify-center items-center">
       <img src={Logo} alt={type} />
-    </a>
+    </button>
   );
 }
 

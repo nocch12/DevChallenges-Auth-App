@@ -18,6 +18,11 @@ const Register: React.FC = () => {
     register(email, password, passwordConfirmation);
   }
 
+  const socialRegisterHandler = (type: string) => {
+    console.log(type);
+  }
+
+
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -91,7 +96,7 @@ const Register: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <SocialIcons />
+                <SocialIcons clicked={socialRegisterHandler} />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">

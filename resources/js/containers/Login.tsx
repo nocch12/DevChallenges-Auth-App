@@ -18,6 +18,39 @@ const Login: React.FC = () => {
     login(email, password);
   }
 
+  const socialLoginHandler = async (type: string) => {
+    const w: any = window.open('/oauth/google', 'login', 'width=500px,height=600px');
+
+    let closed = false;
+    const windowWatcher = () => {
+      setTimeout(() => {
+        try {
+          console.log(w);
+
+          if(w && w.opener && w.closed) {
+            console.log('closed');
+          } else {
+            console.log("else");
+
+            windowWatcher();
+          }
+        } catch (error) {
+          console.log(error);
+          windowWatcher();
+        }
+      }, 1000);
+    }
+    windowWatcher();
+    // setInterval(() => {
+    //   if(w && w.opener && w.closed) {
+    //     console.log(w);
+    //     // console.log(w.opener);
+    //     // console.log(w.closed);
+    //     // console.log(w);
+    //   }
+    // }, 1000)
+  }
+
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -70,7 +103,7 @@ const Login: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <SocialIcons />
+                <SocialIcons clicked={socialLoginHandler} />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">
