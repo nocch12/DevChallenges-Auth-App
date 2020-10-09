@@ -6,56 +6,32 @@
 
 require("./bootstrap");
 
-import React, { useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { useAuth } from "./store/auth/useAuth"
+import React from "react";
+import { Switch, BrowserRouter } from "react-router-dom";
+import {useAuth} from './store/auth/useAuth'
+import AuthRoute from './routes/AuthRoute';
+import GuestRoute from './routes/GuestRoute';
+
+import Layout from './containers/Layout'
 import Login from "./containers/Login";
 import Logout from "./containers/Logout";
 import Register from "./containers/Register";
 import User from "./containers/User";
-import Loader from "./components/Loader";
-import Header from "./components/Header";
 
 const App: React.FC = () => {
-  const { state, authCheck } = useAuth();
+  const {state} = useAuth();
 
-  useEffect(() => {
-    authCheck();
-  }, [authCheck]);
-
-
-  let loader = null;
-  if (state.initChecking) loader = <Loader />;
-
-  let routes = (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-      <Redirect to="/register" />
-    </Switch>
-  );
-
-  if (state.id) {
-    routes = (
-      <React.Fragment>
-        <Header />
-        <Switch>
-          <Route path="/user" component={User} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={User} />
-          <Redirect to="/user" />
-        </Switch>
-      </React.Fragment>
-    );
-  }
-
-  console.log(state);
   return (
-    <React.Fragment>
-      {JSON.stringify(state)}
-      {loader}
-      {routes}
-    </React.Fragment>
+    <BrowserRouter>
+      <Layout>
+        <Switch>
+          <GuestRoute path="/login" user={state} component={Login} />
+          <GuestRoute path="/register" user={state} component={Register} />
+          <AuthRoute path="/user" user={state} component={User} />
+          <AuthRoute path="/logout" user={state} component={Logout} />
+        </Switch>
+      </Layout>
+    </BrowserRouter>
   );
 };
 

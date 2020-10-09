@@ -11,7 +11,7 @@ const logo = require('../../icons/google-icon.svg') as string;
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {state, login} = useAuth();
+  const {state, login, authCheck} = useAuth();
 
   const loginHandler = (e: FormEvent): void => {
     e.preventDefault();
@@ -25,17 +25,12 @@ const Login: React.FC = () => {
     const windowWatcher = () => {
       setTimeout(() => {
         try {
-          console.log(w);
-
-          if(w && w.opener && w.closed) {
-            console.log('closed');
+          if(w.closed) {
+            authCheck();
           } else {
-            console.log("else");
-
             windowWatcher();
           }
         } catch (error) {
-          console.log(error);
           windowWatcher();
         }
       }, 1000);

@@ -46,7 +46,7 @@ class OAuthController extends Controller
             logger($e->getMessage());
         }
 
-        return redirect('/user');
+        return view('oauth_callback');
     }
 
     public function createUser($providerUser)

@@ -8,17 +8,17 @@ require("./bootstrap");
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "./store/auth/context";
+import AuthCheck from './middleware/AuthCheck';
 import App from './App';
 
 const Index: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Provider>
+    <Provider>
+      <AuthCheck>
         <App />
-      </Provider>
-    </BrowserRouter>
+      </AuthCheck>
+    </Provider>
   );
 };
 
