@@ -1,7 +1,6 @@
-import React, { FormEvent, useState, useContext } from "react";
+import React, { FormEvent, useState } from "react";
 import {NavLink} from 'react-router-dom';
-
-import {Context} from '../store/auth/context';
+import { useAuth } from "../store/auth/useAuth";
 
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -12,7 +11,7 @@ const logo = require('../../icons/google-icon.svg') as string;
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {state, login} = useContext(Context);
+  const {state, login} = useAuth();
 
   const loginHandler = (e: FormEvent): void => {
     e.preventDefault();
@@ -20,7 +19,15 @@ const Login: React.FC = () => {
   }
 
   const socialLoginHandler = (type: string) => {
-    console.log(type);
+    // const w: any = window.open('/oauth/google', 'login', 'width=300px,height=300px');
+    // setInterval(() => {
+    //   if(w && w.opener && w.closed) {
+    //     console.log(w);
+    //     // console.log(w.opener);
+    //     // console.log(w.closed);
+    //     // console.log(w);
+    //   }
+    // }, 1000)
   }
 
   return (
@@ -34,6 +41,7 @@ const Login: React.FC = () => {
                 <h2>devChallenges</h2>
               </div>
               <div className="mb-3">
+                <a href="/oauth/google">aaa</a>
                 <h3 className="text-lg font-semibold">
                   Login
                 </h3>

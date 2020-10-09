@@ -1,4 +1,5 @@
-import {useAuth} from './store/auth/useAuth'
+import React from 'react';
+import {useAuth} from './store/auth/useAuth';
 
 export interface IAuthProviderProps {
   children?: any;
@@ -22,6 +23,9 @@ export interface Iprofile {
   age?: string;
 }
 
-export type ContextType = ReturnType<typeof useAuth>
+export type ContextType = {
+  state: IAuthState;
+  dispatch: React.Dispatch<any>;
+}
 
 export type SocialName = 'google' | 'github' | 'twitter' | 'facebook';
