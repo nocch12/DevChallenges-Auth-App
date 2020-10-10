@@ -18,10 +18,14 @@ export const useAuth = () => {
     axios
       .get(GET_USER_URL)
       .then(res => {
-        dispatch(authSuccess(res.data.id, res.data.email));
+        if(res.data.success) {
+          dispatch(authSuccess(res.data.id, res.data.email));
+        } else {
+          dispatch(authFail({message: 'Sorry, somthing went wrong'}));
+        }
       })
       .catch(err => {
-        dispatch(authFail(err));
+        dispatch(authFail({}));
       });
   }, [dispatch, authStart, authSuccess, authFail]);
 
@@ -37,10 +41,14 @@ export const useAuth = () => {
             password
           })
           .then(res => {
-            dispatch(authSuccess(res.data.user.id, res.data.user.email));
+            if(res.data.success) {
+              dispatch(authSuccess(res.data.user.id, res.data.user.email));
+            } else {
+              dispatch(authFail({message: 'Sorry, somthing went wrong'}));
+            }
           })
           .catch(err => {
-            dispatch(authFail(err));
+            dispatch(authFail(err.response.data.errors));
           });
       });
     },
@@ -89,10 +97,14 @@ export const useAuth = () => {
             password_confirmation: passwordConfirmation
           })
           .then(res => {
-            dispatch(authSuccess(res.data.user.id, res.data.user.email));
+            if(res.data.success) {
+              dispatch(authSuccess(res.data.user.id, res.data.user.email));
+            } else {
+              dispatch(authFail({message: 'Sorry, somthing went wrong'}));
+            }
           })
           .catch(err => {
-            dispatch(authFail(err));
+            dispatch(authFail(err.response.data.errors));
           });
       });
     },

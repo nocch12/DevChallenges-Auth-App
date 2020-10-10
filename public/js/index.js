@@ -72759,6 +72759,29 @@ exports.default = Button;
 
 /***/ }),
 
+/***/ "./resources/js/components/ErrorText.tsx":
+/*!***********************************************!*\
+  !*** ./resources/js/components/ErrorText.tsx ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ErrorText = function (_a) {
+    var children = _a.children;
+    return (react_1.default.createElement("p", { className: "text-myred" }, children));
+};
+exports.default = ErrorText;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/GlobalLoader.tsx":
 /*!**************************************************!*\
   !*** ./resources/js/components/GlobalLoader.tsx ***!
@@ -72965,6 +72988,7 @@ var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./re
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
 var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
+var ErrorText_1 = __importDefault(__webpack_require__(/*! ../components/ErrorText */ "./resources/js/components/ErrorText.tsx"));
 var Login = function () {
     var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
     var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
@@ -72975,6 +72999,15 @@ var Login = function () {
     };
     var loader = react_1.useMemo(function () {
         return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
+    }, [state]);
+    var errors = react_1.useMemo(function () {
+        var keys = Object.keys(state.errors);
+        if (!keys.length)
+            return null;
+        return keys.map(function (key) {
+            var text = state.errors[key];
+            return text ? react_1.default.createElement(ErrorText_1.default, { key: key }, text) : null;
+        });
     }, [state]);
     return (react_1.default.createElement("div", null,
         loader,
@@ -72987,6 +73020,7 @@ var Login = function () {
                         react_1.default.createElement("div", { className: "mb-3" },
                             react_1.default.createElement("h3", { className: "text-lg font-semibold" }, "Login"))),
                     react_1.default.createElement("section", { className: "mb-8" },
+                        errors,
                         react_1.default.createElement("form", { onSubmit: loginHandler },
                             react_1.default.createElement("div", { className: "mb-4" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
@@ -73121,6 +73155,8 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
 var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
+var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
+var ErrorText_1 = __importDefault(__webpack_require__(/*! ../components/ErrorText */ "./resources/js/components/ErrorText.tsx"));
 var Register = function () {
     var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
     var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
@@ -73130,7 +73166,20 @@ var Register = function () {
         e.preventDefault();
         register(email, password, passwordConfirmation);
     };
+    var loader = react_1.useMemo(function () {
+        return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
+    }, [state]);
+    var errors = react_1.useMemo(function () {
+        var keys = Object.keys(state.errors);
+        if (!keys.length)
+            return null;
+        return keys.map(function (key) {
+            var text = state.errors[key];
+            return text ? react_1.default.createElement(ErrorText_1.default, { key: key }, text) : null;
+        });
+    }, [state]);
     return (react_1.default.createElement("div", null,
+        loader,
         react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
                 react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
@@ -73147,10 +73196,11 @@ var Register = function () {
                                 react_1.default.createElement("span", { className: "sm:block" }, "projects. There are multiple paths for you to"),
                                 react_1.default.createElement("span", { className: "sm:block" }, "choose")))),
                     react_1.default.createElement("section", { className: "mb-8" },
+                        errors,
                         react_1.default.createElement("form", { onSubmit: registerHandler },
                             react_1.default.createElement("div", { className: "mb-4" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
-                            react_1.default.createElement("div", { className: "mb-6" },
+                            react_1.default.createElement("div", { className: "mb-4" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password", value: password, onChange: function (e) { return setPassword(e.target.value); } })),
                             react_1.default.createElement("div", { className: "mb-6" },
                                 react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password Repeat", value: passwordConfirmation, onChange: function (e) { return setPasswordConfirmation(e.target.value); } })),
@@ -73429,10 +73479,10 @@ exports.authSuccess = function (id, email) {
         email: email,
     };
 };
-exports.authFail = function (error) {
+exports.authFail = function (errors) {
     return {
         type: exports.AUTH_FAIL,
-        error: error,
+        errors: errors,
     };
 };
 exports.authLogout = function () {
@@ -73515,7 +73565,7 @@ exports.initialState = {
     image: "",
     biography: "",
     phone: "",
-    error: null,
+    errors: {},
     loading: false,
     authRedirectPath: "/",
     initChecking: true
@@ -73525,9 +73575,9 @@ var reducer = function (state, action) {
         case actions_1.AUTH_START:
             return __assign(__assign({}, state), { loading: true });
         case actions_1.AUTH_SUCCESS:
-            return __assign(__assign({}, state), { id: action.id, email: action.email, error: null, loading: false, initChecking: false });
+            return __assign(__assign({}, state), { id: action.id, email: action.email, errors: {}, loading: false, initChecking: false });
         case actions_1.AUTH_FAIL:
-            return __assign(__assign({}, state), { error: action.error, loading: false, initChecking: false });
+            return __assign(__assign({}, state), { errors: action.errors || {}, loading: false, initChecking: false });
         case actions_1.LOGOUT:
             return __assign(__assign({}, exports.initialState), { initChecking: false });
         default:
@@ -73565,10 +73615,15 @@ exports.useAuth = function () {
         axios_1.default
             .get(endpoints_1.GET_USER_URL)
             .then(function (res) {
-            dispatch(actions_1.authSuccess(res.data.id, res.data.email));
+            if (res.data.success) {
+                dispatch(actions_1.authSuccess(res.data.id, res.data.email));
+            }
+            else {
+                dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
+            }
         })
             .catch(function (err) {
-            dispatch(actions_1.authFail(err));
+            dispatch(actions_1.authFail({}));
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
     var login = react_1.useCallback(function (email, password) {
@@ -73581,10 +73636,15 @@ exports.useAuth = function () {
                 password: password
             })
                 .then(function (res) {
-                dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+                if (res.data.success) {
+                    dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+                }
+                else {
+                    dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
+                }
             })
                 .catch(function (err) {
-                dispatch(actions_1.authFail(err));
+                dispatch(actions_1.authFail(err.response.data.errors));
             });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
@@ -73623,10 +73683,15 @@ exports.useAuth = function () {
                 password_confirmation: passwordConfirmation
             })
                 .then(function (res) {
-                dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+                if (res.data.success) {
+                    dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+                }
+                else {
+                    dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
+                }
             })
                 .catch(function (err) {
-                dispatch(actions_1.authFail(err));
+                dispatch(actions_1.authFail(err.response.data.errors));
             });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);

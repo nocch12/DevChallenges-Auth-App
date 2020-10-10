@@ -6,6 +6,7 @@ import { useAuth } from "../store/auth/useAuth";
 import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
 import GlobalLoader from "../components/GlobalLoader";
+import ErrorText from "../components/ErrorText";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +22,16 @@ const Register: React.FC = () => {
 
   const loader = useMemo(() => {
     return state.loading ? <GlobalLoader /> : null;
+  }, [state]);
+
+  const errors = useMemo(() => {
+    const keys = Object.keys(state.errors);
+    if (!keys.length) return null;
+
+    return keys.map(key => {
+      const text = state.errors[key];
+      return text ? <ErrorText key={key}>{text}</ErrorText> : null;
+    });
   }, [state]);
 
   return (
@@ -56,6 +67,7 @@ const Register: React.FC = () => {
             </section>
             {/* form */}
             <section className="mb-8">
+              {errors}
               <form onSubmit={registerHandler}>
                 <div className="mb-4">
                   <input
@@ -66,7 +78,7 @@ const Register: React.FC = () => {
                     onChange={e => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mb-6">
+                <div className="mb-4">
                   <input
                     className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
                     type="password"

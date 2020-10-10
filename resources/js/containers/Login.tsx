@@ -6,6 +6,7 @@ import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import GlobalLoader from "../components/GlobalLoader";
+import ErrorText from "../components/ErrorText";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,16 @@ const Login: React.FC = () => {
 
   const loader = useMemo(() => {
     return state.loading ? <GlobalLoader /> : null;
+  }, [state]);
+
+  const errors = useMemo(() => {
+    const keys = Object.keys(state.errors);
+    if (!keys.length) return null;
+
+    return keys.map(key => {
+      const text = state.errors[key];
+      return text ? <ErrorText key={key}>{text}</ErrorText> : null;
+    });
   }, [state]);
 
   return (
@@ -38,6 +49,7 @@ const Login: React.FC = () => {
             </section>
             {/* form */}
             <section className="mb-8">
+              {errors}
               <form onSubmit={loginHandler}>
                 <div className="mb-4">
                   <input

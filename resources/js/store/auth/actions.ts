@@ -26,10 +26,10 @@ export const authSuccess = (id: string, email: string) => {
   }
 }
 
-export const authFail = (error: any) => {
+export const authFail = (errors: {}) => {
   return {
     type: AUTH_FAIL,
-    error,
+    errors,
   }
 }
 

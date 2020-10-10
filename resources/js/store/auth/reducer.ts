@@ -9,7 +9,7 @@ export const initialState: IAuthState = {
   image: "",
   biography: "",
   phone: "",
-  error: null,
+  errors: {},
   loading: false,
   authRedirectPath: "/",
   initChecking: true
@@ -24,14 +24,14 @@ const reducer = (state: IAuthState, action: ActionType): IAuthState => {
         ...state,
         id: action.id,
         email: action.email,
-        error: null,
+        errors: {},
         loading: false,
         initChecking: false
       };
     case AUTH_FAIL:
       return {
         ...state,
-        error: action.error,
+        errors: action.errors || {},
         loading: false,
         initChecking: false
       };
