@@ -1,5 +1,4 @@
 import React from 'react';
-import {useAuth} from './store/auth/useAuth';
 
 export interface IAuthProviderProps {
   children?: any;

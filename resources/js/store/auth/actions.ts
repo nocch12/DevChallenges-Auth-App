@@ -1,9 +1,9 @@
-export const AUTH_START = 'AUTH_START';
-export const AUTH_SUCCESS = 'AUTH_SUCCESS';
-export const AUTH_FAIL = 'AUTH_FAIL';
-export const LOGOUT = 'LOGOUT';
+export const AUTH_START = 'AUTH_START' as const;
+export const AUTH_SUCCESS = 'AUTH_SUCCESS' as const;
+export const AUTH_FAIL = 'AUTH_FAIL' as const;
+export const LOGOUT = 'LOGOUT' as const;
 
-export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH' as const;
 
 export type ActionType = (
   | ReturnType<typeof authStart>

@@ -1,5 +1,6 @@
 import React from "react";
 import { IAuthState } from "../../types";
+import { ActionType } from "./actions";
 import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT } from "./actions";
 
 export const initialState: IAuthState = {
@@ -14,7 +15,7 @@ export const initialState: IAuthState = {
   initChecking: true
 };
 
-const reducer = (state: IAuthState, action: any): IAuthState => {
+const reducer = (state: IAuthState, action: ActionType): IAuthState => {
   switch (action.type) {
     case AUTH_START:
       return { ...state, loading: true };
