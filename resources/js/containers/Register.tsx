@@ -1,25 +1,31 @@
-import React, { FormEvent, useState } from "react";
-import {NavLink} from 'react-router-dom';
+import React, { FormEvent, useState, useMemo } from "react";
+import { NavLink } from "react-router-dom";
 
-import {useAuth} from '../store/auth/useAuth';
+import { useAuth } from "../store/auth/useAuth";
 
-import Button from '../components/Button';
-import OAuthIcons from './OAuthIcons';
+import OAuthIcons from "./OAuthIcons";
+import Button from "../components/Button";
+import GlobalLoader from "../components/GlobalLoader";
 
 const Register: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const {state, register} = useAuth();
+  const { state, register } = useAuth();
 
   const registerHandler = (e: FormEvent): void => {
     e.preventDefault();
     register(email, password, passwordConfirmation);
-  }
+  };
+
+  const loader = useMemo(() => {
+    return state.loading ? <GlobalLoader /> : null;
+  }, [state]);
 
   return (
     <div>
+      {loader}
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="max-w-lg w-full mb-6">
           <div className="border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14">
@@ -33,15 +39,17 @@ const Register: React.FC = () => {
                   <span className="sm:block">
                     Join thousands of learners from
                   </span>
-                  <span className="sm:block">
-                    around the world
-                  </span>
+                  <span className="sm:block">around the world</span>
                 </h3>
               </div>
               <div>
                 <p className="text-base">
-                  <span className="sm:block">Master web development by making real-life</span>
-                  <span className="sm:block">projects. There are multiple paths for you to</span>
+                  <span className="sm:block">
+                    Master web development by making real-life
+                  </span>
+                  <span className="sm:block">
+                    projects. There are multiple paths for you to
+                  </span>
                   <span className="sm:block">choose</span>
                 </p>
               </div>
@@ -55,7 +63,7 @@ const Register: React.FC = () => {
                     type="email"
                     placeholder="Email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-6">
@@ -64,7 +72,7 @@ const Register: React.FC = () => {
                     type="password"
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="mb-6">
@@ -73,32 +81,29 @@ const Register: React.FC = () => {
                     type="password"
                     placeholder="Password Repeat"
                     value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    onChange={e => setPasswordConfirmation(e.target.value)}
                   />
                 </div>
                 <div>
-                  <Button type="submit">
-                    Start coding now
-                  </Button>
+                  <Button type="submit">Start coding now</Button>
                 </div>
               </form>
             </section>
             {/* social */}
             <section>
               <div className="mb-6 text-center text-mygray-200">
-                <p>
-                or continue with these social profile
-                </p>
+                <p>or continue with these social profile</p>
               </div>
               <div className="mb-6">
                 <OAuthIcons />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">
-                  <span>
-                    Adready a member?
-                  </span>
-                  <NavLink to="/login" className="text-myblue-200"> Login</NavLink>
+                  <span>Adready a member?</span>
+                  <NavLink to="/login" className="text-myblue-200">
+                    {" "}
+                    Login
+                  </NavLink>
                 </p>
               </div>
             </section>

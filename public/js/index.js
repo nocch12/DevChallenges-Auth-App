@@ -72775,7 +72775,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var Loader_1 = __importDefault(__webpack_require__(/*! ./Loader */ "./resources/js/components/Loader.tsx"));
 var GlobalLoader = function () {
-    return (react_1.default.createElement("div", { className: "w-full h-screen flex items-center justify-center bg-black bg-opacity-25" },
+    return (react_1.default.createElement("div", { className: "fixed inset-0 w-full h-screen flex items-center justify-center bg-white bg-opacity-75" },
         react_1.default.createElement(Loader_1.default, null)));
 };
 exports.default = GlobalLoader;
@@ -72857,7 +72857,7 @@ var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/r
 __webpack_require__(/*! react-loader-spinner/dist/loader/css/react-spinner-loader.css */ "./node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css");
 var react_loader_spinner_1 = __importDefault(__webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/index.js"));
 var Loader = function () {
-    return (react_1.default.createElement(react_loader_spinner_1.default, { type: "Bars", color: "#2F80ED", height: 100, width: 100, timeout: 3000 }));
+    return (react_1.default.createElement(react_loader_spinner_1.default, { type: "Bars", color: "#2F80ED", height: 100, width: 100, timeout: 0 }));
 };
 exports.default = Loader;
 
@@ -72961,19 +72961,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
+var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
-var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
-var logo = __webpack_require__(/*! ../../icons/google-icon.svg */ "./resources/icons/google-icon.svg");
+var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
 var Login = function () {
-    var _a = react_1.useState(''), email = _a[0], setEmail = _a[1];
-    var _b = react_1.useState(''), password = _b[0], setPassword = _b[1];
+    var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
+    var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
     var _c = useAuth_1.useAuth(), state = _c.state, login = _c.login;
     var loginHandler = function (e) {
         e.preventDefault();
         login(email, password);
     };
+    var loader = react_1.useMemo(function () {
+        return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
+    }, [state]);
     return (react_1.default.createElement("div", null,
+        loader,
         react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
                 react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
@@ -72981,7 +72985,6 @@ var Login = function () {
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("h2", null, "devChallenges")),
                         react_1.default.createElement("div", { className: "mb-3" },
-                            react_1.default.createElement("a", { href: "/oauth/google" }, "aaa"),
                             react_1.default.createElement("h3", { className: "text-lg font-semibold" }, "Login"))),
                     react_1.default.createElement("section", { className: "mb-8" },
                         react_1.default.createElement("form", { onSubmit: loginHandler },
@@ -72999,7 +73002,9 @@ var Login = function () {
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("p", { className: "text-center text-mygray-200" },
                                 react_1.default.createElement("span", null, "Don\u2019t have an account yet?"),
-                                react_1.default.createElement(react_router_dom_1.NavLink, { to: "/register", className: "text-myblue-200" }, " Register")))))))));
+                                react_1.default.createElement(react_router_dom_1.NavLink, { to: "/register", className: "text-myblue-200" },
+                                    " ",
+                                    "Register")))))))));
 };
 exports.default = Login;
 
@@ -73069,10 +73074,10 @@ var SocialButton_1 = __importDefault(__webpack_require__(/*! ../components/Socia
 var OAuthIcons = function () {
     var oauth = useAuth_1.useAuth().oauth;
     return (react_1.default.createElement("div", { className: "flex justify-between px-20" },
-        react_1.default.createElement(SocialButton_1.default, { type: "google", clicked: function () { return oauth('google'); } }),
-        react_1.default.createElement(SocialButton_1.default, { type: "facebook", clicked: function () { return oauth('facebook'); } }),
-        react_1.default.createElement(SocialButton_1.default, { type: "twitter", clicked: function () { return oauth('twitter'); } }),
-        react_1.default.createElement(SocialButton_1.default, { type: "github", clicked: function () { return oauth('github'); } })));
+        react_1.default.createElement(SocialButton_1.default, { type: "google", clicked: function () { return oauth("google"); } }),
+        react_1.default.createElement(SocialButton_1.default, { type: "facebook", clicked: function () { return oauth("facebook"); } }),
+        react_1.default.createElement(SocialButton_1.default, { type: "twitter", clicked: function () { return oauth("twitter"); } }),
+        react_1.default.createElement(SocialButton_1.default, { type: "github", clicked: function () { return oauth("github"); } })));
 };
 exports.default = OAuthIcons;
 
@@ -73114,12 +73119,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
-var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
+var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Register = function () {
-    var _a = react_1.useState(''), email = _a[0], setEmail = _a[1];
-    var _b = react_1.useState(''), password = _b[0], setPassword = _b[1];
-    var _c = react_1.useState(''), passwordConfirmation = _c[0], setPasswordConfirmation = _c[1];
+    var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
+    var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
+    var _c = react_1.useState(""), passwordConfirmation = _c[0], setPasswordConfirmation = _c[1];
     var _d = useAuth_1.useAuth(), state = _d.state, register = _d.register;
     var registerHandler = function (e) {
         e.preventDefault();
@@ -73159,7 +73164,9 @@ var Register = function () {
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("p", { className: "text-center text-mygray-200" },
                                 react_1.default.createElement("span", null, "Adready a member?"),
-                                react_1.default.createElement(react_router_dom_1.NavLink, { to: "/login", className: "text-myblue-200" }, " Login")))))))));
+                                react_1.default.createElement(react_router_dom_1.NavLink, { to: "/login", className: "text-myblue-200" },
+                                    " ",
+                                    "Login")))))))));
 };
 exports.default = Register;
 
@@ -73555,9 +73562,12 @@ exports.useAuth = function () {
     var _a = react_1.useContext(context_1.Context), state = _a.state, dispatch = _a.dispatch;
     var authCheck = react_1.useCallback(function () {
         // // ログイン時にCSRFトークンを初期化
-        axios_1.default.get(endpoints_1.GET_USER_URL).then(function (res) {
+        axios_1.default
+            .get(endpoints_1.GET_USER_URL)
+            .then(function (res) {
             dispatch(actions_1.authSuccess(res.data.id, res.data.email));
-        }).catch(function (err) {
+        })
+            .catch(function (err) {
             dispatch(actions_1.authFail(err));
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
@@ -73565,18 +73575,22 @@ exports.useAuth = function () {
         dispatch(actions_1.authStart());
         // ログイン時にCSRFトークンを初期化
         axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
-            axios_1.default.post(endpoints_1.LOGIN_URL, {
+            axios_1.default
+                .post(endpoints_1.LOGIN_URL, {
                 email: email,
-                password: password,
-            }).then(function (res) {
+                password: password
+            })
+                .then(function (res) {
                 dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
-            }).catch(function (err) {
+            })
+                .catch(function (err) {
                 dispatch(actions_1.authFail(err));
             });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
     var oauth = function (type) {
-        var w = window.open("/oauth/" + type, 'login', 'width=500px,height=600px');
+        dispatch(actions_1.authStart());
+        var w = window.open("/oauth/" + type, "login", "width=500px,height=600px");
         var windowWatcher = function () {
             setTimeout(function () {
                 try {
@@ -73590,25 +73604,28 @@ exports.useAuth = function () {
                 catch (error) {
                     windowWatcher();
                 }
-            }, 1000);
+            }, 500);
         };
         windowWatcher();
     };
     var logout = react_1.useCallback(function () {
-        // ログイン時にCSRFトークンを初期化
-        axios_1.default.get(endpoints_1.LOGOUT_URL).finally(function () { dispatch(actions_1.authLogout()); });
+        dispatch(actions_1.authLogout());
+        axios_1.default.get(endpoints_1.LOGOUT_URL);
     }, [dispatch, actions_1.authLogout]);
     var register = react_1.useCallback(function (email, password, passwordConfirmation) {
         dispatch(actions_1.authStart());
         // ログイン時にCSRFトークンを初期化
         axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
-            axios_1.default.post(endpoints_1.REGISTER_URL, {
+            axios_1.default
+                .post(endpoints_1.REGISTER_URL, {
                 email: email,
                 password: password,
-                password_confirmation: passwordConfirmation,
-            }).then(function (res) {
+                password_confirmation: passwordConfirmation
+            })
+                .then(function (res) {
                 dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
-            }).catch(function (err) {
+            })
+                .catch(function (err) {
                 dispatch(actions_1.authFail(err));
             });
         });
