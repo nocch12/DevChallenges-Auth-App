@@ -1,14 +1,15 @@
 import React from 'react';
+import {SocialName} from '../types';
 
 import SocialButton from './SocialButton';
 
 type PropType = {
-  clicked: (type: string) => void
+  clicked: (type: SocialName) => void
 }
 
 const SocialIcons: React.FC<PropType> = ({clicked}) => {
 
-  const onClick = (type: string) => {
+  const onClick = (type: SocialName) => {
     clicked(type);
   }
 

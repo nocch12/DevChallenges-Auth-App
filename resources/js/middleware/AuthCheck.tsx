@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import GlobalLoader from '../hoc/GlobalLoader'
+import GlobalLoader from '../components/GlobalLoader'
 import { useAuth } from "../store/auth/useAuth";
 
 const AuthCheck: React.FC<any> = ({ children }) => {

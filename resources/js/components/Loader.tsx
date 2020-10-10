@@ -1,10 +1,16 @@
 import React from 'react';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import LoaderSpinner from "react-loader-spinner";
 
 const Loader = () => {
   return (
-    <div>
-      Loading
-    </div>
+    <LoaderSpinner
+      type="Bars"
+      color="#2F80ED"
+      height={100}
+      width={100}
+      timeout={3000} //3 secs
+    />
   );
 }
 

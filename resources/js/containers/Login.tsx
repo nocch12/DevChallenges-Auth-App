@@ -1,6 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import {NavLink} from 'react-router-dom';
 import { useAuth } from "../store/auth/useAuth";
+import {SocialName} from '../types';
 
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -18,8 +19,8 @@ const Login: React.FC = () => {
     login(email, password);
   }
 
-  const socialLoginHandler = async (type: string) => {
-    const w: any = window.open('/oauth/google', 'login', 'width=500px,height=600px');
+  const socialLoginHandler = async (type: SocialName) => {
+    const w: any = window.open(`/oauth/${type}`, 'login', 'width=500px,height=600px');
 
     let closed = false;
     const windowWatcher = () => {

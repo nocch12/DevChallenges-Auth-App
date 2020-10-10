@@ -72759,6 +72759,30 @@ exports.default = Button;
 
 /***/ }),
 
+/***/ "./resources/js/components/GlobalLoader.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/GlobalLoader.tsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Loader_1 = __importDefault(__webpack_require__(/*! ./Loader */ "./resources/js/components/Loader.tsx"));
+var GlobalLoader = function () {
+    return (react_1.default.createElement("div", { className: "w-full h-screen flex items-center justify-center bg-black bg-opacity-25" },
+        react_1.default.createElement(Loader_1.default, null)));
+};
+exports.default = GlobalLoader;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Header.tsx":
 /*!********************************************!*\
   !*** ./resources/js/components/Header.tsx ***!
@@ -72812,6 +72836,30 @@ var Input = function (props) {
     return (react_1.default.createElement("input", __assign({ className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none" }, props)));
 };
 exports.default = Input;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Loader.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/components/Loader.tsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+__webpack_require__(/*! react-loader-spinner/dist/loader/css/react-spinner-loader.css */ "./node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css");
+var react_loader_spinner_1 = __importDefault(__webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/index.js"));
+var Loader = function () {
+    return (react_1.default.createElement(react_loader_spinner_1.default, { type: "Bars", color: "#2F80ED", height: 100, width: 100, timeout: 3000 }));
+};
+exports.default = Loader;
 
 
 /***/ }),
@@ -72995,7 +73043,7 @@ var Login = function () {
     var socialLoginHandler = function (type) { return __awaiter(void 0, void 0, void 0, function () {
         var w, closed, windowWatcher;
         return __generator(this, function (_a) {
-            w = window.open('/oauth/google', 'login', 'width=500px,height=600px');
+            w = window.open("/oauth/" + type, 'login', 'width=500px,height=600px');
             closed = false;
             windowWatcher = function () {
                 setTimeout(function () {
@@ -73227,31 +73275,6 @@ exports.LOGOUT_URL = '/api/logout';
 
 /***/ }),
 
-/***/ "./resources/js/hoc/GlobalLoader.tsx":
-/*!*******************************************!*\
-  !*** ./resources/js/hoc/GlobalLoader.tsx ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-__webpack_require__(/*! react-loader-spinner/dist/loader/css/react-spinner-loader.css */ "./node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css");
-var react_loader_spinner_1 = __importDefault(__webpack_require__(/*! react-loader-spinner */ "./node_modules/react-loader-spinner/index.js"));
-var GlobalLoader = function () {
-    return (react_1.default.createElement("div", { className: "w-full h-screen flex items-center justify-center" },
-        react_1.default.createElement(react_loader_spinner_1.default, { type: "Bars", color: "#2F80ED", height: 100, width: 100, timeout: 3000 })));
-};
-exports.default = GlobalLoader;
-
-
-/***/ }),
-
 /***/ "./resources/js/index.tsx":
 /*!********************************!*\
   !*** ./resources/js/index.tsx ***!
@@ -73321,7 +73344,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../hoc/GlobalLoader */ "./resources/js/hoc/GlobalLoader.tsx"));
+var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
 var AuthCheck = function (_a) {
     var children = _a.children;
