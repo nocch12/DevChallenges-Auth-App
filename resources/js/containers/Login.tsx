@@ -1,50 +1,21 @@
 import React, { FormEvent, useState } from "react";
 import {NavLink} from 'react-router-dom';
 import { useAuth } from "../store/auth/useAuth";
-import {SocialName} from '../types';
 
 import Button from '../components/Button';
 import Input from '../components/Input';
-import SocialIcons from '../components/SocialIcons';
+import OAuthIcons from './OAuthIcons';
 
 const logo = require('../../icons/google-icon.svg') as string;
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {state, login, authCheck} = useAuth();
+  const {state, login} = useAuth();
 
   const loginHandler = (e: FormEvent): void => {
     e.preventDefault();
     login(email, password);
-  }
-
-  const socialLoginHandler = async (type: SocialName) => {
-    const w: any = window.open(`/oauth/${type}`, 'login', 'width=500px,height=600px');
-
-    let closed = false;
-    const windowWatcher = () => {
-      setTimeout(() => {
-        try {
-          if(w.closed) {
-            authCheck();
-          } else {
-            windowWatcher();
-          }
-        } catch (error) {
-          windowWatcher();
-        }
-      }, 1000);
-    }
-    windowWatcher();
-    // setInterval(() => {
-    //   if(w && w.opener && w.closed) {
-    //     console.log(w);
-    //     // console.log(w.opener);
-    //     // console.log(w.closed);
-    //     // console.log(w);
-    //   }
-    // }, 1000)
   }
 
   return (
@@ -99,7 +70,7 @@ const Login: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <SocialIcons clicked={socialLoginHandler} />
+                <OAuthIcons />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">

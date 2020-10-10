@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import {useAuth} from '../store/auth/useAuth';
 
 import Button from '../components/Button';
-import SocialIcons from '../components/SocialIcons';
+import OAuthIcons from './OAuthIcons';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,11 +17,6 @@ const Register: React.FC = () => {
     e.preventDefault();
     register(email, password, passwordConfirmation);
   }
-
-  const socialRegisterHandler = (type: string) => {
-    console.log(type);
-  }
-
 
   return (
     <div>
@@ -96,7 +91,7 @@ const Register: React.FC = () => {
                 </p>
               </div>
               <div className="mb-6">
-                <SocialIcons clicked={socialRegisterHandler} />
+                <OAuthIcons />
               </div>
               <div className="mb-6">
                 <p className="text-center text-mygray-200">

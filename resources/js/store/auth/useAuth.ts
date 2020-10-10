@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { authStart, authSuccess, authFail, authLogout } from "./actions";
 import { Context } from "./context";
+import {SocialName} from '../../types';
 import { GET_USER_URL, LOGOUT_URL, LOGIN_URL, REGISTER_URL } from '../../endpoints'
 import axios from "axios";
 
@@ -32,6 +33,27 @@ export const useAuth = () => {
     });
   }, [dispatch, authStart, authSuccess, authFail]);
 
+
+  const oauth = (type: SocialName) => {
+    const w: any = window.open(`/oauth/${type}`, 'login', 'width=500px,height=600px');
+
+    const windowWatcher = () => {
+      setTimeout(() => {
+        try {
+          if(w.closed) {
+            authCheck();
+          } else {
+            windowWatcher();
+          }
+        } catch (error) {
+          windowWatcher();
+        }
+      }, 1000);
+    }
+    windowWatcher();
+  }
+
+
   const logout = useCallback(() => {
     // ログイン時にCSRFトークンを初期化
     axios.get(LOGOUT_URL).finally(() => {dispatch(authLogout())});
@@ -54,5 +76,5 @@ export const useAuth = () => {
     });
   }, [dispatch, authStart, authSuccess, authFail]);
 
-  return {state, login, logout, register, authCheck}
+  return {state, login, logout, register, oauth, authCheck}
 };
