@@ -73719,8 +73719,8 @@ exports.useAuth = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\js\index.tsx */"./resources/js/index.tsx");
-module.exports = __webpack_require__(/*! E:\docker.host\sakura\AuthApp\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/k-ohno/development/sakura/authapp/resources/js/index.tsx */"./resources/js/index.tsx");
+module.exports = __webpack_require__(/*! /home/k-ohno/development/sakura/authapp/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
