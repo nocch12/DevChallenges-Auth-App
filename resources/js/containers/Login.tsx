@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useCallback, useMemo } from "react";
+import React, { FormEvent, useEffect, useState, useCallback, useMemo } from "react";
 import axios from 'axios'
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
@@ -10,9 +10,15 @@ import Input from "../components/Input";
 import GlobalLoader from "../components/GlobalLoader";
 import ErrorText from "../components/ErrorText";
 
+interface IErrors {
+  email?: Array<string>;
+  password?: Array<string>;
+}
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({} as IErrors);
   const { state, authStartAction, authSuccessAction, authFailAction} = useAuth();
 
   const loginHandler = (e: FormEvent): void => {
@@ -25,6 +31,7 @@ const Login: React.FC = () => {
 
     // ログイン時にCSRFトークンを初期化
     axios.get("/sanctum/csrf-cookie").then(response => {
+      setErrors({});
       axios
         .post(LOGIN_URL, {
           email,
@@ -38,6 +45,7 @@ const Login: React.FC = () => {
           }
         })
         .catch(err => {
+          setErrors(err.response.data.errors || {});
           authFailAction();
         });
     });
@@ -47,15 +55,6 @@ const Login: React.FC = () => {
     return state.loading ? <GlobalLoader /> : null;
   }, [state]);
 
-  const errors = useMemo(() => {
-    const keys = Object.keys(state.errors);
-    if (!keys.length) return null;
-
-    return keys.map(key => {
-      const text = state.errors[key];
-      return text ? <ErrorText key={key}>{text}</ErrorText> : null;
-    });
-  }, [state]);
 
   return (
     <div>

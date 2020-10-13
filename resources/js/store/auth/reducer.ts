@@ -15,7 +15,6 @@ export const initialProfile: Iprofile = {
 
 export const initialState: IAuthState = {
   profile: {...initialProfile},
-  errors: {},
   loading: false,
   authRedirectPath: "/",
   initChecking: true
@@ -26,19 +25,15 @@ const reducer = (state: IAuthState, action: ActionType): IAuthState => {
     case AUTH_START:
       return { ...state, loading: true };
     case AUTH_SUCCESS:
-      console.log(1, state, action);
-
       return {
         ...state,
         profile: action.profile,
-        errors: {},
         loading: false,
         initChecking: false
       };
     case AUTH_FAIL:
       return {
         ...state,
-        errors: action.errors || {},
         loading: false,
         initChecking: false
       };

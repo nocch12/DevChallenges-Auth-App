@@ -20,7 +20,7 @@ export const useAuth = () => {
   }, [dispatch, authSuccess]);
 
   const authFailAction = useCallback(() => {
-    dispatch(authFail({}));
+    dispatch(authFail());
   }, [dispatch, authFail]);
 
   const authCheck = useCallback(() => {
@@ -31,11 +31,11 @@ export const useAuth = () => {
         if(res.data.success) {
           dispatch(authSuccess(res.data));
         } else {
-          dispatch(authFail({message: 'Sorry, somthing went wrong'}));
+          dispatch(authFail());
         }
       })
       .catch(err => {
-        dispatch(authFail({}));
+        dispatch(authFail());
       });
   }, [dispatch, authStart, authSuccess, authFail]);
 

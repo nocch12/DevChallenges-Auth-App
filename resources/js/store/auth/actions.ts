@@ -26,10 +26,9 @@ export const authSuccess = (profile: Iprofile) => {
   };
 };
 
-export const authFail = (errors: {}) => {
+export const authFail = () => {
   return {
     type: AUTH_FAIL,
-    errors
   };
 };
 

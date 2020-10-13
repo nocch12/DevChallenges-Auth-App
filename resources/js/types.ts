@@ -4,13 +4,8 @@ export interface IAuthProviderProps {
   children?: any;
 }
 
-export type IValidateErrors = {
-  [key: string]: string;
-}
-
 export interface IAuthState {
   profile: Iprofile;
-  errors: IValidateErrors;
   loading: boolean;
   authRedirectPath: string;
   initChecking: boolean;
