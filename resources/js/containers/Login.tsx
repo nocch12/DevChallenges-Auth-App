@@ -16,8 +16,8 @@ import Input from "../components/Input";
 import GlobalLoader from "../components/GlobalLoader";
 
 interface IErrors {
-  email?: Array<string>;
-  password?: Array<string>;
+  email?: string;
+  password?: string;
 }
 
 interface Form {
@@ -81,6 +81,8 @@ const Login: React.FC = () => {
             }
           })
           .catch(err => {
+            console.log(err.response.data);
+
             setErrors(err.response.data.errors || {});
             authFailAction();
           });

@@ -11,9 +11,9 @@ import GlobalLoader from "../components/GlobalLoader";
 import { validate } from "../validation/authValidation";
 
 interface IErrors {
-  email?: Array<string>;
-  password?: Array<string>;
-  password_confirmation?: Array<string>;
+  email?: string;
+  password?: string;
+  password_confirmation?: string;
 }
 
 interface Form {
