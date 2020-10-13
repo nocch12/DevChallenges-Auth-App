@@ -72671,10 +72671,10 @@ var App = function () {
     return (react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
         react_1.default.createElement(Layout_1.default, null,
             react_1.default.createElement(react_router_dom_1.Switch, null,
-                react_1.default.createElement(GuestRoute_1.default, { path: "/login", user: state, component: Login_1.default }),
-                react_1.default.createElement(GuestRoute_1.default, { path: "/register", user: state, component: Register_1.default }),
-                react_1.default.createElement(AuthRoute_1.default, { path: "/user", user: state, component: User_1.default }),
-                react_1.default.createElement(AuthRoute_1.default, { path: "/logout", user: state, component: Logout_1.default })))));
+                react_1.default.createElement(GuestRoute_1.default, { path: "/login", user: state.profile, component: Login_1.default }),
+                react_1.default.createElement(GuestRoute_1.default, { path: "/register", user: state.profile, component: Register_1.default }),
+                react_1.default.createElement(AuthRoute_1.default, { path: "/user", user: state.profile, component: User_1.default }),
+                react_1.default.createElement(AuthRoute_1.default, { path: "/logout", user: state.profile, component: Logout_1.default })))));
 };
 exports.default = App;
 
@@ -72937,6 +72937,7 @@ var Header_1 = __importDefault(__webpack_require__(/*! ../components/Header */ "
 var Layout = function (_a) {
     var children = _a.children;
     var state = useAuth_1.useAuth().state;
+    console.log(state);
     var header = null;
     if (state.profile.id)
         header = react_1.default.createElement(Header_1.default, null);
@@ -72982,8 +72983,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
+var endpoints_1 = __webpack_require__(/*! ../endpoints */ "./resources/js/endpoints.ts");
 var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
@@ -72992,11 +72995,33 @@ var ErrorText_1 = __importDefault(__webpack_require__(/*! ../components/ErrorTex
 var Login = function () {
     var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
     var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
-    var _c = useAuth_1.useAuth(), state = _c.state, login = _c.login;
+    var _c = useAuth_1.useAuth(), state = _c.state, authStartAction = _c.authStartAction, authSuccessAction = _c.authSuccessAction, authFailAction = _c.authFailAction;
     var loginHandler = function (e) {
         e.preventDefault();
         login(email, password);
     };
+    var login = react_1.useCallback(function (email, password) {
+        authStartAction();
+        // ログイン時にCSRFトークンを初期化
+        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
+            axios_1.default
+                .post(endpoints_1.LOGIN_URL, {
+                email: email,
+                password: password
+            })
+                .then(function (res) {
+                if (res.data.result) {
+                    authSuccessAction(res.data.user);
+                }
+                else {
+                    authFailAction();
+                }
+            })
+                .catch(function (err) {
+                authFailAction();
+            });
+        });
+    }, [authStartAction, authSuccessAction, authFailAction]);
     var loader = react_1.useMemo(function () {
         return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
     }, [state]);
@@ -73151,8 +73176,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
+var endpoints_1 = __webpack_require__(/*! ../endpoints */ "./resources/js/endpoints.ts");
 var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
@@ -73161,11 +73188,34 @@ var Register = function () {
     var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
     var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
     var _c = react_1.useState(""), passwordConfirmation = _c[0], setPasswordConfirmation = _c[1];
-    var _d = useAuth_1.useAuth(), state = _d.state, register = _d.register;
+    var _d = useAuth_1.useAuth(), state = _d.state, authStartAction = _d.authStartAction, authSuccessAction = _d.authSuccessAction, authFailAction = _d.authFailAction;
     var registerHandler = function (e) {
         e.preventDefault();
         register(email, password, passwordConfirmation);
     };
+    var register = react_1.useCallback(function (email, password, passwordConfirmation) {
+        authStartAction();
+        // ログイン時にCSRFトークンを初期化
+        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
+            axios_1.default
+                .post(endpoints_1.REGISTER_URL, {
+                email: email,
+                password: password,
+                password_confirmation: passwordConfirmation,
+            })
+                .then(function (res) {
+                if (res.data.result) {
+                    authSuccessAction(res.data.user);
+                }
+                else {
+                    authFailAction();
+                }
+            })
+                .catch(function (err) {
+                authFailAction();
+            });
+        });
+    }, [authStartAction, authSuccessAction, authFailAction]);
     var loader = react_1.useMemo(function () {
         return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
     }, [state]);
@@ -73443,7 +73493,7 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 var AuthRoute = function (_a) {
     var user = _a.user, Comp = _a.component, rest = __rest(_a, ["user", "component"]);
     return (react_1.default.createElement(react_router_dom_1.Route, __assign({}, rest, { render: function (props) {
-            return !user.id ? (react_1.default.createElement(Comp, __assign({}, props))) : (react_1.default.createElement(react_router_dom_1.Redirect, { to: '/user' }));
+            return !user.id ? react_1.default.createElement(Comp, __assign({}, props)) : react_1.default.createElement(react_router_dom_1.Redirect, { to: "/user" });
         } })));
 };
 exports.default = AuthRoute;
@@ -73579,6 +73629,7 @@ var reducer = function (state, action) {
         case actions_1.AUTH_START:
             return __assign(__assign({}, state), { loading: true });
         case actions_1.AUTH_SUCCESS:
+            console.log(1, state, action);
             return __assign(__assign({}, state), { profile: action.profile, errors: {}, loading: false, initChecking: false });
         case actions_1.AUTH_FAIL:
             return __assign(__assign({}, state), { errors: action.errors || {}, loading: false, initChecking: false });
@@ -73614,6 +73665,15 @@ var endpoints_1 = __webpack_require__(/*! ../../endpoints */ "./resources/js/end
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.useAuth = function () {
     var _a = react_1.useContext(context_1.Context), state = _a.state, dispatch = _a.dispatch;
+    var authStartAction = react_1.useCallback(function () {
+        dispatch(actions_1.authStart());
+    }, [dispatch, actions_1.authStart]);
+    var authSuccessAction = react_1.useCallback(function (profile) {
+        dispatch(actions_1.authSuccess(profile));
+    }, [dispatch, actions_1.authSuccess]);
+    var authFailAction = react_1.useCallback(function () {
+        dispatch(actions_1.authFail({}));
+    }, [dispatch, actions_1.authFail]);
     var authCheck = react_1.useCallback(function () {
         // // ログイン時にCSRFトークンを初期化
         axios_1.default
@@ -73628,28 +73688,6 @@ exports.useAuth = function () {
         })
             .catch(function (err) {
             dispatch(actions_1.authFail({}));
-        });
-    }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
-    var login = react_1.useCallback(function (email, password) {
-        dispatch(actions_1.authStart());
-        // ログイン時にCSRFトークンを初期化
-        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
-            axios_1.default
-                .post(endpoints_1.LOGIN_URL, {
-                email: email,
-                password: password
-            })
-                .then(function (res) {
-                if (res.data.success) {
-                    dispatch(actions_1.authSuccess(res.data.user));
-                }
-                else {
-                    dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
-                }
-            })
-                .catch(function (err) {
-                dispatch(actions_1.authFail(err.response.data.errors));
-            });
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
     var oauth = function (type) {
@@ -73676,30 +73714,7 @@ exports.useAuth = function () {
         dispatch(actions_1.authLogout());
         axios_1.default.get(endpoints_1.LOGOUT_URL);
     }, [dispatch, actions_1.authLogout]);
-    var register = react_1.useCallback(function (email, password, passwordConfirmation) {
-        dispatch(actions_1.authStart());
-        // ログイン時にCSRFトークンを初期化
-        axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
-            axios_1.default
-                .post(endpoints_1.REGISTER_URL, {
-                email: email,
-                password: password,
-                password_confirmation: passwordConfirmation
-            })
-                .then(function (res) {
-                if (res.data.success) {
-                    dispatch(actions_1.authSuccess(res.data.user));
-                }
-                else {
-                    dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
-                }
-            })
-                .catch(function (err) {
-                dispatch(actions_1.authFail(err.response.data.errors));
-            });
-        });
-    }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
-    return { state: state, login: login, logout: logout, register: register, oauth: oauth, authCheck: authCheck };
+    return { state: state, authStartAction: authStartAction, authSuccessAction: authSuccessAction, authFailAction: authFailAction, logout: logout, oauth: oauth, authCheck: authCheck };
 };
 
 

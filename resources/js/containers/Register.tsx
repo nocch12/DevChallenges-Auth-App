@@ -1,7 +1,8 @@
-import React, { FormEvent, useState, useMemo } from "react";
+import React, { FormEvent, useState, useCallback, useMemo } from "react";
+import axios from 'axios'
 import { NavLink } from "react-router-dom";
-
 import { useAuth } from "../store/auth/useAuth";
+import {REGISTER_URL} from '../endpoints'
 
 import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
@@ -12,13 +13,36 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-
-  const { state, register } = useAuth();
+  const { state, authStartAction, authSuccessAction, authFailAction} = useAuth();
 
   const registerHandler = (e: FormEvent): void => {
     e.preventDefault();
     register(email, password, passwordConfirmation);
   };
+
+  const register = useCallback((email: string, password: string, passwordConfirmation: string) => {
+    authStartAction();
+
+    // ログイン時にCSRFトークンを初期化
+    axios.get("/sanctum/csrf-cookie").then(response => {
+      axios
+        .post(REGISTER_URL, {
+          email,
+          password,
+          password_confirmation: passwordConfirmation,
+        })
+        .then(res => {
+          if(res.data.result) {
+            authSuccessAction(res.data.user);
+          } else {
+            authFailAction();
+          }
+        })
+        .catch(err => {
+          authFailAction();
+        });
+    });
+  }, [authStartAction, authSuccessAction, authFailAction]);
 
   const loader = useMemo(() => {
     return state.loading ? <GlobalLoader /> : null;

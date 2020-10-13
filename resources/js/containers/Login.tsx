@@ -1,6 +1,8 @@
-import React, { FormEvent, useState, useMemo } from "react";
+import React, { FormEvent, useState, useCallback, useMemo } from "react";
+import axios from 'axios'
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
+import {LOGIN_URL} from '../endpoints'
 
 import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
@@ -11,12 +13,35 @@ import ErrorText from "../components/ErrorText";
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { state, login } = useAuth();
+  const { state, authStartAction, authSuccessAction, authFailAction} = useAuth();
 
   const loginHandler = (e: FormEvent): void => {
     e.preventDefault();
     login(email, password);
   };
+
+  const login = useCallback((email: string, password: string) => {
+    authStartAction();
+
+    // ログイン時にCSRFトークンを初期化
+    axios.get("/sanctum/csrf-cookie").then(response => {
+      axios
+        .post(LOGIN_URL, {
+          email,
+          password
+        })
+        .then(res => {
+          if(res.data.result) {
+            authSuccessAction(res.data.user);
+          } else {
+            authFailAction();
+          }
+        })
+        .catch(err => {
+          authFailAction();
+        });
+    });
+  }, [authStartAction, authSuccessAction, authFailAction]);
 
   const loader = useMemo(() => {
     return state.loading ? <GlobalLoader /> : null;

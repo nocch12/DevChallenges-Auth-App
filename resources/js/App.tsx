@@ -25,10 +25,10 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Layout>
         <Switch>
-          <GuestRoute path="/login" user={state} component={Login} />
-          <GuestRoute path="/register" user={state} component={Register} />
-          <AuthRoute path="/user" user={state} component={User} />
-          <AuthRoute path="/logout" user={state} component={Logout} />
+          <GuestRoute path="/login" user={state.profile} component={Login} />
+          <GuestRoute path="/register" user={state.profile} component={Register} />
+          <AuthRoute path="/user" user={state.profile} component={User} />
+          <AuthRoute path="/logout" user={state.profile} component={Logout} />
         </Switch>
       </Layout>
     </BrowserRouter>

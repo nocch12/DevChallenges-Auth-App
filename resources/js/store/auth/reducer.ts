@@ -26,6 +26,8 @@ const reducer = (state: IAuthState, action: ActionType): IAuthState => {
     case AUTH_START:
       return { ...state, loading: true };
     case AUTH_SUCCESS:
+      console.log(1, state, action);
+
       return {
         ...state,
         profile: action.profile,

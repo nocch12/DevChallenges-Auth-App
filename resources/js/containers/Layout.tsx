@@ -7,6 +7,8 @@ import Header from "../components/Header";
 const Layout: React.FC<any> = ({children}) => {
   const {state} = useAuth();
 
+  console.log(state);
+
   let header = null;
   if(state.profile.id) header = <Header />;
 
