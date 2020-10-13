@@ -19,7 +19,7 @@ export const useAuth = () => {
       .get(GET_USER_URL)
       .then(res => {
         if(res.data.success) {
-          dispatch(authSuccess(res.data.id, res.data.email));
+          dispatch(authSuccess(res.data));
         } else {
           dispatch(authFail({message: 'Sorry, somthing went wrong'}));
         }
@@ -42,7 +42,7 @@ export const useAuth = () => {
           })
           .then(res => {
             if(res.data.success) {
-              dispatch(authSuccess(res.data.user.id, res.data.user.email));
+              dispatch(authSuccess(res.data.user));
             } else {
               dispatch(authFail({message: 'Sorry, somthing went wrong'}));
             }
@@ -98,7 +98,7 @@ export const useAuth = () => {
           })
           .then(res => {
             if(res.data.success) {
-              dispatch(authSuccess(res.data.user.id, res.data.user.email));
+              dispatch(authSuccess(res.data.user));
             } else {
               dispatch(authFail({message: 'Sorry, somthing went wrong'}));
             }

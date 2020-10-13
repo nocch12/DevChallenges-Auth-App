@@ -9,11 +9,7 @@ export type IValidateErrors = {
 }
 
 export interface IAuthState {
-  id: string;
-  email: string;
-  image: string;
-  biography: string;
-  phone: string;
+  profile: Iprofile;
   errors: IValidateErrors;
   loading: boolean;
   authRedirectPath: string;
@@ -21,9 +17,13 @@ export interface IAuthState {
 }
 
 export interface Iprofile {
-  image?: string;
-  name?: string;
-  age?: string;
+  id: string;
+  email: string;
+  image: string;
+  name: string;
+  age: string;
+  biography: string;
+  phone: string;
 }
 
 export type ContextType = {

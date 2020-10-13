@@ -8,7 +8,7 @@ const Layout: React.FC<any> = ({children}) => {
   const {state} = useAuth();
 
   let header = null;
-  if(state.id) header = <Header />;
+  if(state.profile.id) header = <Header />;
 
   return (
     <React.Fragment>

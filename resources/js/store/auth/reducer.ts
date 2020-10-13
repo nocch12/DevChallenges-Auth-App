@@ -1,14 +1,20 @@
 import React from "react";
-import { IAuthState } from "../../types";
+import { IAuthState, Iprofile } from "../../types";
 import { ActionType } from "./actions";
 import { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, LOGOUT } from "./actions";
 
+export const initialProfile: Iprofile = {
+  id: '',
+  email: '',
+  phone: '',
+  image: '',
+  biography: '',
+  age: '',
+  name: ''
+}
+
 export const initialState: IAuthState = {
-  id: "",
-  email: "",
-  image: "",
-  biography: "",
-  phone: "",
+  profile: {...initialProfile},
   errors: {},
   loading: false,
   authRedirectPath: "/",
@@ -22,8 +28,7 @@ const reducer = (state: IAuthState, action: ActionType): IAuthState => {
     case AUTH_SUCCESS:
       return {
         ...state,
-        id: action.id,
-        email: action.email,
+        profile: action.profile,
         errors: {},
         loading: false,
         initChecking: false

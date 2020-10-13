@@ -72938,7 +72938,7 @@ var Layout = function (_a) {
     var children = _a.children;
     var state = useAuth_1.useAuth().state;
     var header = null;
-    if (state.id)
+    if (state.profile.id)
         header = react_1.default.createElement(Header_1.default, null);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         header,
@@ -73462,32 +73462,31 @@ exports.default = AuthRoute;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authLogout = exports.authFail = exports.authSuccess = exports.authStart = exports.SET_AUTH_REDIRECT_PATH = exports.LOGOUT = exports.AUTH_FAIL = exports.AUTH_SUCCESS = exports.AUTH_START = void 0;
-exports.AUTH_START = 'AUTH_START';
-exports.AUTH_SUCCESS = 'AUTH_SUCCESS';
-exports.AUTH_FAIL = 'AUTH_FAIL';
-exports.LOGOUT = 'LOGOUT';
-exports.SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+exports.AUTH_START = "AUTH_START";
+exports.AUTH_SUCCESS = "AUTH_SUCCESS";
+exports.AUTH_FAIL = "AUTH_FAIL";
+exports.LOGOUT = "LOGOUT";
+exports.SET_AUTH_REDIRECT_PATH = "SET_AUTH_REDIRECT_PATH";
 exports.authStart = function () {
     return {
-        type: exports.AUTH_START,
+        type: exports.AUTH_START
     };
 };
-exports.authSuccess = function (id, email) {
+exports.authSuccess = function (profile) {
     return {
         type: exports.AUTH_SUCCESS,
-        id: id,
-        email: email,
+        profile: profile
     };
 };
 exports.authFail = function (errors) {
     return {
         type: exports.AUTH_FAIL,
-        errors: errors,
+        errors: errors
     };
 };
 exports.authLogout = function () {
     return {
-        type: exports.LOGOUT,
+        type: exports.LOGOUT
     };
 };
 
@@ -73557,14 +73556,19 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.initialState = void 0;
+exports.initialState = exports.initialProfile = void 0;
 var actions_1 = __webpack_require__(/*! ./actions */ "./resources/js/store/auth/actions.ts");
+exports.initialProfile = {
+    id: '',
+    email: '',
+    phone: '',
+    image: '',
+    biography: '',
+    age: '',
+    name: ''
+};
 exports.initialState = {
-    id: "",
-    email: "",
-    image: "",
-    biography: "",
-    phone: "",
+    profile: __assign({}, exports.initialProfile),
     errors: {},
     loading: false,
     authRedirectPath: "/",
@@ -73575,7 +73579,7 @@ var reducer = function (state, action) {
         case actions_1.AUTH_START:
             return __assign(__assign({}, state), { loading: true });
         case actions_1.AUTH_SUCCESS:
-            return __assign(__assign({}, state), { id: action.id, email: action.email, errors: {}, loading: false, initChecking: false });
+            return __assign(__assign({}, state), { profile: action.profile, errors: {}, loading: false, initChecking: false });
         case actions_1.AUTH_FAIL:
             return __assign(__assign({}, state), { errors: action.errors || {}, loading: false, initChecking: false });
         case actions_1.LOGOUT:
@@ -73616,7 +73620,7 @@ exports.useAuth = function () {
             .get(endpoints_1.GET_USER_URL)
             .then(function (res) {
             if (res.data.success) {
-                dispatch(actions_1.authSuccess(res.data.id, res.data.email));
+                dispatch(actions_1.authSuccess(res.data));
             }
             else {
                 dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
@@ -73637,7 +73641,7 @@ exports.useAuth = function () {
             })
                 .then(function (res) {
                 if (res.data.success) {
-                    dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+                    dispatch(actions_1.authSuccess(res.data.user));
                 }
                 else {
                     dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
@@ -73684,7 +73688,7 @@ exports.useAuth = function () {
             })
                 .then(function (res) {
                 if (res.data.success) {
-                    dispatch(actions_1.authSuccess(res.data.user.id, res.data.user.email));
+                    dispatch(actions_1.authSuccess(res.data.user));
                 }
                 else {
                     dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
