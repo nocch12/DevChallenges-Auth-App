@@ -1,60 +1,97 @@
-import React, { FormEvent, useEffect, useState, useCallback, useMemo } from "react";
-import axios from 'axios'
+import React, {
+  FormEvent,
+  useState,
+  useCallback,
+  useMemo
+} from "react";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
-import {LOGIN_URL} from '../endpoints'
+import { LOGIN_URL } from "../endpoints";
+import { validate } from "../validation/authValidation";
 
 import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import GlobalLoader from "../components/GlobalLoader";
-import ErrorText from "../components/ErrorText";
 
 interface IErrors {
   email?: Array<string>;
   password?: Array<string>;
 }
 
+interface Form {
+  [key: string]: string;
+  email: string;
+  password: string;
+}
+
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState<Form>({
+    email: "",
+    password: ""
+  });
   const [errors, setErrors] = useState({} as IErrors);
-  const { state, authStartAction, authSuccessAction, authFailAction} = useAuth();
+  const {
+    state,
+    authStartAction,
+    authSuccessAction,
+    authFailAction
+  } = useAuth();
 
   const loginHandler = (e: FormEvent): void => {
     e.preventDefault();
-    login(email, password);
+    login(form.email, form.password);
   };
 
-  const login = useCallback((email: string, password: string) => {
-    authStartAction();
+  const inputHandler = (key: string, value: string) => {
+    const newForm = {
+      ...form,
+      [key]: value
+    };
+    setForm(newForm);
+    setErrorsHandler(key, value);
+  };
 
-    // ログイン時にCSRFトークンを初期化
-    axios.get("/sanctum/csrf-cookie").then(response => {
-      setErrors({});
-      axios
-        .post(LOGIN_URL, {
-          email,
-          password
-        })
-        .then(res => {
-          if(res.data.result) {
-            authSuccessAction(res.data.user);
-          } else {
+  const setErrorsHandler = (key: string, value: string) => {
+    const errorMsg = validate(key, value);
+    const newErrors = {
+      [key]: errorMsg
+    };
+    setErrors({ ...errors, ...newErrors });
+  };
+
+  const login = useCallback(
+    (email: string, password: string) => {
+      authStartAction();
+
+      // ログイン時にCSRFトークンを初期化
+      axios.get("/sanctum/csrf-cookie").then(response => {
+        setErrors({});
+        axios
+          .post(LOGIN_URL, {
+            email,
+            password
+          })
+          .then(res => {
+            if (res.data.result) {
+              authSuccessAction(res.data.user);
+            } else {
+              authFailAction();
+            }
+          })
+          .catch(err => {
+            setErrors(err.response.data.errors || {});
             authFailAction();
-          }
-        })
-        .catch(err => {
-          setErrors(err.response.data.errors || {});
-          authFailAction();
-        });
-    });
-  }, [authStartAction, authSuccessAction, authFailAction]);
+          });
+      });
+    },
+    [authStartAction, authSuccessAction, authFailAction]
+  );
 
   const loader = useMemo(() => {
     return state.loading ? <GlobalLoader /> : null;
   }, [state]);
-
 
   return (
     <div>
@@ -73,23 +110,25 @@ const Login: React.FC = () => {
             </section>
             {/* form */}
             <section className="mb-8">
-              {errors}
               <form onSubmit={loginHandler}>
                 <div className="mb-4">
-                  <input
-                    className="appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none"
+                  <Input
                     type="email"
                     placeholder="Email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    value={form.email}
+                    errorMessage={errors.email}
+                    onChange={(e: any) => inputHandler("email", e.target.value)}
                   />
                 </div>
                 <div className="mb-6">
                   <Input
                     type="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e: any) => setPassword(e.target.value)}
+                    value={form.password}
+                    errorMessage={errors.password}
+                    onChange={(e: any) =>
+                      inputHandler("password", e.target.value)
+                    }
                   />
                 </div>
                 <div>
