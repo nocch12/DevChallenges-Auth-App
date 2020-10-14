@@ -28,7 +28,7 @@ export const useAuth = () => {
     axios
       .get(GET_USER_URL)
       .then(res => {
-        if(res.data.success) {
+        if(res.data) {
           dispatch(authSuccess(res.data));
         } else {
           dispatch(authFail());
