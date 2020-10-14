@@ -3,12 +3,13 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
 import { REGISTER_URL } from "../endpoints";
+import { makeErrors } from "../validation/responseValidation";
+import { validate } from "../validation/authValidation";
 
 import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import GlobalLoader from "../components/GlobalLoader";
-import { validate } from "../validation/authValidation";
 
 interface IErrors {
   email?: string;
@@ -79,6 +80,8 @@ const Register: React.FC = () => {
             }
           })
           .catch(err => {
+            const newErrors = makeErrors(err.response.data.errors);
+            setErrors({ ...errors, ...newErrors });
             authFailAction();
           });
       });

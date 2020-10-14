@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
 import { LOGIN_URL } from "../endpoints";
 import { validate } from "../validation/authValidation";
+import { makeErrors } from "../validation/responseValidation";
 
 import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
@@ -81,9 +82,8 @@ const Login: React.FC = () => {
             }
           })
           .catch(err => {
-            console.log(err.response.data);
-
-            setErrors(err.response.data.errors || {});
+            const newErrors = makeErrors(err.response.data.errors);
+            setErrors({ ...errors, ...newErrors });
             authFailAction();
           });
       });
