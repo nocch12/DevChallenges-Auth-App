@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div>
+    <div className="fixed top bg-transparent">
       <NavLink to="/logout">Logout</NavLink>
     </div>
   );

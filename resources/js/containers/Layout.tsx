@@ -10,12 +10,22 @@ const Layout: React.FC<any> = ({children}) => {
   console.log(state);
 
   let header = null;
-  if(state.profile.id) header = <Header />;
+  let mainClasses = [
+    'min-h-screen flex items-center justify-center pt-6 px-6'
+  ];
+
+  if(state.profile.id) {
+    header = <Header />;
+    mainClasses.push('bg-mygray-300');
+  }
+
 
   return (
     <React.Fragment>
       {header}
-      {children}
+      <main className={mainClasses.join(' ')}>
+        {children}
+      </main>
     </React.Fragment>
   );
 }

@@ -96,9 +96,9 @@ const Register: React.FC = () => {
   return (
     <div>
       {loader}
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div>
         <div className="max-w-lg w-full mb-6">
-          <div className="border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14">
+          <div className="border border-mygray-200 rounded-card pt-12 pb-10 px-8 sm:px-14">
             {/* introduction */}
             <section className="mb-8">
               <div className="mb-6">
@@ -164,7 +164,7 @@ const Register: React.FC = () => {
               </form>
             </section>
             {/* social */}
-            <section>
+            <section className="sm:px-16">
               <div className="mb-6 text-center text-mygray-200">
                 <p>or continue with these social profile</p>
               </div>

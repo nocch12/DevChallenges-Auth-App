@@ -1,9 +1,4 @@
-import React, {
-  FormEvent,
-  useState,
-  useCallback,
-  useMemo
-} from "react";
+import React, { FormEvent, useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
@@ -96,70 +91,68 @@ const Login: React.FC = () => {
   }, [state]);
 
   return (
-    <div>
+    <React.Fragment>
       {loader}
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="max-w-lg w-full mb-6">
-          <div className="border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14">
-            {/* introduction */}
-            <section className="mb-8">
-              <div className="mb-6">
-                <h2>devChallenges</h2>
-              </div>
-              <div className="mb-3">
-                <h3 className="text-lg font-semibold">Login</h3>
-              </div>
-            </section>
-            {/* form */}
-            <section className="mb-8">
-              <form onSubmit={loginHandler}>
-                <div className="mb-4">
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    value={form.email}
-                    errorMessage={errors.email}
-                    onChange={(e: any) => inputHandler("email", e.target.value)}
-                  />
-                </div>
-                <div className="mb-6">
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    value={form.password}
-                    errorMessage={errors.password}
-                    onChange={(e: any) =>
-                      inputHandler("password", e.target.value)
-                    }
-                  />
-                </div>
-                <div>
-                  <Button type="submit">Login</Button>
-                </div>
-              </form>
-            </section>
-            {/* social */}
-            <section>
-              <div className="mb-6 text-center text-mygray-200">
-                <p>or continue with these social profile</p>
+      <div className="max-w-lg w-full mb-6">
+        <div className="border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14">
+          {/* introduction */}
+          <section className="mb-8">
+            <div className="mb-6">
+              <h2>devChallenges</h2>
+            </div>
+            <div className="mb-3">
+              <h3 className="text-lg font-semibold">Login</h3>
+            </div>
+          </section>
+          {/* form */}
+          <section className="mb-8">
+            <form onSubmit={loginHandler}>
+              <div className="mb-4">
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  value={form.email}
+                  errorMessage={errors.email}
+                  onChange={(e: any) => inputHandler("email", e.target.value)}
+                />
               </div>
               <div className="mb-6">
-                <OAuthIcons />
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  value={form.password}
+                  errorMessage={errors.password}
+                  onChange={(e: any) =>
+                    inputHandler("password", e.target.value)
+                  }
+                />
               </div>
-              <div className="mb-6">
-                <p className="text-center text-mygray-200">
-                  <span>Don’t have an account yet?</span>
-                  <NavLink to="/register" className="text-myblue-200">
-                    {" "}
-                    Register
-                  </NavLink>
-                </p>
+              <div>
+                <Button type="submit">Login</Button>
               </div>
-            </section>
-          </div>
+            </form>
+          </section>
+          {/* social */}
+          <section className="sm:px-16">
+            <div className="mb-6 text-center text-mygray-200">
+              <p>or continue with these social profile</p>
+            </div>
+            <div className="mb-6">
+              <OAuthIcons />
+            </div>
+            <div className="mb-6">
+              <p className="text-center text-mygray-200">
+                <span>Don’t have an account yet?</span>
+                <NavLink to="/register" className="text-myblue-200">
+                  {" "}
+                  Register
+                </NavLink>
+              </p>
+            </div>
+          </section>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

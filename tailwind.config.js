@@ -18,7 +18,10 @@ module.exports = {
         },
         mygray: {
           100: "#828282",
-          200: "#BDBDBD"
+          200: "#BDBDBD",
+          300: "#FAFAFB",
+          400: "#E0E0E0",
+          500: "#D3D3D3",
         },
         myred: "#EB5757",
       },

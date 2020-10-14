@@ -72674,7 +72674,8 @@ var App = function () {
                 react_1.default.createElement(GuestRoute_1.default, { path: "/login", user: state.profile, component: Login_1.default }),
                 react_1.default.createElement(GuestRoute_1.default, { path: "/register", user: state.profile, component: Register_1.default }),
                 react_1.default.createElement(AuthRoute_1.default, { path: "/user", user: state.profile, component: User_1.default }),
-                react_1.default.createElement(AuthRoute_1.default, { path: "/logout", user: state.profile, component: Logout_1.default })))));
+                react_1.default.createElement(AuthRoute_1.default, { path: "/logout", user: state.profile, component: Logout_1.default }),
+                react_1.default.createElement(react_router_dom_1.Redirect, { to: "/login" })))));
 };
 exports.default = App;
 
@@ -72822,7 +72823,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var Header = function () {
-    return (react_1.default.createElement("div", null,
+    return (react_1.default.createElement("div", { className: "fixed top bg-transparent" },
         react_1.default.createElement(react_router_dom_1.NavLink, { to: "/logout" }, "Logout")));
 };
 exports.default = Header;
@@ -72850,13 +72851,34 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var Input = function (props) {
-    return (react_1.default.createElement("input", __assign({ className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none" }, props)));
+var ErrorText_1 = __importDefault(__webpack_require__(/*! ./ErrorText */ "./resources/js/components/ErrorText.tsx"));
+var Input = function (_a) {
+    var errorMessage = _a.errorMessage, rest = __rest(_a, ["errorMessage"]);
+    var classes = "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none";
+    var error = null;
+    if (errorMessage) {
+        error = react_1.default.createElement(ErrorText_1.default, null, errorMessage);
+        classes += " border-myred";
+    }
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("input", __assign({ className: classes }, rest)),
+        error));
 };
 exports.default = Input;
 
@@ -72939,11 +72961,16 @@ var Layout = function (_a) {
     var state = useAuth_1.useAuth().state;
     console.log(state);
     var header = null;
-    if (state.profile.id)
+    var mainClasses = [
+        'min-h-screen flex items-center justify-center pt-6 px-6'
+    ];
+    if (state.profile.id) {
         header = react_1.default.createElement(Header_1.default, null);
+        mainClasses.push('bg-mygray-300');
+    }
     return (react_1.default.createElement(react_1.default.Fragment, null,
         header,
-        children));
+        react_1.default.createElement("main", { className: mainClasses.join(' ') }, children)));
 };
 exports.default = Layout;
 
@@ -72959,6 +72986,17 @@ exports.default = Layout;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -72987,23 +73025,42 @@ var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/a
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
 var endpoints_1 = __webpack_require__(/*! ../endpoints */ "./resources/js/endpoints.ts");
+var authValidation_1 = __webpack_require__(/*! ../validation/authValidation */ "./resources/js/validation/authValidation.ts");
+var responseValidation_1 = __webpack_require__(/*! ../validation/responseValidation */ "./resources/js/validation/responseValidation.ts");
 var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
 var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
-var ErrorText_1 = __importDefault(__webpack_require__(/*! ../components/ErrorText */ "./resources/js/components/ErrorText.tsx"));
 var Login = function () {
-    var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
-    var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
+    var _a = react_1.useState({
+        email: "",
+        password: ""
+    }), form = _a[0], setForm = _a[1];
+    var _b = react_1.useState({}), errors = _b[0], setErrors = _b[1];
     var _c = useAuth_1.useAuth(), state = _c.state, authStartAction = _c.authStartAction, authSuccessAction = _c.authSuccessAction, authFailAction = _c.authFailAction;
     var loginHandler = function (e) {
         e.preventDefault();
-        login(email, password);
+        login(form.email, form.password);
+    };
+    var inputHandler = function (key, value) {
+        var _a;
+        var newForm = __assign(__assign({}, form), (_a = {}, _a[key] = value, _a));
+        setForm(newForm);
+        setErrorsHandler(key, value);
+    };
+    var setErrorsHandler = function (key, value) {
+        var _a;
+        var errorMsg = authValidation_1.validate(key, value);
+        var newErrors = (_a = {},
+            _a[key] = errorMsg,
+            _a);
+        setErrors(__assign(__assign({}, errors), newErrors));
     };
     var login = react_1.useCallback(function (email, password) {
         authStartAction();
         // ログイン時にCSRFトークンを初期化
         axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
+            setErrors({});
             axios_1.default
                 .post(endpoints_1.LOGIN_URL, {
                 email: email,
@@ -73018,6 +73075,8 @@ var Login = function () {
                 }
             })
                 .catch(function (err) {
+                var newErrors = responseValidation_1.makeErrors(err.response.data.errors);
+                setErrors(__assign(__assign({}, errors), newErrors));
                 authFailAction();
             });
         });
@@ -73025,45 +73084,36 @@ var Login = function () {
     var loader = react_1.useMemo(function () {
         return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
     }, [state]);
-    var errors = react_1.useMemo(function () {
-        var keys = Object.keys(state.errors);
-        if (!keys.length)
-            return null;
-        return keys.map(function (key) {
-            var text = state.errors[key];
-            return text ? react_1.default.createElement(ErrorText_1.default, { key: key }, text) : null;
-        });
-    }, [state]);
-    return (react_1.default.createElement("div", null,
+    return (react_1.default.createElement(react_1.default.Fragment, null,
         loader,
-        react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
-            react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
-                react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
-                    react_1.default.createElement("section", { className: "mb-8" },
+        react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
+            react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14" },
+                react_1.default.createElement("section", { className: "mb-8" },
+                    react_1.default.createElement("div", { className: "mb-6" },
+                        react_1.default.createElement("h2", null, "devChallenges")),
+                    react_1.default.createElement("div", { className: "mb-3" },
+                        react_1.default.createElement("h3", { className: "text-lg font-semibold" }, "Login"))),
+                react_1.default.createElement("section", { className: "mb-8" },
+                    react_1.default.createElement("form", { onSubmit: loginHandler },
+                        react_1.default.createElement("div", { className: "mb-4" },
+                            react_1.default.createElement(Input_1.default, { type: "email", placeholder: "Email", value: form.email, errorMessage: errors.email, onChange: function (e) { return inputHandler("email", e.target.value); } })),
                         react_1.default.createElement("div", { className: "mb-6" },
-                            react_1.default.createElement("h2", null, "devChallenges")),
-                        react_1.default.createElement("div", { className: "mb-3" },
-                            react_1.default.createElement("h3", { className: "text-lg font-semibold" }, "Login"))),
-                    react_1.default.createElement("section", { className: "mb-8" },
-                        errors,
-                        react_1.default.createElement("form", { onSubmit: loginHandler },
-                            react_1.default.createElement("div", { className: "mb-4" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
-                            react_1.default.createElement("div", { className: "mb-6" },
-                                react_1.default.createElement(Input_1.default, { type: "password", placeholder: "Password", value: password, onChange: function (e) { return setPassword(e.target.value); } })),
-                            react_1.default.createElement("div", null,
-                                react_1.default.createElement(Button_1.default, { type: "submit" }, "Login")))),
-                    react_1.default.createElement("section", null,
-                        react_1.default.createElement("div", { className: "mb-6 text-center text-mygray-200" },
-                            react_1.default.createElement("p", null, "or continue with these social profile")),
-                        react_1.default.createElement("div", { className: "mb-6" },
-                            react_1.default.createElement(OAuthIcons_1.default, null)),
-                        react_1.default.createElement("div", { className: "mb-6" },
-                            react_1.default.createElement("p", { className: "text-center text-mygray-200" },
-                                react_1.default.createElement("span", null, "Don\u2019t have an account yet?"),
-                                react_1.default.createElement(react_router_dom_1.NavLink, { to: "/register", className: "text-myblue-200" },
-                                    " ",
-                                    "Register")))))))));
+                            react_1.default.createElement(Input_1.default, { type: "password", placeholder: "Password", value: form.password, errorMessage: errors.password, onChange: function (e) {
+                                    return inputHandler("password", e.target.value);
+                                } })),
+                        react_1.default.createElement("div", null,
+                            react_1.default.createElement(Button_1.default, { type: "submit" }, "Login")))),
+                react_1.default.createElement("section", { className: "sm:px-16" },
+                    react_1.default.createElement("div", { className: "mb-6 text-center text-mygray-200" },
+                        react_1.default.createElement("p", null, "or continue with these social profile")),
+                    react_1.default.createElement("div", { className: "mb-6" },
+                        react_1.default.createElement(OAuthIcons_1.default, null)),
+                    react_1.default.createElement("div", { className: "mb-6" },
+                        react_1.default.createElement("p", { className: "text-center text-mygray-200" },
+                            react_1.default.createElement("span", null, "Don\u2019t have an account yet?"),
+                            react_1.default.createElement(react_router_dom_1.NavLink, { to: "/register", className: "text-myblue-200" },
+                                " ",
+                                "Register"))))))));
 };
 exports.default = Login;
 
@@ -73132,7 +73182,7 @@ var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js
 var SocialButton_1 = __importDefault(__webpack_require__(/*! ../components/SocialButton */ "./resources/js/components/SocialButton.tsx"));
 var OAuthIcons = function () {
     var oauth = useAuth_1.useAuth().oauth;
-    return (react_1.default.createElement("div", { className: "flex justify-between px-20" },
+    return (react_1.default.createElement("div", { className: "flex justify-between" },
         react_1.default.createElement(SocialButton_1.default, { type: "google", clicked: function () { return oauth("google"); } }),
         react_1.default.createElement(SocialButton_1.default, { type: "facebook", clicked: function () { return oauth("facebook"); } }),
         react_1.default.createElement(SocialButton_1.default, { type: "twitter", clicked: function () { return oauth("twitter"); } }),
@@ -73152,6 +73202,17 @@ exports.default = OAuthIcons;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -73180,20 +73241,39 @@ var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/a
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
 var endpoints_1 = __webpack_require__(/*! ../endpoints */ "./resources/js/endpoints.ts");
+var responseValidation_1 = __webpack_require__(/*! ../validation/responseValidation */ "./resources/js/validation/responseValidation.ts");
+var authValidation_1 = __webpack_require__(/*! ../validation/authValidation */ "./resources/js/validation/authValidation.ts");
 var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./resources/js/containers/OAuthIcons.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
+var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
 var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
-var ErrorText_1 = __importDefault(__webpack_require__(/*! ../components/ErrorText */ "./resources/js/components/ErrorText.tsx"));
 var Register = function () {
-    var _a = react_1.useState(""), email = _a[0], setEmail = _a[1];
-    var _b = react_1.useState(""), password = _b[0], setPassword = _b[1];
-    var _c = react_1.useState(""), passwordConfirmation = _c[0], setPasswordConfirmation = _c[1];
-    var _d = useAuth_1.useAuth(), state = _d.state, authStartAction = _d.authStartAction, authSuccessAction = _d.authSuccessAction, authFailAction = _d.authFailAction;
+    var _a = react_1.useState({
+        email: "",
+        password: "",
+        password_confirmation: ""
+    }), form = _a[0], setForm = _a[1];
+    var _b = react_1.useState({}), errors = _b[0], setErrors = _b[1];
+    var _c = useAuth_1.useAuth(), state = _c.state, authStartAction = _c.authStartAction, authSuccessAction = _c.authSuccessAction, authFailAction = _c.authFailAction;
     var registerHandler = function (e) {
         e.preventDefault();
-        register(email, password, passwordConfirmation);
+        register(form.email, form.password, form.password_confirmation);
     };
-    var register = react_1.useCallback(function (email, password, passwordConfirmation) {
+    var inputHandler = function (key, value) {
+        var _a;
+        var newForm = __assign(__assign({}, form), (_a = {}, _a[key] = value, _a));
+        setForm(newForm);
+        setErrorsHandler(key, value);
+    };
+    var setErrorsHandler = function (key, value) {
+        var _a;
+        var errorMsg = authValidation_1.validate(key, value);
+        var newErrors = (_a = {},
+            _a[key] = errorMsg,
+            _a);
+        setErrors(__assign(__assign({}, errors), newErrors));
+    };
+    var register = react_1.useCallback(function (email, password, password_confirmation) {
         authStartAction();
         // ログイン時にCSRFトークンを初期化
         axios_1.default.get("/sanctum/csrf-cookie").then(function (response) {
@@ -73201,7 +73281,7 @@ var Register = function () {
                 .post(endpoints_1.REGISTER_URL, {
                 email: email,
                 password: password,
-                password_confirmation: passwordConfirmation,
+                password_confirmation: password_confirmation
             })
                 .then(function (res) {
                 if (res.data.result) {
@@ -73212,6 +73292,8 @@ var Register = function () {
                 }
             })
                 .catch(function (err) {
+                var newErrors = responseValidation_1.makeErrors(err.response.data.errors);
+                setErrors(__assign(__assign({}, errors), newErrors));
                 authFailAction();
             });
         });
@@ -73219,20 +73301,11 @@ var Register = function () {
     var loader = react_1.useMemo(function () {
         return state.loading ? react_1.default.createElement(GlobalLoader_1.default, null) : null;
     }, [state]);
-    var errors = react_1.useMemo(function () {
-        var keys = Object.keys(state.errors);
-        if (!keys.length)
-            return null;
-        return keys.map(function (key) {
-            var text = state.errors[key];
-            return text ? react_1.default.createElement(ErrorText_1.default, { key: key }, text) : null;
-        });
-    }, [state]);
     return (react_1.default.createElement("div", null,
         loader,
-        react_1.default.createElement("div", { className: "min-h-screen flex items-center justify-center bg-gray-50" },
+        react_1.default.createElement("div", null,
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
-                react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-14" },
+                react_1.default.createElement("div", { className: "border border-mygray-200 rounded-card pt-12 pb-10 px-8 sm:px-14" },
                     react_1.default.createElement("section", { className: "mb-8" },
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("h2", null, "devChallenges")),
@@ -73246,17 +73319,20 @@ var Register = function () {
                                 react_1.default.createElement("span", { className: "sm:block" }, "projects. There are multiple paths for you to"),
                                 react_1.default.createElement("span", { className: "sm:block" }, "choose")))),
                     react_1.default.createElement("section", { className: "mb-8" },
-                        errors,
                         react_1.default.createElement("form", { onSubmit: registerHandler },
                             react_1.default.createElement("div", { className: "mb-4" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "email", placeholder: "Email", value: email, onChange: function (e) { return setEmail(e.target.value); } })),
+                                react_1.default.createElement(Input_1.default, { type: "email", placeholder: "Email", value: form.email, errorMessage: errors.email, onChange: function (e) { return inputHandler("email", e.target.value); } })),
                             react_1.default.createElement("div", { className: "mb-4" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password", value: password, onChange: function (e) { return setPassword(e.target.value); } })),
+                                react_1.default.createElement(Input_1.default, { type: "password", placeholder: "Password", value: form.password, errorMessage: errors.password, onChange: function (e) {
+                                        return inputHandler("password", e.target.value);
+                                    } })),
                             react_1.default.createElement("div", { className: "mb-6" },
-                                react_1.default.createElement("input", { className: "appearance-none block w-full bg-white text-black placeholder-mygray-200 border border-mygray-200 rounded-lg py-3 px-3 leading-tight focus:outline-none", type: "password", placeholder: "Password Repeat", value: passwordConfirmation, onChange: function (e) { return setPasswordConfirmation(e.target.value); } })),
+                                react_1.default.createElement(Input_1.default, { type: "password", placeholder: "Password confirmation", value: form.password_confirmation, errorMessage: errors.password_confirmation, onChange: function (e) {
+                                        return inputHandler("password_confirmation", e.target.value);
+                                    } })),
                             react_1.default.createElement("div", null,
                                 react_1.default.createElement(Button_1.default, { type: "submit" }, "Start coding now")))),
-                    react_1.default.createElement("section", null,
+                    react_1.default.createElement("section", { className: "sm:px-16" },
                         react_1.default.createElement("div", { className: "mb-6 text-center text-mygray-200" },
                             react_1.default.createElement("p", null, "or continue with these social profile")),
                         react_1.default.createElement("div", { className: "mb-6" },
@@ -73287,11 +73363,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var User = function () {
-    return (react_1.default.createElement("div", null,
-        "user",
-        react_1.default.createElement(react_router_dom_1.NavLink, { to: "/logout" }, "logout")));
+    return (react_1.default.createElement("div", null));
 };
 exports.default = User;
 
@@ -73528,10 +73601,9 @@ exports.authSuccess = function (profile) {
         profile: profile
     };
 };
-exports.authFail = function (errors) {
+exports.authFail = function () {
     return {
         type: exports.AUTH_FAIL,
-        errors: errors
     };
 };
 exports.authLogout = function () {
@@ -73619,7 +73691,6 @@ exports.initialProfile = {
 };
 exports.initialState = {
     profile: __assign({}, exports.initialProfile),
-    errors: {},
     loading: false,
     authRedirectPath: "/",
     initChecking: true
@@ -73629,10 +73700,9 @@ var reducer = function (state, action) {
         case actions_1.AUTH_START:
             return __assign(__assign({}, state), { loading: true });
         case actions_1.AUTH_SUCCESS:
-            console.log(1, state, action);
-            return __assign(__assign({}, state), { profile: action.profile, errors: {}, loading: false, initChecking: false });
+            return __assign(__assign({}, state), { profile: action.profile, loading: false, initChecking: false });
         case actions_1.AUTH_FAIL:
-            return __assign(__assign({}, state), { errors: action.errors || {}, loading: false, initChecking: false });
+            return __assign(__assign({}, state), { loading: false, initChecking: false });
         case actions_1.LOGOUT:
             return __assign(__assign({}, exports.initialState), { initChecking: false });
         default:
@@ -73672,22 +73742,22 @@ exports.useAuth = function () {
         dispatch(actions_1.authSuccess(profile));
     }, [dispatch, actions_1.authSuccess]);
     var authFailAction = react_1.useCallback(function () {
-        dispatch(actions_1.authFail({}));
+        dispatch(actions_1.authFail());
     }, [dispatch, actions_1.authFail]);
     var authCheck = react_1.useCallback(function () {
         // // ログイン時にCSRFトークンを初期化
         axios_1.default
             .get(endpoints_1.GET_USER_URL)
             .then(function (res) {
-            if (res.data.success) {
+            if (res.data) {
                 dispatch(actions_1.authSuccess(res.data));
             }
             else {
-                dispatch(actions_1.authFail({ message: 'Sorry, somthing went wrong' }));
+                dispatch(actions_1.authFail());
             }
         })
             .catch(function (err) {
-            dispatch(actions_1.authFail({}));
+            dispatch(actions_1.authFail());
         });
     }, [dispatch, actions_1.authStart, actions_1.authSuccess, actions_1.authFail]);
     var oauth = function (type) {
@@ -73715,6 +73785,104 @@ exports.useAuth = function () {
         axios_1.default.get(endpoints_1.LOGOUT_URL);
     }, [dispatch, actions_1.authLogout]);
     return { state: state, authStartAction: authStartAction, authSuccessAction: authSuccessAction, authFailAction: authFailAction, logout: logout, oauth: oauth, authCheck: authCheck };
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/validation/authValidation.ts":
+/*!***************************************************!*\
+  !*** ./resources/js/validation/authValidation.ts ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validate = void 0;
+var FIELD = {
+    email: 'email',
+    password: 'password',
+    password_confirmation: 'password_confirmation'
+};
+var MESSAGE = {
+    email: {
+        required: 'email field is required'
+    },
+    password: {
+        required: 'password field is required',
+        min: 'password must be at least 8 characters.'
+    },
+};
+var emailValidation = function (value) {
+    if (value == '' || !value)
+        return MESSAGE.email.required;
+    return '';
+};
+var passwordValidation = function (value) {
+    if (value == '' || !value)
+        return MESSAGE.password.required;
+    if (value.length < 8)
+        return 'password must be at least 8 characters.';
+    return '';
+};
+exports.validate = function (key, value) {
+    switch (key) {
+        case FIELD.email:
+            return emailValidation(value);
+        case FIELD.password:
+            return passwordValidation(value);
+        case FIELD.password_confirmation:
+            return passwordValidation(value);
+        default:
+            return '';
+    }
+};
+
+
+/***/ }),
+
+/***/ "./resources/js/validation/responseValidation.ts":
+/*!*******************************************************!*\
+  !*** ./resources/js/validation/responseValidation.ts ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.makeErrors = exports.makeErrorMessage = void 0;
+exports.makeErrorMessage = function (errors) {
+    if (!errors.length)
+        return '';
+    if (Array.isArray(errors)) {
+        return errors[0];
+    }
+    return errors;
+};
+exports.makeErrors = function (responseErrors) {
+    var _a;
+    var data = {};
+    for (var key in responseErrors) {
+        if (Object.prototype.hasOwnProperty.call(responseErrors, key)) {
+            var error = responseErrors[key];
+            data = __assign(__assign({}, data), (_a = {}, _a[key] = error, _a));
+        }
+    }
+    return data;
 };
 
 
