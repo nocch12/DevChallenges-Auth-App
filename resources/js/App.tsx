@@ -7,7 +7,7 @@
 require("./bootstrap");
 
 import React from "react";
-import { Switch, BrowserRouter } from "react-router-dom";
+import { Switch, BrowserRouter, Redirect } from "react-router-dom";
 import {useAuth} from './store/auth/useAuth'
 import AuthRoute from './routes/AuthRoute';
 import GuestRoute from './routes/GuestRoute';
@@ -29,6 +29,7 @@ const App: React.FC = () => {
           <GuestRoute path="/register" user={state.profile} component={Register} />
           <AuthRoute path="/user" user={state.profile} component={User} />
           <AuthRoute path="/logout" user={state.profile} component={Logout} />
+          <Redirect to="/login" />
         </Switch>
       </Layout>
     </BrowserRouter>
