@@ -10,7 +10,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        myblack: "#333333",
+        myblack: {
+          100: "#333333",
+          200: "#4F4F4F",
+        },
         myblue: {
           100: "#2F80ED",
           200: "#2D9CDB",
@@ -22,15 +25,20 @@ module.exports = {
           300: "#FAFAFB",
           400: "#E0E0E0",
           500: "#D3D3D3",
+          600: "#F2F2F2",
         },
         myred: "#EB5757",
       },
       borderRadius: {
+        popup: '12px',
         card: '24px',
       },
       spacing: {
         '14': '3.5rem',
-      }
+      },
+      inset: {
+        '100': '100%'
+      },
     }
   },
   variants: {},
