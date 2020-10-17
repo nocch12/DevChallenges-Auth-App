@@ -82178,6 +82178,30 @@ exports.default = Button;
 
 /***/ }),
 
+/***/ "./resources/js/components/DeveloperInfo.tsx":
+/*!***************************************************!*\
+  !*** ./resources/js/components/DeveloperInfo.tsx ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var DeveloperInfo = function () {
+    return (react_1.default.createElement("div", { id: "developer-info", className: "text-sm text-mygray-200 flex justify-between" },
+        react_1.default.createElement("p", null, "Kohki Ohno"),
+        react_1.default.createElement("p", null, "devchallenges.io")));
+};
+exports.default = DeveloperInfo;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ErrorText.tsx":
 /*!***********************************************!*\
   !*** ./resources/js/components/ErrorText.tsx ***!
@@ -82396,7 +82420,7 @@ var ExitToApp_1 = __importDefault(__webpack_require__(/*! @material-ui/icons/Exi
 var NavItems = react_1.default.forwardRef(function (_a, ref) {
     var isShow = _a.isShow, clicked = _a.clicked;
     var navClasses = [
-        'w-48 absolute top-100 right-0 bg-white border border-mygray-400 shadow p-3 rounded-popup'
+        'w-48 absolute top-100 right-0 bg-white border border-mygray-400 shadow p-3 rounded-xl'
     ];
     if (!isShow) {
         navClasses.push('hidden');
@@ -82437,8 +82461,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var ProfileItem = function (_a) {
-    var label = _a.label, children = _a.children;
-    return (react_1.default.createElement("div", { className: "p-5 border-b border-mygray-400" },
+    var label = _a.label, borderNone = _a.borderNone, children = _a.children;
+    var mainClasses = ['p-5'];
+    if (!borderNone) {
+        mainClasses.push('border-b border-mygray-400');
+    }
+    return (react_1.default.createElement("div", { className: mainClasses.join(' ') },
         react_1.default.createElement("div", { className: "flex flex-no-wrap items-center justify-between" },
             react_1.default.createElement("div", { className: "text-mygray-200 w-56" },
                 react_1.default.createElement("p", null, label)),
@@ -82501,17 +82529,17 @@ var Layout = function (_a) {
     var state = useAuth_1.useAuth().state;
     console.log(state);
     var header = null;
-    var mainClasses = ['min-h-screen'];
+    var mainClasses = ["min-h-screen"];
     if (state.profile.id) {
         header = react_1.default.createElement(Header_1.default, null);
-        mainClasses.push('bg-mygray-300 pt-12 md:pt-16');
+        mainClasses.push("bg-mygray-300 pt-12 md:pt-16");
     }
     else {
-        mainClasses.push('flex justify-center items-center');
+        mainClasses.push("flex justify-center items-center");
     }
     return (react_1.default.createElement(react_1.default.Fragment, null,
         header,
-        react_1.default.createElement("main", { className: mainClasses.join(' ') }, children)));
+        react_1.default.createElement("main", { className: mainClasses.join(" ") }, children)));
 };
 exports.default = Layout;
 
@@ -82572,6 +82600,7 @@ var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./re
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
 var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
+var DeveloperInfo_1 = __importDefault(__webpack_require__(/*! ../components/DeveloperInfo */ "./resources/js/components/DeveloperInfo.tsx"));
 var Login = function () {
     var _a = react_1.useState({
         email: "",
@@ -82627,8 +82656,8 @@ var Login = function () {
     }, [state]);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         loader,
-        react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
-            react_1.default.createElement("div", { className: "md:border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14" },
+        react_1.default.createElement("div", { className: "max-w-lg w-full mb-6 px-5 md:px-0" },
+            react_1.default.createElement("div", { className: "md:border border-mygray-200 bg-white rounded-card pt-12 md:pb-10 md:px-14" },
                 react_1.default.createElement("section", { className: "mb-8" },
                     react_1.default.createElement("div", { className: "mb-6" },
                         react_1.default.createElement("h2", null, "devChallenges")),
@@ -82654,7 +82683,8 @@ var Login = function () {
                             react_1.default.createElement("span", null, "Don\u2019t have an account yet?"),
                             react_1.default.createElement(react_router_dom_1.NavLink, { to: "/register", className: "text-myblue-200" },
                                 " ",
-                                "Register"))))))));
+                                "Register"))))),
+            react_1.default.createElement(DeveloperInfo_1.default, null))));
 };
 exports.default = Login;
 
@@ -82788,6 +82818,7 @@ var OAuthIcons_1 = __importDefault(__webpack_require__(/*! ./OAuthIcons */ "./re
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
 var Input_1 = __importDefault(__webpack_require__(/*! ../components/Input */ "./resources/js/components/Input.tsx"));
 var GlobalLoader_1 = __importDefault(__webpack_require__(/*! ../components/GlobalLoader */ "./resources/js/components/GlobalLoader.tsx"));
+var DeveloperInfo_1 = __importDefault(__webpack_require__(/*! ../components/DeveloperInfo */ "./resources/js/components/DeveloperInfo.tsx"));
 var Register = function () {
     var _a = react_1.useState({
         email: "",
@@ -82845,8 +82876,8 @@ var Register = function () {
     return (react_1.default.createElement("div", null,
         loader,
         react_1.default.createElement("div", null,
-            react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
-                react_1.default.createElement("div", { className: "md:border border-mygray-200 rounded-card pt-12 pb-10 px-8 sm:px-14" },
+            react_1.default.createElement("div", { className: "max-w-lg w-full mb-6 px-5 md:px-0" },
+                react_1.default.createElement("div", { className: "md:border border-mygray-200 rounded-card pt-12 md:pb-10 sm:px-14" },
                     react_1.default.createElement("section", { className: "mb-8" },
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("h2", null, "devChallenges")),
@@ -82883,7 +82914,8 @@ var Register = function () {
                                 react_1.default.createElement("span", null, "Adready a member?"),
                                 react_1.default.createElement(react_router_dom_1.NavLink, { to: "/login", className: "text-myblue-200" },
                                     " ",
-                                    "Login")))))))));
+                                    "Login"))))))),
+        react_1.default.createElement(DeveloperInfo_1.default, null)));
 };
 exports.default = Register;
 
@@ -82905,13 +82937,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
 var ProfileItem_1 = __importDefault(__webpack_require__(/*! ../components/ProfileItem */ "./resources/js/components/ProfileItem.tsx"));
+var DeveloperInfo_1 = __importDefault(__webpack_require__(/*! ../components/DeveloperInfo */ "./resources/js/components/DeveloperInfo.tsx"));
 var User = function () {
-    return (react_1.default.createElement("div", { className: "pt-6" },
+    var state = useAuth_1.useAuth().state;
+    return (react_1.default.createElement("div", { className: "pt-6 max-w-content mx-auto" },
         react_1.default.createElement("section", { className: "text-black text-center mb-8" },
-            react_1.default.createElement("h1", { className: "text-2xl mb-2" }, "Personal info"),
-            react_1.default.createElement("p", { className: "text-sm" }, "Basic info, like your name and photo")),
-        react_1.default.createElement("section", null,
+            react_1.default.createElement("h1", { className: "text-2xl mb-2 md:text-4xl" }, "Personal info"),
+            react_1.default.createElement("p", { className: "text-sm md:text-lg" }, "Basic info, like your name and photo")),
+        react_1.default.createElement("section", { className: "border-b md:border md:rounded-xl border-mygray-400" },
             react_1.default.createElement("div", { className: "p-5 border-b border-mygray-400" },
                 react_1.default.createElement("div", { className: "flex items-center" },
                     react_1.default.createElement("div", { className: "flex-grow" },
@@ -82921,15 +82956,18 @@ var User = function () {
                         react_1.default.createElement(react_router_dom_1.NavLink, { className: "border rounded-lg border-mygray-100 text-mygray-100 text-center py-2 px-6", to: "user" }, "Edit")))),
             react_1.default.createElement(ProfileItem_1.default, { label: "PHOTO" },
                 react_1.default.createElement("div", { className: "flex justify-end" },
-                    react_1.default.createElement("img", { className: "h-18 w-18 rounded-md", src: "aaa.jpg", alt: "" }))),
+                    state.profile.image,
+                    react_1.default.createElement("img", { className: "h-18 w-18 rounded-md", src: "aaa.jpg", alt: "profile-image" }))),
             react_1.default.createElement(ProfileItem_1.default, { label: "NAME" },
-                react_1.default.createElement("p", { className: "truncate" }, "KOHKI OHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNO")),
+                react_1.default.createElement("p", { className: "truncate" }, state.profile.name)),
             react_1.default.createElement(ProfileItem_1.default, { label: "BIO" },
-                react_1.default.createElement("p", { className: "truncate" }, "KOHKI OHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNO")),
+                react_1.default.createElement("p", { className: "truncate" }, state.profile.biography)),
             react_1.default.createElement(ProfileItem_1.default, { label: "EMAIL" },
-                react_1.default.createElement("p", { className: "truncate" }, "KOHKI OHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNO")),
-            react_1.default.createElement(ProfileItem_1.default, { label: "PASSWORD" },
-                react_1.default.createElement("p", { className: "truncate" }, "********")))));
+                react_1.default.createElement("p", { className: "truncate" }, state.profile.email)),
+            react_1.default.createElement(ProfileItem_1.default, { label: "PASSWORD", borderNone: true },
+                react_1.default.createElement("p", { className: "truncate" }, "********"))),
+        react_1.default.createElement("div", { className: "px-5 md:px-0" },
+            react_1.default.createElement(DeveloperInfo_1.default, null))));
 };
 exports.default = User;
 

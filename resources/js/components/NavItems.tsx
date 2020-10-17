@@ -12,7 +12,7 @@ type PropType = {
 const NavItems = React.forwardRef<HTMLDivElement, PropType>(({isShow, clicked}, ref) => {
 
   let navClasses = [
-    'w-48 absolute top-100 right-0 bg-white border border-mygray-400 shadow p-3 rounded-popup'
+    'w-48 absolute top-100 right-0 bg-white border border-mygray-400 shadow p-3 rounded-xl'
   ];
 
   if(!isShow) {

@@ -10415,7 +10415,7 @@ video {
   border-radius: 9999px;
 }
 
-.rounded-popup {
+.rounded-xl {
   border-radius: 12px;
 }
 
@@ -10543,22 +10543,22 @@ video {
   border-bottom-left-radius: 9999px;
 }
 
-.rounded-t-popup {
+.rounded-t-xl {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-.rounded-r-popup {
+.rounded-r-xl {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
-.rounded-b-popup {
+.rounded-b-xl {
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
 }
 
-.rounded-l-popup {
+.rounded-l-xl {
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 }
@@ -10679,19 +10679,19 @@ video {
   border-bottom-left-radius: 9999px;
 }
 
-.rounded-tl-popup {
+.rounded-tl-xl {
   border-top-left-radius: 12px;
 }
 
-.rounded-tr-popup {
+.rounded-tr-xl {
   border-top-right-radius: 12px;
 }
 
-.rounded-br-popup {
+.rounded-br-xl {
   border-bottom-right-radius: 12px;
 }
 
-.rounded-bl-popup {
+.rounded-bl-xl {
   border-bottom-left-radius: 12px;
 }
 
@@ -12887,6 +12887,10 @@ video {
 
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.max-w-content {
+  max-width: 845px;
 }
 
 .min-h-0 {
@@ -33030,7 +33034,7 @@ video {
     border-radius: 9999px;
   }
 
-  .sm\:rounded-popup {
+  .sm\:rounded-xl {
     border-radius: 12px;
   }
 
@@ -33158,22 +33162,22 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .sm\:rounded-t-popup {
+  .sm\:rounded-t-xl {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
 
-  .sm\:rounded-r-popup {
+  .sm\:rounded-r-xl {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
   }
 
-  .sm\:rounded-b-popup {
+  .sm\:rounded-b-xl {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
   }
 
-  .sm\:rounded-l-popup {
+  .sm\:rounded-l-xl {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
   }
@@ -33294,19 +33298,19 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .sm\:rounded-tl-popup {
+  .sm\:rounded-tl-xl {
     border-top-left-radius: 12px;
   }
 
-  .sm\:rounded-tr-popup {
+  .sm\:rounded-tr-xl {
     border-top-right-radius: 12px;
   }
 
-  .sm\:rounded-br-popup {
+  .sm\:rounded-br-xl {
     border-bottom-right-radius: 12px;
   }
 
-  .sm\:rounded-bl-popup {
+  .sm\:rounded-bl-xl {
     border-bottom-left-radius: 12px;
   }
 
@@ -35502,6 +35506,10 @@ video {
 
   .sm\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .sm\:max-w-content {
+    max-width: 845px;
   }
 
   .sm\:min-h-0 {
@@ -55580,7 +55588,7 @@ video {
     border-radius: 9999px;
   }
 
-  .md\:rounded-popup {
+  .md\:rounded-xl {
     border-radius: 12px;
   }
 
@@ -55708,22 +55716,22 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .md\:rounded-t-popup {
+  .md\:rounded-t-xl {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
 
-  .md\:rounded-r-popup {
+  .md\:rounded-r-xl {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
   }
 
-  .md\:rounded-b-popup {
+  .md\:rounded-b-xl {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
   }
 
-  .md\:rounded-l-popup {
+  .md\:rounded-l-xl {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
   }
@@ -55844,19 +55852,19 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .md\:rounded-tl-popup {
+  .md\:rounded-tl-xl {
     border-top-left-radius: 12px;
   }
 
-  .md\:rounded-tr-popup {
+  .md\:rounded-tr-xl {
     border-top-right-radius: 12px;
   }
 
-  .md\:rounded-br-popup {
+  .md\:rounded-br-xl {
     border-bottom-right-radius: 12px;
   }
 
-  .md\:rounded-bl-popup {
+  .md\:rounded-bl-xl {
     border-bottom-left-radius: 12px;
   }
 
@@ -58052,6 +58060,10 @@ video {
 
   .md\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .md\:max-w-content {
+    max-width: 845px;
   }
 
   .md\:min-h-0 {
@@ -78130,7 +78142,7 @@ video {
     border-radius: 9999px;
   }
 
-  .lg\:rounded-popup {
+  .lg\:rounded-xl {
     border-radius: 12px;
   }
 
@@ -78258,22 +78270,22 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .lg\:rounded-t-popup {
+  .lg\:rounded-t-xl {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
 
-  .lg\:rounded-r-popup {
+  .lg\:rounded-r-xl {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
   }
 
-  .lg\:rounded-b-popup {
+  .lg\:rounded-b-xl {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
   }
 
-  .lg\:rounded-l-popup {
+  .lg\:rounded-l-xl {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
   }
@@ -78394,19 +78406,19 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .lg\:rounded-tl-popup {
+  .lg\:rounded-tl-xl {
     border-top-left-radius: 12px;
   }
 
-  .lg\:rounded-tr-popup {
+  .lg\:rounded-tr-xl {
     border-top-right-radius: 12px;
   }
 
-  .lg\:rounded-br-popup {
+  .lg\:rounded-br-xl {
     border-bottom-right-radius: 12px;
   }
 
-  .lg\:rounded-bl-popup {
+  .lg\:rounded-bl-xl {
     border-bottom-left-radius: 12px;
   }
 
@@ -80602,6 +80614,10 @@ video {
 
   .lg\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .lg\:max-w-content {
+    max-width: 845px;
   }
 
   .lg\:min-h-0 {
@@ -100680,7 +100696,7 @@ video {
     border-radius: 9999px;
   }
 
-  .xl\:rounded-popup {
+  .xl\:rounded-xl {
     border-radius: 12px;
   }
 
@@ -100808,22 +100824,22 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .xl\:rounded-t-popup {
+  .xl\:rounded-t-xl {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
 
-  .xl\:rounded-r-popup {
+  .xl\:rounded-r-xl {
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
   }
 
-  .xl\:rounded-b-popup {
+  .xl\:rounded-b-xl {
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
   }
 
-  .xl\:rounded-l-popup {
+  .xl\:rounded-l-xl {
     border-top-left-radius: 12px;
     border-bottom-left-radius: 12px;
   }
@@ -100944,19 +100960,19 @@ video {
     border-bottom-left-radius: 9999px;
   }
 
-  .xl\:rounded-tl-popup {
+  .xl\:rounded-tl-xl {
     border-top-left-radius: 12px;
   }
 
-  .xl\:rounded-tr-popup {
+  .xl\:rounded-tr-xl {
     border-top-right-radius: 12px;
   }
 
-  .xl\:rounded-br-popup {
+  .xl\:rounded-br-xl {
     border-bottom-right-radius: 12px;
   }
 
-  .xl\:rounded-bl-popup {
+  .xl\:rounded-bl-xl {
     border-bottom-left-radius: 12px;
   }
 
@@ -103152,6 +103168,10 @@ video {
 
   .xl\:max-w-screen-xl {
     max-width: 1280px;
+  }
+
+  .xl\:max-w-content {
+    max-width: 845px;
   }
 
   .xl\:min-h-0 {

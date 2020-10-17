@@ -30,7 +30,7 @@ module.exports = {
         myred: "#EB5757",
       },
       borderRadius: {
-        popup: '12px',
+        xl: '12px',
         card: '24px',
       },
       spacing: {
@@ -38,6 +38,9 @@ module.exports = {
       },
       width: {
         '18': '4.5rem',
+      },
+      maxWidth: {
+        'content': '845px'
       },
       height: {
         '18': '4.5rem',

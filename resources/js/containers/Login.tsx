@@ -10,6 +10,7 @@ import OAuthIcons from "./OAuthIcons";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import GlobalLoader from "../components/GlobalLoader";
+import DeveloperInfo from "../components/DeveloperInfo";
 
 interface IErrors {
   email?: string;
@@ -93,8 +94,8 @@ const Login: React.FC = () => {
   return (
     <React.Fragment>
       {loader}
-      <div className="max-w-lg w-full mb-6">
-        <div className="md:border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14">
+      <div className="max-w-lg w-full mb-6 px-5 md:px-0">
+        <div className="md:border border-mygray-200 bg-white rounded-card pt-12 md:pb-10 md:px-14">
           {/* introduction */}
           <section className="mb-8">
             <div className="mb-6">
@@ -151,6 +152,7 @@ const Login: React.FC = () => {
             </div>
           </section>
         </div>
+        <DeveloperInfo />
       </div>
     </React.Fragment>
   );
