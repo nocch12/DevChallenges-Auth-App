@@ -17,6 +17,7 @@ import Login from "./containers/Login";
 import Logout from "./containers/Logout";
 import Register from "./containers/Register";
 import User from "./containers/User";
+import Edit from "./containers/Edit";
 
 const App: React.FC = () => {
   const {state} = useAuth();
@@ -27,7 +28,8 @@ const App: React.FC = () => {
         <Switch>
           <GuestRoute path="/login" user={state.profile} component={Login} />
           <GuestRoute path="/register" user={state.profile} component={Register} />
-          <AuthRoute path="/user" user={state.profile} component={User} />
+          <AuthRoute path="/user" exact user={state.profile} component={User} />
+          <AuthRoute path="/user/edit" user={state.profile} component={Edit} />
           <AuthRoute path="/logout" user={state.profile} component={Logout} />
           <Redirect to="/login" />
         </Switch>

@@ -9,7 +9,7 @@ const Layout: React.FC<any> = ({ children }) => {
   console.log(state);
 
   let header = null;
-  let mainClasses = ["min-h-screen"];
+  let mainClasses = ["min-h-screen pb-12"];
 
   if (state.profile.id) {
     header = <Header />;

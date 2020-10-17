@@ -30,7 +30,7 @@ const User = () => {
             <div className="w-56 text-right">
               <NavLink
                 className="border rounded-lg border-mygray-100 text-mygray-100 text-center py-2 px-6"
-                to="user"
+                to="/user/edit"
               >
                 Edit
               </NavLink>
