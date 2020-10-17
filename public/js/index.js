@@ -82286,7 +82286,7 @@ var Header = function () {
         navItems = (react_1.default.createElement(NavItems_1.default, { ref: ref, isShow: navShow, clicked: toggleNavHandler }));
     }
     return (react_1.default.createElement("header", { className: "fixed w-full top-0 left-0 bg-transparent px-3 md:px-16" },
-        react_1.default.createElement("div", { className: "relative flex items-center justify-between py-3 md:py-6" },
+        react_1.default.createElement("div", { className: "relative flex items-center justify-between h-12 md:h-16" },
             react_1.default.createElement("div", { className: "" },
                 react_1.default.createElement("h1", null, "devchallenges")),
             react_1.default.createElement("div", { className: "", onClick: toggleNavHandler }, "Image"),
@@ -82422,6 +82422,33 @@ exports.default = NavItems;
 
 /***/ }),
 
+/***/ "./resources/js/components/ProfileItem.tsx":
+/*!*************************************************!*\
+  !*** ./resources/js/components/ProfileItem.tsx ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ProfileItem = function (_a) {
+    var label = _a.label, children = _a.children;
+    return (react_1.default.createElement("div", { className: "p-5 border-b border-mygray-400" },
+        react_1.default.createElement("div", { className: "flex flex-no-wrap items-center justify-between" },
+            react_1.default.createElement("div", { className: "text-mygray-200 w-56" },
+                react_1.default.createElement("p", null, label)),
+            react_1.default.createElement("div", { className: "text-myblack-100 flex-grow text-right overflow-hidden" }, children))));
+};
+exports.default = ProfileItem;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/SocialButton.tsx":
 /*!**************************************************!*\
   !*** ./resources/js/components/SocialButton.tsx ***!
@@ -82474,12 +82501,13 @@ var Layout = function (_a) {
     var state = useAuth_1.useAuth().state;
     console.log(state);
     var header = null;
-    var mainClasses = [
-        'min-h-screen flex items-center justify-center pt-6 px-6'
-    ];
+    var mainClasses = ['min-h-screen'];
     if (state.profile.id) {
         header = react_1.default.createElement(Header_1.default, null);
-        mainClasses.push('bg-mygray-300');
+        mainClasses.push('bg-mygray-300 pt-12 md:pt-16');
+    }
+    else {
+        mainClasses.push('flex justify-center items-center');
     }
     return (react_1.default.createElement(react_1.default.Fragment, null,
         header,
@@ -82600,7 +82628,7 @@ var Login = function () {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         loader,
         react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
-            react_1.default.createElement("div", { className: "border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14" },
+            react_1.default.createElement("div", { className: "md:border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14" },
                 react_1.default.createElement("section", { className: "mb-8" },
                     react_1.default.createElement("div", { className: "mb-6" },
                         react_1.default.createElement("h2", null, "devChallenges")),
@@ -82818,7 +82846,7 @@ var Register = function () {
         loader,
         react_1.default.createElement("div", null,
             react_1.default.createElement("div", { className: "max-w-lg w-full mb-6" },
-                react_1.default.createElement("div", { className: "border border-mygray-200 rounded-card pt-12 pb-10 px-8 sm:px-14" },
+                react_1.default.createElement("div", { className: "md:border border-mygray-200 rounded-card pt-12 pb-10 px-8 sm:px-14" },
                     react_1.default.createElement("section", { className: "mb-8" },
                         react_1.default.createElement("div", { className: "mb-6" },
                             react_1.default.createElement("h2", null, "devChallenges")),
@@ -82876,8 +82904,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var ProfileItem_1 = __importDefault(__webpack_require__(/*! ../components/ProfileItem */ "./resources/js/components/ProfileItem.tsx"));
 var User = function () {
-    return (react_1.default.createElement("div", null));
+    return (react_1.default.createElement("div", { className: "pt-6" },
+        react_1.default.createElement("section", { className: "text-black text-center mb-8" },
+            react_1.default.createElement("h1", { className: "text-2xl mb-2" }, "Personal info"),
+            react_1.default.createElement("p", { className: "text-sm" }, "Basic info, like your name and photo")),
+        react_1.default.createElement("section", null,
+            react_1.default.createElement("div", { className: "p-5 border-b border-mygray-400" },
+                react_1.default.createElement("div", { className: "flex items-center" },
+                    react_1.default.createElement("div", { className: "flex-grow" },
+                        react_1.default.createElement("h2", { className: "text-2xl mb-1" }, "Profile"),
+                        react_1.default.createElement("p", { className: "text-sm text-mygray-100" }, "Some info may be visible to other people")),
+                    react_1.default.createElement("div", { className: "w-56 text-right" },
+                        react_1.default.createElement(react_router_dom_1.NavLink, { className: "border rounded-lg border-mygray-100 text-mygray-100 text-center py-2 px-6", to: "user" }, "Edit")))),
+            react_1.default.createElement(ProfileItem_1.default, { label: "PHOTO" },
+                react_1.default.createElement("div", { className: "flex justify-end" },
+                    react_1.default.createElement("img", { className: "h-18 w-18 rounded-md", src: "aaa.jpg", alt: "" }))),
+            react_1.default.createElement(ProfileItem_1.default, { label: "NAME" },
+                react_1.default.createElement("p", { className: "truncate" }, "KOHKI OHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNO")),
+            react_1.default.createElement(ProfileItem_1.default, { label: "BIO" },
+                react_1.default.createElement("p", { className: "truncate" }, "KOHKI OHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNO")),
+            react_1.default.createElement(ProfileItem_1.default, { label: "EMAIL" },
+                react_1.default.createElement("p", { className: "truncate" }, "KOHKI OHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNOOHNO")),
+            react_1.default.createElement(ProfileItem_1.default, { label: "PASSWORD" },
+                react_1.default.createElement("p", { className: "truncate" }, "********")))));
 };
 exports.default = User;
 

@@ -10,13 +10,13 @@ const Layout: React.FC<any> = ({children}) => {
   console.log(state);
 
   let header = null;
-  let mainClasses = [
-    'min-h-screen flex items-center justify-center pt-6 px-6'
-  ];
+  let mainClasses = ['min-h-screen'];
 
   if(state.profile.id) {
     header = <Header />;
-    mainClasses.push('bg-mygray-300');
+    mainClasses.push('bg-mygray-300 pt-12 md:pt-16');
+  } else {
+    mainClasses.push('flex justify-center items-center');
   }
 
 

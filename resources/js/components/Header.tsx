@@ -40,7 +40,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed w-full top-0 left-0 bg-transparent px-3 md:px-16">
-      <div className="relative flex items-center justify-between py-3 md:py-6">
+      <div className="relative flex items-center justify-between h-12 md:h-16">
         <div className="">
           <h1>devchallenges</h1>
         </div>

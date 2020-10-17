@@ -94,7 +94,7 @@ const Login: React.FC = () => {
     <React.Fragment>
       {loader}
       <div className="max-w-lg w-full mb-6">
-        <div className="border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14">
+        <div className="md:border border-mygray-200 bg-white rounded-card pt-12 pb-10 px-8 sm:px-14">
           {/* introduction */}
           <section className="mb-8">
             <div className="mb-6">
