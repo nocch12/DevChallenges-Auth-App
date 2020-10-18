@@ -42,29 +42,32 @@ const User = () => {
         <ProfileItem label="PHOTO">
           <div className="flex justify-end">
             {state.profile.image}
-            <img className="h-18 w-18 rounded-md" src="aaa.jpg" alt="profile-image" />
+            <img
+              className="h-18 w-18 rounded-md"
+              src="aaa.jpg"
+              alt="profile-image"
+            />
           </div>
         </ProfileItem>
 
         {/* NAME */}
         <ProfileItem label="NAME">
-          <p className="truncate">
-            {state.profile.name}
-          </p>
+          <p className="truncate">{state.profile.name}</p>
         </ProfileItem>
 
         {/* BIO */}
         <ProfileItem label="BIO">
-          <p className="truncate">
-            {state.profile.biography}
-          </p>
+          <p className="truncate">{state.profile.biography}</p>
+        </ProfileItem>
+
+        {/* BIO */}
+        <ProfileItem label="PHOTO">
+          <p className="truncate">{state.profile.phone}</p>
         </ProfileItem>
 
         {/* EMAIL */}
         <ProfileItem label="EMAIL">
-          <p className="truncate">
-            {state.profile.email}
-          </p>
+          <p className="truncate">{state.profile.email}</p>
         </ProfileItem>
 
         {/* PASSWORD */}

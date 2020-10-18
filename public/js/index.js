@@ -82084,6 +82084,7 @@ var Login_1 = __importDefault(__webpack_require__(/*! ./containers/Login */ "./r
 var Logout_1 = __importDefault(__webpack_require__(/*! ./containers/Logout */ "./resources/js/containers/Logout.tsx"));
 var Register_1 = __importDefault(__webpack_require__(/*! ./containers/Register */ "./resources/js/containers/Register.tsx"));
 var User_1 = __importDefault(__webpack_require__(/*! ./containers/User */ "./resources/js/containers/User.tsx"));
+var Edit_1 = __importDefault(__webpack_require__(/*! ./containers/Edit */ "./resources/js/containers/Edit.tsx"));
 var App = function () {
     var state = useAuth_1.useAuth().state;
     return (react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
@@ -82091,7 +82092,8 @@ var App = function () {
             react_1.default.createElement(react_router_dom_1.Switch, null,
                 react_1.default.createElement(GuestRoute_1.default, { path: "/login", user: state.profile, component: Login_1.default }),
                 react_1.default.createElement(GuestRoute_1.default, { path: "/register", user: state.profile, component: Register_1.default }),
-                react_1.default.createElement(AuthRoute_1.default, { path: "/user", user: state.profile, component: User_1.default }),
+                react_1.default.createElement(AuthRoute_1.default, { path: "/user", exact: true, user: state.profile, component: User_1.default }),
+                react_1.default.createElement(AuthRoute_1.default, { path: "/user/edit", user: state.profile, component: Edit_1.default }),
                 react_1.default.createElement(AuthRoute_1.default, { path: "/logout", user: state.profile, component: Logout_1.default }),
                 react_1.default.createElement(react_router_dom_1.Redirect, { to: "/login" })))));
 };
@@ -82309,7 +82311,7 @@ var Header = function () {
     if (navShow) {
         navItems = (react_1.default.createElement(NavItems_1.default, { ref: ref, isShow: navShow, clicked: toggleNavHandler }));
     }
-    return (react_1.default.createElement("header", { className: "fixed w-full top-0 left-0 bg-transparent px-3 md:px-16" },
+    return (react_1.default.createElement("header", { className: "fixed w-full top-0 left-0 bg-transparent px-3 md:px-16 bg-mygray-300" },
         react_1.default.createElement("div", { className: "relative flex items-center justify-between h-12 md:h-16" },
             react_1.default.createElement("div", { className: "" },
                 react_1.default.createElement("h1", null, "devchallenges")),
@@ -82446,6 +82448,31 @@ exports.default = NavItems;
 
 /***/ }),
 
+/***/ "./resources/js/components/ProfileInput.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/ProfileInput.tsx ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ProfileInput = react_1.default.memo(function (_a) {
+    var label = _a.label, name = _a.name, placeholder = _a.placeholder, value = _a.value, type = _a.type, changed = _a.changed;
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("label", { className: "text-sm", htmlFor: name + "-input" }, label),
+        react_1.default.createElement("input", { id: name + "-input", className: "w-full block border rounded-xl border-mygray-100 placeholder-mygray-200 text-sm p-4 outline-none bg-transparent", type: type, placeholder: placeholder || '', value: value, onChange: changed })));
+});
+exports.default = ProfileInput;
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ProfileItem.tsx":
 /*!*************************************************!*\
   !*** ./resources/js/components/ProfileItem.tsx ***!
@@ -82473,6 +82500,53 @@ var ProfileItem = function (_a) {
             react_1.default.createElement("div", { className: "text-myblack-100 flex-grow text-right overflow-hidden" }, children))));
 };
 exports.default = ProfileItem;
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ProfileTextarea.tsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/ProfileTextarea.tsx ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ProfileTextarea = react_1.default.memo(function (_a) {
+    var label = _a.label, name = _a.name, placeholder = _a.placeholder, value = _a.value, changed = _a.changed, rest = __rest(_a, ["label", "name", "placeholder", "value", "changed"]);
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement("label", { className: "text-sm", htmlFor: name + "-textarea" }, label),
+        react_1.default.createElement("textarea", __assign({ id: name + "-textarea", className: "w-full block border rounded-xl border-mygray-100 placeholder-mygray-200 text-sm p-4 outline-none bg-transparent", placeholder: placeholder || '', value: value, onChange: changed }, rest))));
+});
+exports.default = ProfileTextarea;
 
 
 /***/ }),
@@ -82508,6 +82582,148 @@ exports.default = SocialIcon;
 
 /***/ }),
 
+/***/ "./resources/js/containers/Edit.tsx":
+/*!******************************************!*\
+  !*** ./resources/js/containers/Edit.tsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
+var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+var ProfileInput_1 = __importDefault(__webpack_require__(/*! ../components/ProfileInput */ "./resources/js/components/ProfileInput.tsx"));
+var ProfileTextarea_1 = __importDefault(__webpack_require__(/*! ../components/ProfileTextarea */ "./resources/js/components/ProfileTextarea.tsx"));
+var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
+var Edit = function () {
+    var state = useAuth_1.useAuth().state;
+    var _a = react_1.useState({}), profile = _a[0], setProfile = _a[1];
+    var _b = react_1.useState(null), photo = _b[0], setPhoto = _b[1];
+    var _c = react_1.useState(""), password = _c[0], setPassword = _c[1];
+    react_1.useEffect(function () {
+        setProfile(state.profile);
+    }, [setProfile]);
+    var setProfileHandler = react_1.useCallback(function (key, value) {
+        var _a;
+        var newProfile = __assign(__assign({}, profile), (_a = {}, _a[key] = value || "", _a));
+        setProfile(newProfile);
+    }, [profile, setProfile]);
+    var inputHandler = react_1.useCallback(function (key, e) {
+        if (key === "password") {
+            return setPassword(e.target.value);
+        }
+        setProfileHandler(key, e.target.value);
+    }, [setPassword, setProfileHandler]);
+    var submitHandler = function (e) {
+        console.log(photo);
+        e.preventDefault();
+        var fd = new FormData;
+        fd.append('name', profile.name);
+        fd.append('email', profile.email);
+        fd.append('biography', profile.biography);
+        fd.append('phone', profile.phone);
+        fd.append('password', password);
+        fd.append('photo', photo);
+        var potions = {
+        // headers: {
+        //   'content-type': 'multipart/form-data',
+        // }
+        };
+        axios_1.default.post('/api/user', fd, potions)
+            .then(function (res) {
+            console.log(res);
+        })
+            .catch(function (err) {
+            console.log(err.response);
+        });
+    };
+    var changePhotoHandler = react_1.useCallback(function (e) {
+        e.preventDefault();
+        var files = e.target.files;
+        if (!files || !files.length)
+            return false;
+        var file = files[0];
+        setPhoto(file);
+        setProfileHandler('photo', file.name);
+    }, [setPhoto, setProfileHandler]);
+    return (react_1.default.createElement("div", { className: "pt-6 max-w-content mx-auto px-5 md:px-0" },
+        react_1.default.createElement("div", null,
+            react_1.default.createElement(react_router_dom_1.NavLink, { className: "text-myblue-200", to: "/user" }, "< Back")),
+        react_1.default.createElement("section", { className: "md:border md:rounded-xl border-mygray-400 md:px-14 md:py-12" },
+            react_1.default.createElement("div", { className: "mb-6" },
+                react_1.default.createElement("h2", { className: "text-2xl mb-1" }, "Change Info"),
+                react_1.default.createElement("p", { className: "text-sm text-mygray-100" }, "Changes will be reflected to every services")),
+            react_1.default.createElement("form", { onSubmit: submitHandler },
+                react_1.default.createElement("div", { className: "mb-6 flex items-center" },
+                    react_1.default.createElement("div", { className: "h-18 w-18" },
+                        react_1.default.createElement("input", { type: "file", onChange: changePhotoHandler })),
+                    react_1.default.createElement("div", null,
+                        react_1.default.createElement("p", { className: "text-sm text-mygray-100" }, "CHANGE PHOTO"))),
+                react_1.default.createElement("div", { className: "mb-6" },
+                    react_1.default.createElement(ProfileInput_1.default, { type: "text", label: "Name", name: "name", value: profile.name || "", placeholder: "Enter your name...", changed: function (e) {
+                            inputHandler("name", e);
+                        } })),
+                react_1.default.createElement("div", { className: "mb-6" },
+                    react_1.default.createElement(ProfileTextarea_1.default, { label: "Bio", name: "biography", value: profile.biography || "", placeholder: "Enter your bio...", rows: "3", changed: function (e) {
+                            inputHandler("biography", e);
+                        } })),
+                react_1.default.createElement("div", { className: "mb-6" },
+                    react_1.default.createElement(ProfileInput_1.default, { type: "text", label: "Phone", name: "phone", value: profile.phone || "", placeholder: "Enter your phone...", changed: function (e) {
+                            inputHandler("phone", e);
+                        } })),
+                react_1.default.createElement("div", { className: "mb-6" },
+                    react_1.default.createElement(ProfileInput_1.default, { type: "email", label: "Email", name: "email", value: profile.email || "", placeholder: "Enter your email...", changed: function (e) {
+                            inputHandler("email", e);
+                        } })),
+                react_1.default.createElement("div", { className: "mb-8" },
+                    react_1.default.createElement(ProfileInput_1.default, { type: "password", label: "Password", name: "password", value: password || "", placeholder: "Enter your new password...", changed: function (e) {
+                            inputHandler("password", e);
+                        } })),
+                react_1.default.createElement("div", { className: "md:w-16 w-full" },
+                    react_1.default.createElement(Button_1.default, { type: "submit" }, "Save"))))));
+};
+exports.default = Edit;
+
+
+/***/ }),
+
 /***/ "./resources/js/containers/Layout.tsx":
 /*!********************************************!*\
   !*** ./resources/js/containers/Layout.tsx ***!
@@ -82529,7 +82745,7 @@ var Layout = function (_a) {
     var state = useAuth_1.useAuth().state;
     console.log(state);
     var header = null;
-    var mainClasses = ["min-h-screen"];
+    var mainClasses = ["min-h-screen pb-12"];
     if (state.profile.id) {
         header = react_1.default.createElement(Header_1.default, null);
         mainClasses.push("bg-mygray-300 pt-12 md:pt-16");
@@ -82953,7 +83169,7 @@ var User = function () {
                         react_1.default.createElement("h2", { className: "text-2xl mb-1" }, "Profile"),
                         react_1.default.createElement("p", { className: "text-sm text-mygray-100" }, "Some info may be visible to other people")),
                     react_1.default.createElement("div", { className: "w-56 text-right" },
-                        react_1.default.createElement(react_router_dom_1.NavLink, { className: "border rounded-lg border-mygray-100 text-mygray-100 text-center py-2 px-6", to: "user" }, "Edit")))),
+                        react_1.default.createElement(react_router_dom_1.NavLink, { className: "border rounded-lg border-mygray-100 text-mygray-100 text-center py-2 px-6", to: "/user/edit" }, "Edit")))),
             react_1.default.createElement(ProfileItem_1.default, { label: "PHOTO" },
                 react_1.default.createElement("div", { className: "flex justify-end" },
                     state.profile.image,
@@ -82962,6 +83178,8 @@ var User = function () {
                 react_1.default.createElement("p", { className: "truncate" }, state.profile.name)),
             react_1.default.createElement(ProfileItem_1.default, { label: "BIO" },
                 react_1.default.createElement("p", { className: "truncate" }, state.profile.biography)),
+            react_1.default.createElement(ProfileItem_1.default, { label: "PHOTO" },
+                react_1.default.createElement("p", { className: "truncate" }, state.profile.phone)),
             react_1.default.createElement(ProfileItem_1.default, { label: "EMAIL" },
                 react_1.default.createElement("p", { className: "truncate" }, state.profile.email)),
             react_1.default.createElement(ProfileItem_1.default, { label: "PASSWORD", borderNone: true },

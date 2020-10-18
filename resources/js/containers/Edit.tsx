@@ -2,30 +2,77 @@ import React, { useState, useEffect, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
 import { Iprofile } from "../types";
+import axios from 'axios'
 
 import ProfileInput from "../components/ProfileInput";
+import ProfileTextarea from "../components/ProfileTextarea";
 import Button from "../components/Button";
 
 const Edit: React.FC = () => {
   const { state } = useAuth();
   const [profile, setProfile] = useState({} as Iprofile);
+  const [photo, setPhoto] = useState<any>(null);
   const [password, setPassword] = useState("");
 
   useEffect(() => {
     setProfile(state.profile);
   }, [setProfile]);
 
+  const setProfileHandler = useCallback(
+    (key: string, value: string) => {
+      let newProfile = { ...profile, [key]: value || "" };
+      setProfile(newProfile);
+    },
+    [profile, setProfile],
+  )
+
   const inputHandler = useCallback(
     (key: string, e: React.ChangeEvent<any>) => {
       if(key ==="password") {
         return setPassword(e.target.value);
       }
-
-      let newProfile = { ...profile, [key]: e.target.value || "" };
-      setProfile(newProfile);
+      setProfileHandler(key, e.target.value);
     },
-    [profile, setProfile]
+    [setPassword, setProfileHandler]
   );
+
+  const submitHandler = (e: React.FormEvent) => {
+    console.log(photo);
+
+    e.preventDefault();
+    const fd = new FormData;
+    fd.append('name', profile.name);
+    fd.append('email', profile.email);
+    fd.append('biography', profile.biography);
+    fd.append('phone', profile.phone);
+    fd.append('password', password);
+    fd.append('photo', photo);
+
+    const potions = {
+      // headers: {
+      //   'content-type': 'multipart/form-data',
+      // }
+    }
+
+    axios.post('/api/user', fd, potions)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err.response);
+      })
+  };
+
+  const changePhotoHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      const files = e.target.files;
+      if(!files || !files.length) return false;
+      const file = files[0];
+
+      setPhoto(file);
+      setProfileHandler('photo', file.name);
+  }, [setPhoto, setProfileHandler]);
 
   return (
     <div className="pt-6 max-w-content mx-auto px-5 md:px-0">
@@ -41,65 +88,80 @@ const Edit: React.FC = () => {
           </p>
         </div>
 
-        <div className="mb-6 flex items-center">
-          <div className="h-18 w-18">
+        <form onSubmit={submitHandler}>
+          <div className="mb-6 flex items-center">
+            <div className="h-18 w-18">
+              <input type="file" onChange={changePhotoHandler} />
+            </div>
+            <div>
+              <p className="text-sm text-mygray-100">CHANGE PHOTO</p>
+            </div>
+          </div>
+          <div className="mb-6">
+            <ProfileInput
+              type="text"
+              label="Name"
+              name="name"
+              value={profile.name || ""}
+              placeholder="Enter your name..."
+              changed={(e: React.ChangeEvent) => {
+                inputHandler("name", e);
+              }}
+            />
+          </div>
+          <div className="mb-6">
+            <ProfileTextarea
+              label="Bio"
+              name="biography"
+              value={profile.biography || ""}
+              placeholder="Enter your bio..."
+              rows="3"
+              changed={(e: React.ChangeEvent) => {
+                inputHandler("biography", e);
+              }}
+            />
+          </div>
+          <div className="mb-6">
+            <ProfileInput
+              type="text"
+              label="Phone"
+              name="phone"
+              value={profile.phone || ""}
+              placeholder="Enter your phone..."
+              changed={(e: React.ChangeEvent) => {
+                inputHandler("phone", e);
+              }}
+            />
+          </div>
+          <div className="mb-6">
+            <ProfileInput
+              type="email"
+              label="Email"
+              name="email"
+              value={profile.email || ""}
+              placeholder="Enter your email..."
+              changed={(e: React.ChangeEvent) => {
+                inputHandler("email", e);
+              }}
+            />
+          </div>
+          <div className="mb-8">
+            <ProfileInput
+              type="password"
+              label="Password"
+              name="password"
+              value={password || ""}
+              placeholder="Enter your new password..."
+              changed={(e: React.ChangeEvent) => {
+                inputHandler("password", e);
+              }}
+            />
+          </div>
+          <div className="md:w-16 w-full">
+            <Button type="submit">Save</Button>
+          </div>
+        </form>
 
-          </div>
-          <div>
-            <p className="text-sm text-mygray-100">CHANGE PHOTO</p>
-          </div>
-        </div>
-        <div className="mb-6">
-          <ProfileInput
-            type="text"
-            label="Name"
-            name="name"
-            value={profile.name || ""}
-            placeholder="Enter your name..."
-            changed={(e: React.ChangeEvent) => {
-              inputHandler("name", e);
-            }}
-          />
-        </div>
-        <div className="mb-6">
-          <ProfileInput
-            type="text"
-            label="Phone"
-            name="phone"
-            value={profile.phone || ""}
-            placeholder="Enter your phone..."
-            changed={(e: React.ChangeEvent) => {
-              inputHandler("phone", e);
-            }}
-          />
-        </div>
-        <div className="mb-6">
-          <ProfileInput
-            type="email"
-            label="Email"
-            name="email"
-            value={profile.email || ""}
-            placeholder="Enter your email..."
-            changed={(e: React.ChangeEvent) => {
-              inputHandler("email", e);
-            }}
-          />
-        </div>
-        <div className="mb-8">
-          <ProfileInput
-            type="password"
-            label="Password"
-            name="password"
-            value={password || ""}
-            placeholder="Enter your new password..."
-            changed={(e: React.ChangeEvent) => {
-              inputHandler("password", e);
-            }}
-          />
-        </div>
-        <div className="md:w-16 w-full">
-          <Button>Save</Button>
-        </div>
       </section>
     </div>
   );
