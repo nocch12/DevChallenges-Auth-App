@@ -6,10 +6,11 @@ type PropType = {
   value: string;
   type: string;
   placeholder?: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 
-const ProfileInput: React.FC<PropType> = React.memo(({label, name, placeholder, value, type, changed}) => {
+const ProfileInput: React.FC<PropType> = React.memo(({label, name, placeholder, value, type, disabled, changed}) => {
   return (
     <React.Fragment>
       <label className="text-sm" htmlFor={`${name}-input`}>
@@ -22,6 +23,7 @@ const ProfileInput: React.FC<PropType> = React.memo(({label, name, placeholder, 
         placeholder={placeholder || ''}
         value={value}
         onChange={changed}
+        disabled={disabled}
       />
     </React.Fragment>
   );

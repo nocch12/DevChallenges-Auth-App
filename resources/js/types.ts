@@ -16,9 +16,9 @@ export interface Iprofile {
   email: string;
   image: string;
   name: string;
-  age: string;
   biography: string;
   phone: string;
+  photo: string;
 }
 
 export type ContextType = {

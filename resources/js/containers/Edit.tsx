@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth/useAuth";
 import { Iprofile } from "../types";
-import axios from 'axios'
+import axios from "axios";
 
+import CameraAlt from '@material-ui/icons/CameraAlt';
 import ProfileInput from "../components/ProfileInput";
 import ProfileTextarea from "../components/ProfileTextarea";
 import Button from "../components/Button";
@@ -16,19 +17,20 @@ const Edit: React.FC = () => {
 
   useEffect(() => {
     setProfile(state.profile);
-  }, [setProfile]);
+    setPhoto(state.profile.photo);
+  }, [setProfile, setPhoto]);
 
   const setProfileHandler = useCallback(
     (key: string, value: string) => {
       let newProfile = { ...profile, [key]: value || "" };
       setProfile(newProfile);
     },
-    [profile, setProfile],
-  )
+    [profile, setProfile]
+  );
 
   const inputHandler = useCallback(
     (key: string, e: React.ChangeEvent<any>) => {
-      if(key ==="password") {
+      if (key === "password") {
         return setPassword(e.target.value);
       }
       setProfileHandler(key, e.target.value);
@@ -40,44 +42,57 @@ const Edit: React.FC = () => {
     console.log(photo);
 
     e.preventDefault();
-    const fd = new FormData;
-    fd.append('name', profile.name);
-    fd.append('email', profile.email);
-    fd.append('biography', profile.biography);
-    fd.append('phone', profile.phone);
-    fd.append('password', password);
-    fd.append('photo', photo);
+    const fd = new FormData();
+    fd.append("name", profile.name);
+    fd.append("biography", profile.biography);
+    fd.append("phone", profile.phone);
+    password && fd.append("password", password);
+    photo && fd.append("photo", photo);
 
-    const potions = {
-      // headers: {
-      //   'content-type': 'multipart/form-data',
-      // }
-    }
-
-    axios.post('/api/user', fd, potions)
+    axios
+      .post("/api/user", fd)
       .then(res => {
         console.log(res);
       })
       .catch(err => {
         console.log(err.response);
-      })
+      });
   };
 
   const changePhotoHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
       const files = e.target.files;
-      if(!files || !files.length) return false;
+      if (!files || !files.length) return false;
       const file = files[0];
 
       setPhoto(file);
-      setProfileHandler('photo', file.name);
-  }, [setPhoto, setProfileHandler]);
+      setProfileHandler("photo", file.name);
+    },
+    [setPhoto, setProfileHandler]
+  );
+
+  const photoPreview = useMemo(() => {
+    switch (true) {
+      case photo instanceof Blob:
+        return URL.createObjectURL(photo);
+      case typeof photo === 'string':
+        console.log(photo);
+
+        return `../storage/profile_photo/${state.profile.id}/${photo}`;
+      default:
+        return "";
+    }
+  }, [state, photo]);
+  console.log(photoPreview);
+
 
   return (
     <div className="pt-6 max-w-content mx-auto px-5 md:px-0">
       <div>
-        <NavLink className="text-myblue-200" to="/user">&lt; Back</NavLink>
+        <NavLink className="text-myblue-200" to="/user">
+          &lt; Back
+        </NavLink>
       </div>
 
       <section className="md:border md:rounded-xl border-mygray-400 md:px-14 md:py-12">
@@ -90,10 +105,14 @@ const Edit: React.FC = () => {
 
         <form onSubmit={submitHandler}>
           <div className="mb-6 flex items-center">
-            <div className="h-18 w-18">
-              <input type="file" onChange={changePhotoHandler} />
-            </div>
-            <div>
+            <label htmlFor="photo" className="h-18 w-18 rounded-lg overflow-hidden relative cursor-pointer">
+              <img className="absolute w-full h-full top left" src={photoPreview} alt="" />
+              <div className="flex items-center justify-center absolute w-full h-full top left bg-black bg-opacity-25">
+                <CameraAlt className="text-white" />
+              </div>
+            </label>
+            <input id="photo" className="hidden" type="file" onChange={changePhotoHandler} />
+            <div className="ml-8">
               <p className="text-sm text-mygray-100">CHANGE PHOTO</p>
             </div>
           </div>
@@ -140,9 +159,7 @@ const Edit: React.FC = () => {
               name="email"
               value={profile.email || ""}
               placeholder="Enter your email..."
-              changed={(e: React.ChangeEvent) => {
-                inputHandler("email", e);
-              }}
+              disabled={true}
             />
           </div>
           <div className="mb-8">
@@ -161,7 +178,6 @@ const Edit: React.FC = () => {
             <Button type="submit">Save</Button>
           </div>
         </form>
-
       </section>
     </div>
   );

@@ -8,6 +8,10 @@ import DeveloperInfo from "../components/DeveloperInfo";
 const User = () => {
   const { state } = useAuth();
 
+  const photo: string = state.profile.photo
+    ? `../storage/profile_photo/${state.profile.id}/${state.profile.photo}`
+    : '';
+
   return (
     <div className="pt-6 max-w-content mx-auto">
       <section className="text-black text-center mb-8">
@@ -42,11 +46,12 @@ const User = () => {
         <ProfileItem label="PHOTO">
           <div className="flex justify-end">
             {state.profile.image}
+            {photo ?
             <img
               className="h-18 w-18 rounded-md"
-              src="aaa.jpg"
+              src={photo}
               alt="profile-image"
-            />
+            /> : null}
           </div>
         </ProfileItem>
 

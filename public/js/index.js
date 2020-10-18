@@ -2274,6 +2274,39 @@ exports.default = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/icons/CameraAlt.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@material-ui/icons/CameraAlt.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@material-ui/icons/utils/createSvgIcon.js"));
+
+var _default = (0, _createSvgIcon.default)(_react.default.createElement(_react.default.Fragment, null, _react.default.createElement("circle", {
+  cx: "12",
+  cy: "12",
+  r: "3.2"
+}), _react.default.createElement("path", {
+  d: "M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"
+})), 'CameraAlt');
+
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/icons/ExitToApp.js":
 /*!******************************************************!*\
   !*** ./node_modules/@material-ui/icons/ExitToApp.js ***!
@@ -82463,10 +82496,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var ProfileInput = react_1.default.memo(function (_a) {
-    var label = _a.label, name = _a.name, placeholder = _a.placeholder, value = _a.value, type = _a.type, changed = _a.changed;
+    var label = _a.label, name = _a.name, placeholder = _a.placeholder, value = _a.value, type = _a.type, disabled = _a.disabled, changed = _a.changed;
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("label", { className: "text-sm", htmlFor: name + "-input" }, label),
-        react_1.default.createElement("input", { id: name + "-input", className: "w-full block border rounded-xl border-mygray-100 placeholder-mygray-200 text-sm p-4 outline-none bg-transparent", type: type, placeholder: placeholder || '', value: value, onChange: changed })));
+        react_1.default.createElement("input", { id: name + "-input", className: "w-full block border rounded-xl border-mygray-100 placeholder-mygray-200 text-sm p-4 outline-none bg-transparent", type: type, placeholder: placeholder || '', value: value, onChange: changed, disabled: disabled })));
 });
 exports.default = ProfileInput;
 
@@ -82629,6 +82662,7 @@ var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/reac
 var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 var useAuth_1 = __webpack_require__(/*! ../store/auth/useAuth */ "./resources/js/store/auth/useAuth.ts");
 var axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+var CameraAlt_1 = __importDefault(__webpack_require__(/*! @material-ui/icons/CameraAlt */ "./node_modules/@material-ui/icons/CameraAlt.js"));
 var ProfileInput_1 = __importDefault(__webpack_require__(/*! ../components/ProfileInput */ "./resources/js/components/ProfileInput.tsx"));
 var ProfileTextarea_1 = __importDefault(__webpack_require__(/*! ../components/ProfileTextarea */ "./resources/js/components/ProfileTextarea.tsx"));
 var Button_1 = __importDefault(__webpack_require__(/*! ../components/Button */ "./resources/js/components/Button.tsx"));
@@ -82639,7 +82673,8 @@ var Edit = function () {
     var _c = react_1.useState(""), password = _c[0], setPassword = _c[1];
     react_1.useEffect(function () {
         setProfile(state.profile);
-    }, [setProfile]);
+        setPhoto(state.profile.photo);
+    }, [setProfile, setPhoto]);
     var setProfileHandler = react_1.useCallback(function (key, value) {
         var _a;
         var newProfile = __assign(__assign({}, profile), (_a = {}, _a[key] = value || "", _a));
@@ -82654,19 +82689,14 @@ var Edit = function () {
     var submitHandler = function (e) {
         console.log(photo);
         e.preventDefault();
-        var fd = new FormData;
-        fd.append('name', profile.name);
-        fd.append('email', profile.email);
-        fd.append('biography', profile.biography);
-        fd.append('phone', profile.phone);
-        fd.append('password', password);
-        fd.append('photo', photo);
-        var potions = {
-        // headers: {
-        //   'content-type': 'multipart/form-data',
-        // }
-        };
-        axios_1.default.post('/api/user', fd, potions)
+        var fd = new FormData();
+        fd.append("name", profile.name);
+        fd.append("biography", profile.biography);
+        fd.append("phone", profile.phone);
+        password && fd.append("password", password);
+        photo && fd.append("photo", photo);
+        axios_1.default
+            .post("/api/user", fd)
             .then(function (res) {
             console.log(res);
         })
@@ -82681,8 +82711,20 @@ var Edit = function () {
             return false;
         var file = files[0];
         setPhoto(file);
-        setProfileHandler('photo', file.name);
+        setProfileHandler("photo", file.name);
     }, [setPhoto, setProfileHandler]);
+    var photoPreview = react_1.useMemo(function () {
+        switch (true) {
+            case photo instanceof Blob:
+                return URL.createObjectURL(photo);
+            case typeof photo === 'string':
+                console.log(photo);
+                return "../storage/profile_photo/" + state.profile.id + "/" + photo;
+            default:
+                return "";
+        }
+    }, [state, photo]);
+    console.log(photoPreview);
     return (react_1.default.createElement("div", { className: "pt-6 max-w-content mx-auto px-5 md:px-0" },
         react_1.default.createElement("div", null,
             react_1.default.createElement(react_router_dom_1.NavLink, { className: "text-myblue-200", to: "/user" }, "< Back")),
@@ -82692,9 +82734,12 @@ var Edit = function () {
                 react_1.default.createElement("p", { className: "text-sm text-mygray-100" }, "Changes will be reflected to every services")),
             react_1.default.createElement("form", { onSubmit: submitHandler },
                 react_1.default.createElement("div", { className: "mb-6 flex items-center" },
-                    react_1.default.createElement("div", { className: "h-18 w-18" },
-                        react_1.default.createElement("input", { type: "file", onChange: changePhotoHandler })),
-                    react_1.default.createElement("div", null,
+                    react_1.default.createElement("label", { htmlFor: "photo", className: "h-18 w-18 rounded-lg overflow-hidden relative cursor-pointer" },
+                        react_1.default.createElement("img", { className: "absolute w-full h-full top left", src: photoPreview, alt: "" }),
+                        react_1.default.createElement("div", { className: "flex items-center justify-center absolute w-full h-full top left bg-black bg-opacity-25" },
+                            react_1.default.createElement(CameraAlt_1.default, { className: "text-white" }))),
+                    react_1.default.createElement("input", { id: "photo", className: "hidden", type: "file", onChange: changePhotoHandler }),
+                    react_1.default.createElement("div", { className: "ml-8" },
                         react_1.default.createElement("p", { className: "text-sm text-mygray-100" }, "CHANGE PHOTO"))),
                 react_1.default.createElement("div", { className: "mb-6" },
                     react_1.default.createElement(ProfileInput_1.default, { type: "text", label: "Name", name: "name", value: profile.name || "", placeholder: "Enter your name...", changed: function (e) {
@@ -82709,9 +82754,7 @@ var Edit = function () {
                             inputHandler("phone", e);
                         } })),
                 react_1.default.createElement("div", { className: "mb-6" },
-                    react_1.default.createElement(ProfileInput_1.default, { type: "email", label: "Email", name: "email", value: profile.email || "", placeholder: "Enter your email...", changed: function (e) {
-                            inputHandler("email", e);
-                        } })),
+                    react_1.default.createElement(ProfileInput_1.default, { type: "email", label: "Email", name: "email", value: profile.email || "", placeholder: "Enter your email...", disabled: true })),
                 react_1.default.createElement("div", { className: "mb-8" },
                     react_1.default.createElement(ProfileInput_1.default, { type: "password", label: "Password", name: "password", value: password || "", placeholder: "Enter your new password...", changed: function (e) {
                             inputHandler("password", e);
@@ -83158,6 +83201,9 @@ var ProfileItem_1 = __importDefault(__webpack_require__(/*! ../components/Profil
 var DeveloperInfo_1 = __importDefault(__webpack_require__(/*! ../components/DeveloperInfo */ "./resources/js/components/DeveloperInfo.tsx"));
 var User = function () {
     var state = useAuth_1.useAuth().state;
+    var photo = state.profile.photo
+        ? "../storage/profile_photo/" + state.profile.id + "/" + state.profile.photo
+        : '';
     return (react_1.default.createElement("div", { className: "pt-6 max-w-content mx-auto" },
         react_1.default.createElement("section", { className: "text-black text-center mb-8" },
             react_1.default.createElement("h1", { className: "text-2xl mb-2 md:text-4xl" }, "Personal info"),
@@ -83173,7 +83219,8 @@ var User = function () {
             react_1.default.createElement(ProfileItem_1.default, { label: "PHOTO" },
                 react_1.default.createElement("div", { className: "flex justify-end" },
                     state.profile.image,
-                    react_1.default.createElement("img", { className: "h-18 w-18 rounded-md", src: "aaa.jpg", alt: "profile-image" }))),
+                    photo ?
+                        react_1.default.createElement("img", { className: "h-18 w-18 rounded-md", src: photo, alt: "profile-image" }) : null)),
             react_1.default.createElement(ProfileItem_1.default, { label: "NAME" },
                 react_1.default.createElement("p", { className: "truncate" }, state.profile.name)),
             react_1.default.createElement(ProfileItem_1.default, { label: "BIO" },
@@ -83507,7 +83554,7 @@ exports.initialProfile = {
     phone: '',
     image: '',
     biography: '',
-    age: '',
+    photo: '',
     name: ''
 };
 exports.initialState = {

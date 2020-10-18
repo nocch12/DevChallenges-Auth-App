@@ -9,7 +9,7 @@ export const initialProfile: Iprofile = {
   phone: '',
   image: '',
   biography: '',
-  age: '',
+  photo: '',
   name: ''
 }
 

@@ -22,8 +22,8 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     })->name('user');
     Route::post('/user', [UpdateController::class, 'update'])->name('user.update');
-    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
