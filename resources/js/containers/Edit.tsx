@@ -10,7 +10,7 @@ import ProfileTextarea from "../components/ProfileTextarea";
 import Button from "../components/Button";
 
 const Edit: React.FC = () => {
-  const { state } = useAuth();
+  const { state, authSuccessAction } = useAuth();
   const [profile, setProfile] = useState({} as Iprofile);
   const [photo, setPhoto] = useState<any>(null);
   const [password, setPassword] = useState("");
@@ -47,12 +47,12 @@ const Edit: React.FC = () => {
     fd.append("biography", profile.biography);
     fd.append("phone", profile.phone);
     password && fd.append("password", password);
-    photo && fd.append("photo", photo);
+    photo && photo instanceof Blob && fd.append("photo", photo);
 
     axios
       .post("/api/user", fd)
       .then(res => {
-        console.log(res);
+        authSuccessAction(res.data);
       })
       .catch(err => {
         console.log(err.response);
@@ -77,14 +77,11 @@ const Edit: React.FC = () => {
       case photo instanceof Blob:
         return URL.createObjectURL(photo);
       case typeof photo === 'string':
-        console.log(photo);
-
         return `../storage/profile_photo/${state.profile.id}/${photo}`;
       default:
         return "";
     }
   }, [state, photo]);
-  console.log(photoPreview);
 
 
   return (

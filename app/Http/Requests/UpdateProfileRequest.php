@@ -24,6 +24,7 @@ class UpdateProfileRequest extends FormRequest
      */
     public function rules()
     {
+        logger(print_r($this->request->all(), true));
         return [
             'name' => ['required', 'string', 'max:255'],
             'password' => ['filled', 'string', 'min:8'],
