@@ -33,12 +33,12 @@ class OAuthController extends Controller
             $providerUser = Socialite::with($provider)->user();
 
             $user = User::where('email', $providerUser->email)->first();
-            logger()->debug(print_r($user, true));
 
             if(!$user) {
                 $user = $this->createUser($providerUser);
             }
             Auth::login($user);
+            logger()->debug(print_r(Auth::user(), true));
 
             $user->tokens()->where('name', 'token-name')->delete();
             $user->createToken('token-name')->plainTextToken;
