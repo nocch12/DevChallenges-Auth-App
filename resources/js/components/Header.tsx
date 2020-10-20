@@ -1,8 +1,18 @@
-import React, { useState, useCallback, useEffect, useRef, createRef } from "react";
+import React, { useState, useCallback, useEffect, useMemo, useRef, createRef } from "react";
+import { useAuth } from "../store/auth/useAuth";
 import NavItems from "./NavItems";
 
 const Header: React.FC = () => {
   const [navShow, setNavShow] = useState(false);
+  const { state } = useAuth();
+  const profile = state.profile;
+
+  const imgSrc = useMemo(() => {
+    if(!profile.photo)
+      return `../images/user_icon.png`;
+
+    return `../storage/profile_photo/${profile.id}/${profile.photo}`;
+  }, [profile]);
 
   const ref = createRef<HTMLDivElement>();
   const documentClickHandler: any = useRef();
@@ -44,8 +54,8 @@ const Header: React.FC = () => {
         <div className="">
           <h1>devchallenges</h1>
         </div>
-        <div className="" onClick={toggleNavHandler}>
-          Image
+        <div className="cursor-pointer" onClick={toggleNavHandler}>
+          <img className="h-8 w-8 object-cover rounded-lg" src={imgSrc} alt="user's icon" />
         </div>
         {navItems}
       </div>
